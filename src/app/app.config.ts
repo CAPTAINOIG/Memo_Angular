@@ -9,7 +9,7 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     importProvidersFrom(HttpClientModule),
-    importProvidersFrom(
-    )
+    importProvidersFrom(BrowserAnimationsModule)
   ]
 };

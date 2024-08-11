@@ -1,17 +1,23 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LoginComponent } from './login/login.component';
-import { FilesComponent } from './files/files.component';
-import { ActivitiesComponent } from './activities/activities.component';
-import { UsersComponent } from './users/users.component';
-import { SettingsComponent } from './settings/settings.component';
+import { DashboardComponent as DashboardLayout } from './layout/dashboard/dashboard.component';
+import { DashboardComponent } from './page/dashboard/dashboard.component';
+import { LoginComponent } from './page/login/login.component';
+import { FilesComponent } from './page/files/files.component';
+import { ActivitiesComponent } from './page/activities/activities.component';
+import { UsersComponent } from './page/users/users.component';
+import { SettingsComponent } from './page/settings/settings.component';
+import { TwofactorauthComponent } from './page/twofactorauth/twofactorauth.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    {'path':'portal/dashboard', component:DashboardComponent},
-    {'path':'login', component:LoginComponent},
-    {'path':'files', component:FilesComponent},
-    {'path':'activities', component:ActivitiesComponent},
-    {'path':'users', component:UsersComponent},
-    {path:'settings', component:SettingsComponent}
+    {'path':'', component:LoginComponent},
+    {path: 'auth', component: TwofactorauthComponent},
+    {'path':'portal', component:DashboardLayout, canActivate:[authGuard], children:[
+        {'path':'dashboard', component:DashboardComponent},
+        {'path':'files', component:FilesComponent},
+        {'path':'activities', component:ActivitiesComponent},
+        {'path':'users', component:UsersComponent},
+        {'path':'settings', component:SettingsComponent}
+    ]},
 ];
 

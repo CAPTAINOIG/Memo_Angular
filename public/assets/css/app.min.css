@@ -360,6 +360,7 @@ Author URL: https://themeforest.net/user/laborasyon/portfolio
 
 .m-l-5 {
   margin-left: 5px !important;
+
 }
 
 .m-l-10 {
@@ -8230,7 +8231,7 @@ button.toast-close-button {
   position: relative;
 }
 
-.navigation ul li a {
+.navigation ul li a,.navigation ul li button {
   color: rgba(255, 255, 255, 0.8) !important;
   display: flex;
   flex-direction: column;
@@ -8241,18 +8242,18 @@ button.toast-close-button {
   border-radius: 5px;
 }
 
-.navigation ul li a .nav-link-icon {
+.navigation ul li a .nav-link-icon,.navigation ul li button .nav-link-icon {
   font-size: 22px;
 }
 
-.navigation ul li a .badge {
+.navigation ul li a .badge,.navigation ul li button .badge {
   top: 0;
   right: 0;
   position: absolute;
   padding: 3px 5px;
 }
 
-.navigation ul li a .badge.badge-small {
+.navigation ul li a .badge.badge-small,.navigation ul li button .badge.badge-small {
   text-indent: -9999px;
   padding: 0;
   width: 10px;
@@ -8262,17 +8263,17 @@ button.toast-close-button {
   top: 7px;
 }
 
-.navigation ul li a .nav-link-label {
+.navigation ul li a .nav-link-label,.navigation ul li button .nav-link-label{
   font-size: 14px;
   margin-top: 7px;
 }
 
-.navigation ul li a:hover {
+.navigation ul li a:hover,.navigation ul li button:hover {
   background: rgba(255, 255, 255, 0.2);
   color: white !important;
 }
 
-.navigation ul li a.active {
+.navigation ul li a.active,.navigation ul li button.active {
   background: rgba(255, 255, 255, 0.7);
   color: black !important;
 }
