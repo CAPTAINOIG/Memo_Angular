@@ -7572,6 +7572,10 @@ div.form-membership:before {
   bottom: 0;
   background: rgba(0, 98, 255, 0.8);
 }
+div.form-membership1:before {
+  content: "";
+  background: white !important;
+}
 
 div.form-membership .form-wrapper {
   background-color: white;

@@ -36,11 +36,11 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isLoading = true;
       const json = this.loginForm.value;
-      // console.log(json);
+      console.log(json);
     
       this.HttpRequest.makePostRequest(`/auth/login`, json).subscribe({
         next: (data:any) => {
-          // console.log(data);
+          console.log(data);
           this.isLoading = false;
           if (data.status) {
             Toastify({
@@ -50,9 +50,10 @@ export class LoginComponent {
               position: "right", // `left`, `center` or `right`
               backgroundColor: "green",
             }).showToast();
-          this.local.write("auth-token", { token: data.token })
-          
-          // this.router.navigate(['/auth']);
+            console.log(data)
+          // this.local.write("auth-token", { token: data.token })
+          this.local.write("data",  (data.token))
+          this.router.navigate(['/auth']);
           }
         },
         error: (err:any) => {

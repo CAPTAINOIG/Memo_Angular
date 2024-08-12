@@ -8,6 +8,7 @@ import { UsersComponent } from './page/users/users.component';
 import { SettingsComponent } from './page/settings/settings.component';
 import { TwofactorauthComponent } from './page/twofactorauth/twofactorauth.component';
 import { authGuard } from './guards/auth.guard';
+import { NewuserComponent } from './page/newuser/newuser.component';
 
 export const routes: Routes = [
     {'path':'', component:LoginComponent},
@@ -17,7 +18,8 @@ export const routes: Routes = [
         {'path':'files', component:FilesComponent},
         {'path':'activities', component:ActivitiesComponent},
         {'path':'users', component:UsersComponent},
-        {'path':'settings', component:SettingsComponent}
+        {'path':'settings', component:SettingsComponent},
+        {'path': 'newuser', component: NewuserComponent},
     ]},
 ];
 

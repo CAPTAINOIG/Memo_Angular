@@ -26,12 +26,10 @@
                             <form>
                                 <div class="form-group">
                                     <label>Role</label>
-                                    <select class="form-control">
-                                        <option value="">Select</option>
-                                        <option value="">User</option>
-                                        <option value="">Staff</option>
-                                        <option value="">Admin</option>
-                                    </select>
+                                    <select id="roleSelect" [(ngModel)]="selectedValue"  class="form-control" [ngModelOptions]="{standalone: true}">
+                                      <option [value]="undefined" selected>Select a role</option>
+                                      <option *ngFor="let item of userRoles"  [value]="item.id">{{ item.RoleName }}</option>
+                                  </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Status</label>
@@ -42,23 +40,17 @@
                                         <option value="">Admin</option>
                                     </select>
                                 </div>
-                                <button class="btn btn-primary">Filter</button>
-                            </form>
+                                <button class="btn btn-primary" (click)="filter()">Filter</button>
+                              </form>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" title="View Grid">
-                            <i class="ti-view-grid"></i>
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <app-usermodal></app-usermodal>
+                      <a href="#" class="nav-link" title="View Grid">
+                        <i class="ti-view-grid"></i>
+                      </a>
                     </li>
                 </ul>
             </div>
-
-
             <div class="card border-0">
                 <div class="table-responsive">
                   <table id="user-list" class="table table-borderless table-hover">
@@ -79,11 +71,11 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let user of users">
+                      <tr *ngFor="let user of makeFilter()">
                         <td>
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-{{user.id}}">
-                            <label class="custom-control-label" for="user-{{user.id}}"></label>
+                            <input type="checkbox" class="custom-control-input" id="user-{{user?.id}}">
+                            <label class="custom-control-label" for="user-{{user?.id}}"></label>
                           </div>
                         </td>
                         <td>
@@ -91,20 +83,20 @@
                             <figure class="avatar avatar-sm mr-2">
                               <img src="../../assets/media/image/user/man_avatar3.jpg" class="rounded-circle" alt="avatar">
                             </figure>
-                            {{user.full_name ? user.full_name : (user.first_name ? user.first_name : user.last_name)}}
+                            {{user?.full_name}}
                           </a>
                         </td>
                         <td>
-                          <a href="mailto:{{user.email}}">{{user.email}}</a>
+                          <a href="mailto:{{user?.email}}">{{user?.email}}</a>
                         </td>
                         <td>
                           <div class="progress" style="height: 5px">
                             <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </td>
-                        <td>{{user.first_name ? user.first_name : 'N/A'}}</td>
+                        <td>{{user?.UserRole?.RoleName}}</td>
                         <td>
-                          <span class="badge bg-danger-bright text-danger">Blocked</span>
+                          <span [class]="!user.is_locked_out?'badge bg-success-bright text-success':'bg-danger-bright text-danger badge'">{{user.is_locked_out?"Block":"Active"}}</span>
                         </td>
                         <td>
                           <div class="dropdown">
@@ -114,7 +106,7 @@
                             <div class="dropdown-menu dropdown-menu-right">
                               <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
                               <a href="#" class="dropdown-item">Edit</a>
-                              <a href="#" class="dropdown-item">Delete</a>
+                              <a href="#" class="dropdown-item">Suspend</a>
                             </div>
                           </div>
                         </td>
@@ -123,9 +115,6 @@
                   </table>
                 </div>
               </div>
-              
-            
-            
         </div>
     </div>
 

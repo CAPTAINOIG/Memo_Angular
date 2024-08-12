@@ -33,3 +33,27 @@ export class LocalstorageService {
     return null;
   }
 }
+
+
+
+
+
+// @Injectable({
+//   providedIn: 'root',
+// })
+// export class LocalStorageService {
+// constructor(){ }
+//   read(key: string): any {
+//     const value = localStorage.getItem(key);
+//     return value ? JSON.parse(value) : null; // Handle null case
+//   }
+
+//   write(key: string, value: any): void {
+//     localStorage.setItem(key, JSON.stringify(value));
+//   }
+
+//   remove(key: string): void {
+//     localStorage.removeItem(key);
+//   }
+// }
+

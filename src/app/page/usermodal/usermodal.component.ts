@@ -23,14 +23,14 @@ export class UsermodalComponent {
     private fb: FormBuilder,
     private router: Router,
     private local: LocalstorageService,
-    private httpRequest: HttpRequestService  // Corrected variable name
+    private httpRequest: HttpRequestService 
   ) {  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       full_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],  // Added email validator
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],  // Example phone number pattern validator
+      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],  // Example phone number 
       role_id: ['', Validators.required],
     });
   }
