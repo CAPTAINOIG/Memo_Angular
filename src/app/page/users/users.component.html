@@ -11,10 +11,14 @@
         <!-- Content body -->
         <div class="content-body">
             <!-- Content -->
-            <div class="content">
-                
-    <div class="row">
-        <div class="col-md-12">
+            <div class="row">
+      <div class="content">
+        <div *ngIf="isLoading" class="spinner-container">
+          <div class="text-center">
+              <img class="img-fluid mb-3 text-center" src="../../assets/media/image/logo-dark.png" alt="upgrade">
+          </div>
+        </div>
+        <div class="col-md-12" *ngIf="!isLoading">
             <div class="page-header d-flex justify-content-between">
                 <h2>Users</h2>
                 <ul class="nav">
@@ -45,7 +49,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                      <a href="#" class="nav-link" title="View Grid">
+                      <a href="#" class="nav-link" title="create user">
                         <i class="ti-view-grid"></i>
                       </a>
                     </li>
@@ -104,9 +108,9 @@
                               <i class="ti-more-alt"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
-                              <a href="#" class="dropdown-item">Edit</a>
-                              <a href="#" class="dropdown-item">Suspend</a>
+                              <!-- <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
+                               -->
+                              <Button (click)="supendUSer(user.id)" href="#" class="dropdown-item">Suspend</Button>
                             </div>
                           </div>
                         </td>

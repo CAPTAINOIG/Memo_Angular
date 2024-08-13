@@ -23,6 +23,8 @@ export class UsersComponent implements OnInit {
   userRoleRights: any = [];
   userProfile: any = [];
   selectedValue=undefined;
+  suspendUser: any 
+  isLoading = true
 
 
 constructor (private httpRequest: HttpRequestService, router:Router, private local: LocalstorageService) 
@@ -34,8 +36,10 @@ ngOnInit(): void {
   this.httpRequest?.makeGetRequest("/users_management/users/all").subscribe((response:any)=>{
     this.users=response.data
     // console.log(this.users);
+    this.isLoading = false;
   },(error:any) => {
     console.log('Error fetching data', error);
+    this.isLoading = false;
 })
 // FETCH USER ROLES
 this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((response: any)=>{
@@ -48,12 +52,6 @@ this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((
   // SETTING THE ROLE ID TO BE USED IN CREATE USER
   // localStorage.setItem('role_id', role_id);
   this.local.write('role_id', (role_id))
-
-
-
-
-
-
 
 
   //GET USER ROLE RIGHTS
@@ -85,8 +83,8 @@ this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((
 
 makeFilter=()=>{
   console.log(this.users)
-  console.log(typeof this.selectedValue)
-  console.log( this.selectedValue)
+  // console.log(typeof this.selectedValue)
+  // console.log( this.selectedValue)
     if(!isNaN(this.selectedValue)){
       return this.users.filter((val)=>val.role_id==this.selectedValue)
     }
@@ -96,5 +94,19 @@ makeFilter=()=>{
 
 filter=()=>{
   console.log(this.selectedValue)
+}
+
+// SUSPEND USER
+supendUSer(itemId: string): void {
+  console.log(itemId);
+  
+  this.httpRequest.makePatchRequest("/users_management/suspend_user_and_unsuspend_user",{identity:itemId}).subscribe((response)=>{
+    console.log(response);
+    this.suspendUser = response.data
+    console.log(this.suspendUser);
+  }, 
+(error)=>{
+  console.log(error);
+})
 }
 }

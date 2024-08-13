@@ -6260,6 +6260,7 @@ a.btn[href="#previous"]:hover {
   box-shadow: 0 0 0 0.2rem rgba(0, 64, 93, 0.4) !important;
 }
 
+
 .btn.btn-github.btn-pulse:not(:disabled):not(.disabled) {
   box-shadow: 0 0 0 0 rgba(0, 64, 93, 0.9) !important;
   -webkit-animation: pulse 1.5s infinite !important;

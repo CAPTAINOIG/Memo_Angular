@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
+  handleClick() {
+    const data = 'Hello from Child!';
+    this.dataEmitter.emit(data); // Emit the data to the parent
+  }
 
 }

@@ -1,5 +1,7 @@
 
-<div class="content-wrapper">
+<div>
+
+    <div class="content-wrapper">
         <!-- begin::navigation -->
         <app-navigation></app-navigation>
         <!-- end::navigation -->
@@ -9,7 +11,7 @@
             <!-- Content -->
             <div class="content">
                     <div class="card bg-primary-bright border-0">
-        <div class="card-body">
+        <!-- <div class="card-body">
             <div class="row">
                 <div class="col-xl-2 col-md-3">
                     <figure>
@@ -30,7 +32,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="row">
@@ -59,7 +61,12 @@
         <a href="files.html">View All</a>
     </div>
 
-    <div class="row">
+    <div *ngIf="isLoading" class="spinner-container">
+        <div class="text-center">
+            <img class="img-fluid mb-3 text-center" src="../../assets/media/image/logo-dark.png" alt="upgrade">
+        </div>
+      </div>
+    <div class="row" *ngIf="!isLoading">
         <div class="col-md-3" *ngFor="let folder of data">
             <div class="card">
                 <div class="card-body">
@@ -68,20 +75,6 @@
                             <i class="font-size-22 ti-folder"></i>
                         </div>
                         <div>
-                            <div class="avatar-group">
-                                <figure class="avatar avatar-sm" data-toggle="tooltip" title="Baxie Roseblade">
-                                    <img src="../../assets/media/image/user/man_avatar5.jpg" class="rounded-circle" alt="image">
-                                </figure>
-                                <figure class="avatar avatar-sm" data-toggle="tooltip" title="Mella Mixter">
-                                    <img src="../../assets/media/image/user/women_avatar1.jpg" class="rounded-circle" alt="image">
-                                </figure>
-                                <figure class="avatar avatar-sm" data-toggle="tooltip" title="Jo Hugill">
-                                    <img src="../../assets/media/image/user/man_avatar1.jpg" class="rounded-circle" alt="image">
-                                </figure>
-                                <figure class="avatar avatar-sm" data-toggle="tooltip" title="Cullie Philcott">
-                                    <span class="avatar-title bg-primary rounded-circle">+ 5</span>
-                                </figure>
-                            </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
@@ -193,16 +186,21 @@
         <a href="#">View All</a>
     </div>
 
+    <div *ngIf="isLoading" class="spinner-container">
+        <div class="text-center">
+            <img class="img-fluid mb-3 text-center" src="../../assets/media/image/logo-dark.png" alt="upgrade">
+        </div>
+      </div>
     <div class="mb-4">
-        <div class="table-responsive">
+        <div class="table-responsive" *ngIf="!isLoading">
             <table class="table table-borderless table-hover mb-0" *ngFor="let recent of recentFiles">
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Size</th>
-                    <th>Modified</th>
+                   
+                    <th>Date Created</th>
                     <th>Label</th>
-                    <th>Members</th>
+                    
                     <th></th>
                 </tr>
                 </thead>
@@ -218,20 +216,10 @@
                             {{recent.MemTitle}}
                         </a>
                     </td>
-                    <td>{{recent.MemFoldId}}MB</td>
+                    
                     <td>{{recent.CreatedAt}}</td>
                     <td>
                         <div class="badge bg-warning-bright text-warning">Project</div>
-                    </td>
-                    <td>
-                        <div class="avatar-group">
-                            <figure class="avatar avatar-sm" title="Lisle Essam" data-toggle="tooltip">
-                                <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
-                            </figure>
-                            <figure class="avatar avatar-sm" title="Baxie Roseblade" data-toggle="tooltip">
-                                <img src="../../assets/media/image/user/man_avatar5.jpg" class="rounded-circle" alt="image">
-                            </figure>
-                        </div>
                     </td>
                     <td class="text-right">
                         <div class="dropdown">
@@ -403,5 +391,14 @@
 
         <!-- Sidebar group -->
         <app-sidebar></app-sidebar>
-        <!-- ./ Sidebar group -->
+        <!-- <app-sidebargroup></app-sidebargroup> -->
+
+        <!-- Use sidebarVisible to control the visibility of app-sidebargroup -->
+        
+        <!-- Toggle button to show/hide the sidebar -->
+        <!-- <button (click)="toggleSidebar()">
+          {{ sidebarVisible ? 'Hide Sidebar' : 'Show Sidebar' }}
+        </button> -->
     </div>
+
+</div>
