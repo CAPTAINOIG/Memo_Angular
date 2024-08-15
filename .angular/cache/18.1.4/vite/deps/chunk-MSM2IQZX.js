@@ -1993,6 +1993,7 @@ var asapScheduler = new AsapScheduler(AsapAction);
 
 // node_modules/rxjs/dist/esm5/internal/scheduler/async.js
 var asyncScheduler = new AsyncScheduler(AsyncAction);
+var async = asyncScheduler;
 
 // node_modules/rxjs/dist/esm5/internal/scheduler/QueueAction.js
 var QueueAction = function(_super) {
@@ -2757,6 +2758,11 @@ var SequenceError = createErrorClass(function(_super) {
   };
 });
 
+// node_modules/rxjs/dist/esm5/internal/util/isDate.js
+function isValidDate(value) {
+  return value instanceof Date && !isNaN(value);
+}
+
 // node_modules/rxjs/dist/esm5/internal/operators/timeout.js
 var TimeoutError = createErrorClass(function(_super) {
   return function TimeoutErrorImpl(info) {
@@ -3043,6 +3049,99 @@ function forkJoin() {
   return resultSelector ? result.pipe(mapOneOrManyArgs(resultSelector)) : result;
 }
 
+// node_modules/rxjs/dist/esm5/internal/observable/fromEvent.js
+var nodeEventEmitterMethods = ["addListener", "removeListener"];
+var eventTargetMethods = ["addEventListener", "removeEventListener"];
+var jqueryMethods = ["on", "off"];
+function fromEvent(target, eventName, options, resultSelector) {
+  if (isFunction(options)) {
+    resultSelector = options;
+    options = void 0;
+  }
+  if (resultSelector) {
+    return fromEvent(target, eventName, options).pipe(mapOneOrManyArgs(resultSelector));
+  }
+  var _a = __read(isEventTarget(target) ? eventTargetMethods.map(function(methodName) {
+    return function(handler) {
+      return target[methodName](eventName, handler, options);
+    };
+  }) : isNodeStyleEventEmitter(target) ? nodeEventEmitterMethods.map(toCommonHandlerRegistry(target, eventName)) : isJQueryStyleEventEmitter(target) ? jqueryMethods.map(toCommonHandlerRegistry(target, eventName)) : [], 2), add = _a[0], remove2 = _a[1];
+  if (!add) {
+    if (isArrayLike(target)) {
+      return mergeMap(function(subTarget) {
+        return fromEvent(subTarget, eventName, options);
+      })(innerFrom(target));
+    }
+  }
+  if (!add) {
+    throw new TypeError("Invalid event target");
+  }
+  return new Observable(function(subscriber) {
+    var handler = function() {
+      var args = [];
+      for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+      }
+      return subscriber.next(1 < args.length ? args : args[0]);
+    };
+    add(handler);
+    return function() {
+      return remove2(handler);
+    };
+  });
+}
+function toCommonHandlerRegistry(target, eventName) {
+  return function(methodName) {
+    return function(handler) {
+      return target[methodName](eventName, handler);
+    };
+  };
+}
+function isNodeStyleEventEmitter(target) {
+  return isFunction(target.addListener) && isFunction(target.removeListener);
+}
+function isJQueryStyleEventEmitter(target) {
+  return isFunction(target.on) && isFunction(target.off);
+}
+function isEventTarget(target) {
+  return isFunction(target.addEventListener) && isFunction(target.removeEventListener);
+}
+
+// node_modules/rxjs/dist/esm5/internal/observable/timer.js
+function timer(dueTime, intervalOrScheduler, scheduler) {
+  if (dueTime === void 0) {
+    dueTime = 0;
+  }
+  if (scheduler === void 0) {
+    scheduler = async;
+  }
+  var intervalDuration = -1;
+  if (intervalOrScheduler != null) {
+    if (isScheduler(intervalOrScheduler)) {
+      scheduler = intervalOrScheduler;
+    } else {
+      intervalDuration = intervalOrScheduler;
+    }
+  }
+  return new Observable(function(subscriber) {
+    var due = isValidDate(dueTime) ? +dueTime - scheduler.now() : dueTime;
+    if (due < 0) {
+      due = 0;
+    }
+    var n = 0;
+    return scheduler.schedule(function() {
+      if (!subscriber.closed) {
+        subscriber.next(n++);
+        if (0 <= intervalDuration) {
+          this.schedule(void 0, intervalDuration);
+        } else {
+          subscriber.complete();
+        }
+      }
+    }, due);
+  });
+}
+
 // node_modules/rxjs/dist/esm5/internal/observable/never.js
 var NEVER = new Observable(noop);
 
@@ -3319,6 +3418,60 @@ function tap(observerOrNext, error, complete) {
       (_b = tapObserver.finalize) === null || _b === void 0 ? void 0 : _b.call(tapObserver);
     }));
   }) : identity;
+}
+
+// node_modules/rxjs/dist/esm5/internal/operators/throttle.js
+function throttle(durationSelector, config2) {
+  return operate(function(source, subscriber) {
+    var _a = config2 !== null && config2 !== void 0 ? config2 : {}, _b = _a.leading, leading = _b === void 0 ? true : _b, _c = _a.trailing, trailing = _c === void 0 ? false : _c;
+    var hasValue = false;
+    var sendValue = null;
+    var throttled = null;
+    var isComplete = false;
+    var endThrottling = function() {
+      throttled === null || throttled === void 0 ? void 0 : throttled.unsubscribe();
+      throttled = null;
+      if (trailing) {
+        send();
+        isComplete && subscriber.complete();
+      }
+    };
+    var cleanupThrottling = function() {
+      throttled = null;
+      isComplete && subscriber.complete();
+    };
+    var startThrottle = function(value) {
+      return throttled = innerFrom(durationSelector(value)).subscribe(createOperatorSubscriber(subscriber, endThrottling, cleanupThrottling));
+    };
+    var send = function() {
+      if (hasValue) {
+        hasValue = false;
+        var value = sendValue;
+        sendValue = null;
+        subscriber.next(value);
+        !isComplete && startThrottle(value);
+      }
+    };
+    source.subscribe(createOperatorSubscriber(subscriber, function(value) {
+      hasValue = true;
+      sendValue = value;
+      !(throttled && !throttled.closed) && (leading ? send() : startThrottle(value));
+    }, function() {
+      isComplete = true;
+      !(trailing && hasValue && throttled && !throttled.closed) && subscriber.complete();
+    }));
+  });
+}
+
+// node_modules/rxjs/dist/esm5/internal/operators/throttleTime.js
+function throttleTime(duration, scheduler, config2) {
+  if (scheduler === void 0) {
+    scheduler = asyncScheduler;
+  }
+  var duration$ = timer(duration, scheduler);
+  return throttle(function() {
+    return duration$;
+  }, config2);
 }
 
 // node_modules/@angular/core/fesm2022/primitives/event-dispatch.mjs
@@ -26876,6 +27029,7 @@ export {
   ConnectableObservable,
   Subject,
   BehaviorSubject,
+  asyncScheduler,
   EMPTY,
   from,
   of,
@@ -26889,6 +27043,7 @@ export {
   concat,
   defer,
   forkJoin,
+  fromEvent,
   filter,
   catchError,
   concatMap,
@@ -26904,6 +27059,7 @@ export {
   switchMap,
   takeUntil,
   tap,
+  throttleTime,
   XSS_SECURITY_URL,
   RuntimeError,
   formatRuntimeError,
@@ -27420,4 +27576,4 @@ export {
    * found in the LICENSE file at https://angular.io/license
    *)
 */
-//# sourceMappingURL=chunk-NPYXZOEU.js.map
+//# sourceMappingURL=chunk-MSM2IQZX.js.map

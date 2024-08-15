@@ -227,6 +227,7 @@
                 <div class="col-md-6">
                    
                             <div class="d-flex mb-3">
+
                                 <div>
                                     <img [src]="imageSrc" alt="Avatar" (click)="fileInput.click()"  
                                         style="cursor: pointer; width: 100px; height: 100px; border-radius: 50%;"/>
@@ -237,6 +238,12 @@
                                     <p>Roxana Roussell</p>
                                     <button (click)="uploadImage()" class="btn btn-outline-primary mr-2">Change Avatar</button>
                                 </div>
+
+                            </div>
+
+                            <div>
+                                <input type="file" (change)="handleImageChange($event)">
+                                <button (click)="updateMemo()">update</button>
                             </div>
                     <form>   
                         <div class="row">

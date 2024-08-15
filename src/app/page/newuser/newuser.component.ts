@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { NavigationComponent } from '../../components/navigation/navigation.component';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalstorageService } from '../../service/LocalstorageService/localstorage.service';
@@ -8,11 +6,12 @@ import { HttpRequestService } from '../../service/HttpRequest/http-request.servi
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css"; 
 import { CommonModule } from '@angular/common';
+import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({
   selector: 'app-newuser',
   standalone: true,
-  imports: [SidebarComponent, NavigationComponent, CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [ CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './newuser.component.html',
   styleUrls: ['./newuser.component.css']
 })
@@ -26,7 +25,8 @@ export class NewuserComponent {
     private fb: FormBuilder,
     private router: Router,
     private local: LocalstorageService,
-    private httpRequest: HttpRequestService
+    private httpRequest: HttpRequestService,
+    private handleModal: ServicesidebarService,
   ) { }
 
   ngOnInit(): void {
@@ -51,6 +51,7 @@ export class NewuserComponent {
       this.isLoading = true;
       const data = this.createUserForm.value;
       console.log("Form Data:", data);  // Log form data to verify
+
 
       this.httpRequest.makePostRequest('/users_management/create_new_user', data).subscribe(
         (response) => {
@@ -94,4 +95,6 @@ export class NewuserComponent {
       }).showToast();
     }
   }
+  
+
 }

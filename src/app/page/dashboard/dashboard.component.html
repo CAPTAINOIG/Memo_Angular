@@ -62,9 +62,7 @@
     </div>
 
     <div *ngIf="isLoading" class="spinner-container">
-        <div class="text-center">
-            <img class="img-fluid mb-3 text-center" src="../../assets/media/image/logo-dark.png" alt="upgrade">
-        </div>
+        <div class="spinner"></div>
       </div>
     <div class="row" *ngIf="!isLoading">
         <div class="col-md-3" *ngFor="let folder of data">
@@ -169,12 +167,12 @@
         </div>
         <div class="col-md-2 text-center">
             <div class="card mb-3">
-                <div class="card-body">
-                    <a href="#" class="avatar avatar-lg">
+                <div class="card-body cursor-pointer">
+                    <div (click)="openModal()" class="avatar avatar-lg">
                         <span class="avatar-title rounded-pill">
                             <i class="ti-plus"></i>
                         </span>
-                    </a>
+                    </div>
                 </div>
             </div>
             <h6>Add</h6>
@@ -187,24 +185,19 @@
     </div>
 
     <div *ngIf="isLoading" class="spinner-container">
-        <div class="text-center">
-            <img class="img-fluid mb-3 text-center" src="../../assets/media/image/logo-dark.png" alt="upgrade">
-        </div>
+            <div class="spinner"></div>
       </div>
     <div class="mb-4">
         <div class="table-responsive" *ngIf="!isLoading">
-            <table class="table table-borderless table-hover mb-0" *ngFor="let recent of recentFiles">
+            <table class="table table-borderless table-hover mb-0">
                 <thead>
                 <tr>
                     <th>Name</th>
-                   
                     <th>Date Created</th>
                     <th>Label</th>
-                    
-                    <th></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody *ngFor="let recent of recentFiles">
                 <tr>
                     <td>
                         <a href="#">

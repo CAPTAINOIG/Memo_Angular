@@ -48,12 +48,13 @@
                               </form>
                         </div>
                     </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link" title="create user">
+                    <li class="nav-item cursor-pointer">
+                      <div (click)="createUser()" class="nav-link" title="create user">
                         <i class="ti-view-grid"></i>
-                      </a>
+                      </div>
                     </li>
                 </ul>
+
             </div>
             <div class="card border-0">
                 <div class="table-responsive">
@@ -110,7 +111,8 @@
                             <div class="dropdown-menu dropdown-menu-right">
                               <!-- <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
                                -->
-                              <Button (click)="supendUSer(user.id)" href="#" class="dropdown-item">Suspend</Button>
+                              <Button (click)="supendUSer(user.id, 'suspend')" href="#" class="dropdown-item">Suspend</Button>
+                              <Button (click)="supendUSer(user.id, 'unsuspend')" href="#" class="dropdown-item">unsuspense user</Button>
                             </div>
                           </div>
                         </td>

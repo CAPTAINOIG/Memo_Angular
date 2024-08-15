@@ -6,13 +6,15 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import {  Router, RouterLink } from '@angular/router';
 import { LocalstorageService } from '../../service/LocalstorageService/localstorage.service';
 import { FormsModule } from '@angular/forms';
+import { ServicesidebarService } from '../../service/servicesidebar.service';
+import { NewuserComponent } from '../newuser/newuser.component';
 
 
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, NavigationComponent, SidebarComponent, RouterLink, FormsModule],
+  imports: [CommonModule, NavigationComponent, SidebarComponent, RouterLink, FormsModule, NewuserComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -27,7 +29,7 @@ export class UsersComponent implements OnInit {
   isLoading = true
 
 
-constructor (private httpRequest: HttpRequestService, router:Router, private local: LocalstorageService) 
+constructor (private httpRequest: HttpRequestService, router:Router, private local: LocalstorageService, public handleModal: ServicesidebarService) 
 { }
 
 
@@ -97,8 +99,8 @@ filter=()=>{
 }
 
 // SUSPEND USER
-supendUSer(itemId: string): void {
-  console.log(itemId);
+supendUSer(itemId: string, action: string): void {
+  console.log(`${itemId}, ${action}`);
   
   this.httpRequest.makePatchRequest("/users_management/suspend_user_and_unsuspend_user",{identity:itemId}).subscribe((response)=>{
     console.log(response);
@@ -108,5 +110,9 @@ supendUSer(itemId: string): void {
 (error)=>{
   console.log(error);
 })
+}
+
+createUser() {
+  this.handleModal.showMother("new_user")
 }
 }

@@ -20,7 +20,7 @@ export class SidebarComponent {
     // recent_folder
     this.HttpRequest?.makeGetRequest("/dashboard/folder/all").subscribe((response:any)=>{
       this.folder=response.data
-      console.log(this.folder);
+      // console.log(this.folder);
       this.isLoading = false
     },(error:any) => {
       // console.log('Error fetching data', error);
