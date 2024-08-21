@@ -67,6 +67,62 @@ Author URL: https://themeforest.net/user/laborasyon/portfolio
 55. Responsive
 
 --------------------------------------------------------------------- */
+.sidebar-group-forms {
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 700px;
+  background-color: white;
+}
+
+.sidebar-group-forms .sidebar {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  right: -100%;
+  top: 0;
+  bottom: 0;
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.2s;
+  background-color: white;
+  border-left: 1px solid #dfdfdf;
+}
+
+.sidebar-group-forms .sidebar.show {
+  visibility: visible;
+  opacity: 1;
+  right: 0;
+}
+
+.sidebar-group-forms .sidebar-header,
+.sidebar-group-forms .sidebar-footer {
+  padding: 30px;
+}
+
+.sidebar-group-forms .sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-group-forms .sidebar-header h1,
+.sidebar-group-forms .sidebar-header h2,
+.sidebar-group-forms .sidebar-header h3,
+.sidebar-group-forms .sidebar-header h4,
+.sidebar-group-forms .sidebar-header h5,
+.sidebar-group-forms .sidebar-header h6 {
+  margin-bottom: 0;
+}
+
+.sidebar-group-forms .sidebar-content {
+  flex: 1;
+  padding: 0 30px;
+  overflow: auto;
+}
 
 .m-0 {
   margin: 0px !important;
