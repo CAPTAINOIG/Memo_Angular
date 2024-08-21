@@ -24,7 +24,7 @@ import { EditmemoComponent } from '../editmemo/editmemo.component';
     UserdetailComponent,
     AuthenticationComponent,
     EsignatureComponent,
-    EditmemoComponent,
+    EditmemoComponent
 ],
   templateUrl: './sidebarforms.component.html',
   styleUrls: ['./sidebarforms.component.css']
@@ -285,7 +285,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
   getMemo() {
     // Implement your logic to fetch memo data
     this.httpRequest.makeGetRequest('/memo/single?id=y89356548697887').subscribe((response)=>{
-      console.log(response);
+      // console.log(response);
     }, (error)=>{
       console.log(error);
       

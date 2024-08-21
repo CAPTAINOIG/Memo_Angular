@@ -1,4 +1,4 @@
-<div class="sidebar-content">
+{/* <div class="sidebar-content">
   <form [formGroup]="createEditForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
           <label for="title">Title</label>
@@ -17,14 +17,12 @@
               ></ngx-editor>
           </div>
       </div>
-
-      <button [disabled]="isLoading" type="submit" class="btn btn-primary">
-          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          Save Draft
-      </button>
       
-      <div *ngIf="isLoading" class="loading-message">
-          Saving... Please wait.
+      <div class="form-group form-check">
+          <input type="checkbox" formControlName="include_signature" class="form-check-input" id="include_signature">
+          <label class="form-check-label" for="include_signature">Include Signature</label>
       </div>
+      
+      <button type="submit" class="btn btn-primary">Save Draft</button>
   </form>
-</div>
+</div> */}
