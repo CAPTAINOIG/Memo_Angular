@@ -15,7 +15,7 @@
       <div class="content">
         <div *ngIf="isLoading" class="spinner-container">
           <div class="text-center">
-              <img class="img-fluid mb-3 text-center" src="../../assets/media/image/logo-dark.png" alt="upgrade">
+            <div class="spinner"></div>
           </div>
         </div>
         <div class="col-md-12" *ngIf="!isLoading">
@@ -35,7 +35,7 @@
                                       <option *ngFor="let item of userRoles"  [value]="item.id">{{ item.RoleName }}</option>
                                   </select>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label>Status</label>
                                     <select class="form-control">
                                         <option value="">Select</option>
@@ -43,7 +43,7 @@
                                         <option value="">Blocked</option>
                                         <option value="">Admin</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <button class="btn btn-primary" (click)="filter()">Filter</button>
                               </form>
                         </div>
@@ -109,18 +109,24 @@
                               <i class="ti-more-alt"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <!-- <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
-                               -->
-                              <Button (click)="supendUSer(user.id, 'suspend')" href="#" class="dropdown-item">Suspend</Button>
-                              <Button (click)="supendUSer(user.id, 'unsuspend')" href="#" class="dropdown-item">unsuspense user</Button>
-                            </div>
+                              <button 
+                              (click)="suspendUserMethod(user.id, suspendUser ? 'unsuspend' : 'suspend')" 
+                              class="dropdown-item"
+                            >
+                              {{ user.is_locked_out ? 'Unsuspend' : 'Suspend' }}
+                            </button>
+                            
+                               <button (click)="authentication(user.id)" class="dropdown-item">Authentication</button>                             
+                              </div>
+                            <div class="dropdown-menu dropdown-menu-right">
                           </div>
+                        </div>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
 

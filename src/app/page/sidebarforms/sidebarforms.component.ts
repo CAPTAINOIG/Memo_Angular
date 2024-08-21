@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { NgxEditorModule, Editor } from 'ngx-editor';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { NewuserComponent } from '../newuser/newuser.component';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";  
+import { UserdetailComponent } from '../../userdetail/userdetail.component';
+import { AuthenticationComponent } from "../authentication/authentication.component";
+import { EsignatureComponent } from '../esignature/esignature.component';
+import { EditmemoComponent } from '../editmemo/editmemo.component';
 
 @Component({
   selector: 'app-sidebarforms',
@@ -17,7 +21,11 @@ import "toastify-js/src/toastify.css";
     FormsModule,
     NgxEditorModule,
     NewuserComponent,
-  ],
+    UserdetailComponent,
+    AuthenticationComponent,
+    EsignatureComponent,
+    EditmemoComponent,
+],
   templateUrl: './sidebarforms.component.html',
   styleUrls: ['./sidebarforms.component.css']
 })
@@ -31,7 +39,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
   location: string | null = null;
   ipAddress: string = '';
   areaName:string = ''
-  locationDetails: any = null;
+  locationDetails: any ={};
+  area_location: string[]=[];
+  template: any = [];
   memId: string;
   memo_attachments = [
     {
@@ -45,7 +55,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
 
   constructor(
     public handleModals: ServicesidebarService,
-    private httpRequest: HttpRequestService
+    private httpRequest: HttpRequestService,
+    private fb: FormBuilder
+    
   ) {
     this.memoForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -60,7 +72,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
       ip_address: new FormControl(''),
       // ipAddress: new FormControl('') ,
       create_as_template: new FormControl(false),
-      access_type: new FormControl('')
+      access: new FormControl(''),
+      // access_type: ['', Validators.required],
+      name: new FormControl(''),
+      email: new FormControl(''),
+      phone: new FormControl(''),
     });
   }
 
@@ -76,21 +92,50 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
   close() {
     this.handleModals.showMother("undefined");
   }
-// CREATING MEMMO
-  createMemo(values: any) {
-    console.log(values);
-    this.httpRequest.makePostRequest('/memo/create', values).subscribe(
-      (response) => {
-        // console.log(response.id);
-         this.memId = response.id
-        // console.log(this.memId);
+
+
+// DRAFT / CREATE MEMO
+  draftMemo(): void {
+    if (this.memoForm.valid) {
+      const memoData = this.memoForm.value;
+      console.log(memoData);
+      this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.memId = response.id
+          // console.log(this.memId);
+          Toastify({
+            text: "success",
+            duration: 3000,
+            gravity: "top", 
+            position: "right", 
+            backgroundColor: "green",
+          }).showToast();
+        },
         
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+        (error) => {
+          console.error('Error saving draft:', error);
+          Toastify({
+            text: `${error}`,
+            duration: 3000,
+            gravity: "top", 
+            position: "right", 
+            backgroundColor: "red",
+          }).showToast();
+        }
+      );
+    } else {
+      console.error('Form is not valid!');
+      Toastify({
+        text: 'Form is not valid',
+        duration: 3000,
+        gravity: "top", 
+        position: "right", 
+        backgroundColor: "red",
+      }).showToast();
+    }
   }
+
 
   addIP(ip_address: string) {
     if (ip_address && !this.allowed_ips.includes(ip_address)) {
@@ -109,11 +154,26 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
   }
 
   onsubmit() {
-    const formValues = { ...this.memoForm.value, ipData: this.allowed_ips, geolocationData:this.locationDetails, memId: this.memId };
+    const formValues = { ...this.memoForm.value, ipData: this.allowed_ips, geolocationData:Object.values(this.locationDetails), memId: this.memId, new: this.area_location};
     console.log('Form Values:', formValues);
     // this.createMemo(formValues); 
     this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response)=>{
-      // console.log(response);
+      console.log(response);
+      Toastify({
+        text: 'success',
+        duration: 3000,
+        gravity: "top", 
+        position: "right", 
+        backgroundColor: "green",
+      }).showToast();
+    }, (error)=>{
+      Toastify({
+        text: `${error}`,
+        duration: 3000,
+        gravity: "top", 
+        position: "right", 
+        backgroundColor: "red",
+      }).showToast();
     })
   }
 
@@ -124,8 +184,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
 // FOR AREA 
  fetchAreaDetails() {
     this.areaName = this.memoForm.get('areaName')?.value;
-    // console.log('Area Name:', this.areaName);
-
+    
+    this.area_location.push(this.areaName);
+    console.log('Area Name:', this.areaName);
     if (this.areaName) {
       this.httpRequest.fetchAreaDetails(this.areaName)
         .subscribe(
@@ -133,17 +194,36 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
             // console.log(data);
             if (data.results && data.results.length > 0) {
               const result = data.results[0].annotations.DMS; // Get the first result
-              this.locationDetails = {
+              Toastify({
+                text: 'success',
+                duration: 3000,
+                gravity: "top", 
+                position: "right", 
+                backgroundColor: "green",
+              }).showToast();
+              this.locationDetails[this.areaName] = {
                 latitude: result.lat,
                 longitude: result.lng,
               };
             } else {
-              this.locationDetails = 'No location found for this area.';
+              Toastify({
+                text: 'No location fetch for this area',
+                duration: 3000,
+                gravity: "top", 
+                position: "right", 
+                backgroundColor: "red",
+              }).showToast();
             }
           },
           error => {
-            this.locationDetails = 'Error fetching area details.';
             console.error(error);
+            Toastify({
+              text: `${error}`,
+              duration: 3000,
+              gravity: "top", 
+              position: "right", 
+              backgroundColor: "red",
+            }).showToast();
           }
         );
     } else {
@@ -151,15 +231,94 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+  // CREATING ACCESS MEMMO
+  createMemo(values: any) {
+    // console.log(values);
+    if (!this.memId) {
+      Toastify({
+        text: "please create a memo",
+        duration: 3000,
+        gravity: "top", 
+        position: "right", 
+        backgroundColor: "red",
+      }).showToast();
+    }  
+    const memoData = {
+      access: values.access,
+      memId: this.memId,
+      users: [
+        {
+          phone: values.phone,
+          email: values.email,
+        },
+      ],
+    };
+    // console.log(memoData);
+    this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
+      (response) => {
+        console.log(response);
+        Toastify({
+          text: 'success',
+          duration: 3000,
+          gravity: "top", 
+          position: "right", 
+          backgroundColor: "red",
+        }).showToast();
+      },
+      (error) => {
+        console.log(error);
+        Toastify({
+          text: `${error}`,
+          duration: 3000,
+          gravity: "top", 
+          position: "right", 
+          backgroundColor: "red",
+        }).showToast();
+      }
+    );
+  }
+
+
+
   getMemo() {
     // Implement your logic to fetch memo data
+    this.httpRequest.makeGetRequest('/memo/single?id=y89356548697887').subscribe((response)=>{
+      console.log(response);
+    }, (error)=>{
+      console.log(error);
+      
+    })
   }
 
   getMemoAttachments() {
     // Implement your logic to fetch memo attachments
+    this.httpRequest.makeGetRequest(`/memo/memo_attachment?${this.memId}`).subscribe((response)=>{
+      console.log(response);
+    }, (error)=>{
+      console.log(error);
+      
+    })
   }
 
-// FILE ATTACHMENT
+  deleteAttachment(id: number) {
+    if (confirm('Are you sure you want to delete this attachment?')) {
+      this.httpRequest.makeDeleteRequest(`/memo/memo_attachment?id=${this.memId}`).subscribe(
+        (response) => {
+          console.log('Attachment deleted successfully', response);
+          this.getMemoAttachments();
+        },
+        (error) => {
+          console.error('Error deleting attachment', error);
+        }
+      );
+    }
+  }
+  
+        // uploadLogo.append('memId', this.memId);
+// FILE ATTACHMENT 
+// Create Attachment
   chooseFile() {
     this.fileInput.nativeElement.click();
   }
@@ -184,10 +343,23 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeSecurityType() {
-    // Implement your logic to handle security type changes
-  }
 
+    // Implement your logic to handle security type changes
+    changeSecurityType(): void {
+      const selectedValue = (event.target as HTMLSelectElement).value;
+      if (selectedValue === 'template') {
+        this.saveTemplate();
+      }
+    }
+  
+    saveTemplate(){
+      this.httpRequest.makeGetRequest('/memo/mem_secure_rule/all').subscribe((response)=>{
+        console.log(response.data);
+        this.template = response.data
+      // console.log(this.template);
+      })
+    }
+  
 
 
   // SELECT ACCESS TYPE. SHARING PAGE
@@ -214,4 +386,5 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
       console.warn('No file selected.');
     }
   }
+
 }

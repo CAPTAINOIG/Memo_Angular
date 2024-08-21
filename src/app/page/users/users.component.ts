@@ -20,16 +20,18 @@ import { NewuserComponent } from '../newuser/newuser.component';
 })
 export class UsersComponent implements OnInit {
   
+  suspendUser: boolean; 
+  user: any []= []
   users: any = [];
   userRoles: any [] = [];
   userRoleRights: any = [];
   userProfile: any = [];
   selectedValue=undefined;
-  suspendUser: any 
   isLoading = true
+  
 
 
-constructor (private httpRequest: HttpRequestService, router:Router, private local: LocalstorageService, public handleModal: ServicesidebarService) 
+constructor (private httpRequest: HttpRequestService, private authData:ServicesidebarService, router:Router, private local: LocalstorageService, public handleModal: ServicesidebarService) 
 { }
 
 
@@ -99,20 +101,41 @@ filter=()=>{
 }
 
 // SUSPEND USER
-supendUSer(itemId: string, action: string): void {
+suspendUserMethod(itemId: string, action: string): void {
   console.log(`${itemId}, ${action}`);
   
-  this.httpRequest.makePatchRequest("/users_management/suspend_user_and_unsuspend_user",{identity:itemId}).subscribe((response)=>{
-    console.log(response);
-    this.suspendUser = response.data
-    console.log(this.suspendUser);
-  }, 
-(error)=>{
-  console.log(error);
-})
+  this.httpRequest.makePatchRequest("/users_management/suspend_user_and_unsuspend_user", { identity: itemId }).subscribe(
+    (response) => {
+      console.log(response);
+      
+      // Update the local suspendUser state based on the action
+      this.suspendUser = (action === 'suspend') ? true : false;
+
+      console.log(this.suspendUser);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
 }
+
 
 createUser() {
   this.handleModal.showMother("new_user")
+}
+authentication(user:string){
+  console.log(user);
+  this.httpRequest.makePostRequest('/users_management/create_authenticator_secret', {identity:user}).subscribe((response)=>{
+    this.handleModal.showMother("authentication")
+    console.log(response);
+    // this.authData = response.data;
+    this.authData.setAuthData(response)
+
+    // console.log(this.authData);
+  }, (error)=>{
+    console.log(error);
+    
+  })
+
 }
 }

@@ -11,29 +11,7 @@
             <!-- Content -->
             <div class="content">
                     <div class="card bg-primary-bright border-0">
-        <!-- <div class="card-body">
-            <div class="row">
-                <div class="col-xl-2 col-md-3">
-                    <figure>
-                        <img class="img-fluid" src="../../assets/media/svg/upgrade.svg" alt="upgrade">
-                    </figure>
-                </div>
-                <div class="col-xl-10 col-md-9">
-                    <div class="d-md-flex align-items-center justify-content-between text-center text-md-left p-4 p-md-0">
-                        <div class="mr-3">
-                            <h4 class="mb-3">Get an Upgrade</h4>
-                            <p class="text-muted">Get additional 500 GB space for your documents and files. Expand
-                                your storage and enjoy your business. Change plan for more space.</p>
-                            <a href="#" class="small">Close</a>
-                        </div>
-                        <div class="flex-shrink-0 ml-3">
-                            <button class="btn btn-outline-primary btn-lg2">Upgrade Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    </div>
+       </div>
 
     <div class="row">
         <div class="col-md-8">
@@ -48,9 +26,9 @@
                             <img src="../../assets/media/svg/report.svg" class="img-fluid" alt="report">
                         </div>
                     </div>
-                    <h4 class="my-3">Create Report</h4>
-                    <p class="text-muted">Create reports to grow their business and serve their customers better. Use this tool to generate reports.</p>
-                    <button class="btn btn-outline-primary btn-lg2">Start Now</button>
+                    <h4 class="my-3">Create Memo</h4>
+                    <p class="text-muted">Create memo to grow their business and serve their customers better. Use this tool to generate reports.</p>
+                    <button class="btn btn-outline-primary btn-lg2" (click)="openModal()">Create Memo</button>
                 </div>
             </div>
         </div>
@@ -58,7 +36,8 @@
 
     <div class="content-title d-flex justify-content-between">
         <h4>Favorite Folders</h4>
-        <a href="files.html">View All</a>
+        <a [routerLink]="['/portal/files']">View All</a>
+
     </div>
 
     <div *ngIf="isLoading" class="spinner-container">
@@ -101,70 +80,10 @@
 
     <div class="content-title d-flex justify-content-between">
         <h4>Quick Access</h4>
-        <a href="#">View All</a>
+        <a [routerLink]="['/portal/files']">View All</a>
     </div>
 
     <div class="row mb-4">
-        <div class="col-md-2 text-center">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <a href="#" class="avatar avatar-lg">
-                        <span class="avatar-title bg-primary rounded-pill">
-                            <i class="ti-image"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <h6>Images</h6>
-        </div>
-        <div class="col-md-2 text-center">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <a href="#" class="avatar avatar-lg">
-                        <span class="avatar-title bg-secondary rounded-pill">
-                            <i class="ti-video-camera"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <h6>Videos</h6>
-        </div>
-        <div class="col-md-2 text-center">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <a href="#" class="avatar avatar-lg">
-                        <span class="avatar-title bg-success rounded-pill">
-                            <i class="ti-music"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <h6>Music</h6>
-        </div>
-        <div class="col-md-2 text-center">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <a href="#" class="avatar avatar-lg">
-                        <span class="avatar-title bg-warning rounded-pill">
-                            <i class="ti-files"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <h6>Documents</h6>
-        </div>
-        <div class="col-md-2 text-center">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <a href="#" class="avatar avatar-lg">
-                        <span class="avatar-title bg-info rounded-pill">
-                            <i class="ti-download"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <h6>Downloads</h6>
-        </div>
         <div class="col-md-2 text-center">
             <div class="card mb-3">
                 <div class="card-body cursor-pointer">
@@ -180,8 +99,8 @@
     </div>
 
     <div class="content-title d-flex justify-content-between">
-        <h4>Recent Files</h4>
-        <a href="#">View All</a>
+        <h4>Recent Memo</h4>
+        <a [routerLink]="['/portal/files']">View All</a>
     </div>
 
     <div *ngIf="isLoading" class="spinner-container">
@@ -211,22 +130,25 @@
                     </td>
                     
                     <td>{{recent.CreatedAt}}</td>
+                   
                     <td>
-                        <div class="badge bg-warning-bright text-warning">Project</div>
+                        {{recent?.MemFold?.MemFoldName}}
                     </td>
+                   
                     <td class="text-right">
                         <div class="dropdown">
                             <a href="#" class="btn btn-floating" data-toggle="dropdown">
                                 <i class="ti-more-alt"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item" data-sidebar-target="#view-detail">View Details</a>
-                                <a href="#" class="dropdown-item">Share</a>
-                                <a href="#" class="dropdown-item">Download</a>
+                                <span (click)="viewFiles(recent)" class="dropdown-item cursor-pointer" data-sidebar-target="#view-detail">View Details</span>
+                                <span class="dropdown-item cursor-pointer" (click)="editFiles(recent)" data-sidebar-target="#view-file">Edit</span>
+
+                                <!-- <a href="#" class="dropdown-item">Download</a>
                                 <a href="#" class="dropdown-item">Copy to</a>
                                 <a href="#" class="dropdown-item">Move to</a>
                                 <a href="#" class="dropdown-item">Rename</a>
-                                <a href="#" class="dropdown-item">Delete</a>
+                                <a href="#" class="dropdown-item">Delete</a> -->
                             </div>
                         </div>
                     </td>

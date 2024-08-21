@@ -7,6 +7,7 @@ import { HttpRequestService } from '../../service/HttpRequest/http-request.servi
 import { LocalstorageService } from '../../service/LocalstorageService/localstorage.service';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";  
+import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private local:LocalstorageService,
-   private HttpRequest:HttpRequestService
+   private HttpRequest:HttpRequestService,
+   private userDetail: ServicesidebarService,
   ) {
     this.loginForm = this.fb.group({
       identity: ['', Validators.required],
@@ -41,6 +43,7 @@ export class LoginComponent {
       this.HttpRequest.makePostRequest(`/auth/login`, json).subscribe({
         next: (data:any) => {
           console.log(data);
+          this.userDetail.setUserDetail(data)
           this.isLoading = false;
           if (data.status) {
             Toastify({

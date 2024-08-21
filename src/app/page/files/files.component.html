@@ -20,7 +20,61 @@
         </a>
     </div>
 
-    <div class="row">
+    <div *ngIf="isLoading" class="spinner-container">
+        <div class="spinner"></div>
+  </div>
+<div class="mb-4">
+    <div class="table-responsive" *ngIf="!isLoading">
+        <table class="table table-borderless table-hover mb-0">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date Created</th>
+                <th>Label</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let item of allFolder">
+            <tr>
+                <td>
+                    <a href="#">
+                        <figure class="avatar avatar-sm mr-2">
+                            <span class="avatar-title bg-warning text-black-50 rounded-pill">
+                                <i class="ti-folder"></i>
+                            </span>
+                        </figure>
+                        {{item?.MemTitle}}
+                    </a>
+                </td>
+                
+                <td>{{item?.CreatedAt}}</td>
+               
+                <td>
+                    {{item?.MemFold?.MemFoldName}}
+                </td>
+               
+                <td class="text-right">
+                    <div class="dropdown">
+                        <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                            <i class="ti-more-alt"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <span (click)="viewFiles(recent)" class="dropdown-item cursor-pointer" data-sidebar-target="#view-detail">View Details</span>
+                             <span class="dropdown-item" (click)="editFiles()">Edit</span>
+                            <!-- <a href="#" class="dropdown-item">Download</a>
+                            <a href="#" class="dropdown-item">Copy to</a>
+                            <a href="#" class="dropdown-item">Move to</a>
+                            <a href="#" class="dropdown-item">Rename</a>
+                            <a href="#" class="dropdown-item">Delete</a> -->
+                        </div>
+                    </div>
+                </td>
+            </tr>
+           
+            </tbody>
+        </table>
+    </div>
+</div>
+    <!-- <div class="row">
         <div class="col-xl-3 files-sidebar">
             <div class="card border-0">
                 <h6 class="card-title">My Folders</h6>
@@ -588,9 +642,9 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -738,9 +792,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -891,7 +945,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
             </div>
             <!-- ./ Content -->
@@ -913,7 +967,7 @@
 
         <!-- Sidebar group -->
         <div class="sidebar-group d-print-none">
-            <!-- Sidebar - Storage -->
+            
             <div class="sidebar primary-sidebar show" id="storage">
                 <div class="sidebar-header">
                     <h4>Storage Overview</h4>

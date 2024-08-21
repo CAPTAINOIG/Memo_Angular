@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { CommonModule } from '@angular/common';
+import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,7 +14,8 @@ export class SidebarComponent {
   folder: any = [];
   isLoading = true;
   constructor(
-    private HttpRequest:HttpRequestService
+    private HttpRequest:HttpRequestService,
+    private handleModal: ServicesidebarService,
   ) {}
   
   ngOnInit(): void {
@@ -26,5 +28,8 @@ export class SidebarComponent {
       // console.log('Error fetching data', error);
       this.isLoading = false;
     })
+  }
+  openModal(){
+    this.handleModal.showMother("create_memo")
   }
 }

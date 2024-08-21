@@ -7,7 +7,7 @@ import { LocalstorageService } from '../LocalstorageService/localstorage.service
 })
 export class HttpRequestService {
   
-  private baseUrl = 'https://3463-102-88-36-150.ngrok-free.app/api'; 
+  private baseUrl = 'https://d10d-102-89-47-253.ngrok-free.app/api'; 
   private geoApiKey = '39f835849b07490f9ada6d2e31447933';
   
   constructor(
@@ -26,6 +26,10 @@ export class HttpRequestService {
 
   public makePatchRequest(url: string, body: any = {}) {
     return this.http.patch<any>(`${this.baseUrl}${url}`, body, { headers: this.returnHeader() });
+  }
+
+  makeDeleteRequest(url: string, body: any = {}) {
+    return this.http.delete<any>(`${this.baseUrl}${url}`, { headers: this.returnHeader() });
   }
 
    // New method for fetching IP location

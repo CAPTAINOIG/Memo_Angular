@@ -1,0 +1,15 @@
+<div class="editMemo-edit-form px-5 mb-2">
+    <h2>Edit Memo</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group" *ngIf="editMemo.MemTitle">
+        <label for="title">Title:</label>
+        <input id="title" [(ngModel)]="editMemo.MemTitle" name="MemTitle" class="form-control" />
+      </div>
+      <div class="form-group" *ngIf="editMemo.MemContents">
+        <label for="contents">Contents:</label>
+        <textarea id="contents" [(ngModel)]="editMemo.MemContents" name="MemContents" class="form-control"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+  

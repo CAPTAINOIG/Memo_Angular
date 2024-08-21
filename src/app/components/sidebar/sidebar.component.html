@@ -2,11 +2,11 @@
     <!-- Sidebar - Storage -->
     <div class="sidebar primary-sidebar show" id="storage">
         <div class="sidebar-header">
-            <h4>Storage Overview</h4>
+            <h4 class="text-center">Folders</h4>
         </div>
         <div *ngIf="isLoading" class="spinner-container">
             <div class="text-center">
-                <img class="img-fluid mb-3 text-center" src="../../assets/media/image/logo-dark.png" alt="upgrade">
+                <div class="spinner"></div>
             </div>
           </div>
         <div class="sidebar-content" *ngIf="!isLoading">
@@ -42,8 +42,8 @@
             </div>
         </div>
         <div class="sidebar-footer">
-            <button class="btn btn-lg btn-block btn-outline-primary">
-                <i class="fa fa-cloud-upload mr-3"></i> Upload
+            <button (click)="openModal()" class="btn btn-lg btn-block btn-outline-primary">
+                <i class="fa fa-cloud-upload mr-3"></i> Create a Memo
             </button>
         </div>
     </div>

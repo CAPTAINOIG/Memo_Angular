@@ -216,6 +216,14 @@
         <a class="nav-item nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
         
         <a class="nav-item nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Security</a>
+
+        <a class="nav-item nav-link" id="v-pills-signature-tab" data-toggle="pill" href="#v-pills-signature" role="tab" aria-controls="v-pills-signature" aria-selected="false">E-Signature</a>
+
+        <!-- <li class="nav-item cursor-pointer">
+            <div (click)="eSignatures()" class="nav-link" title="sign here">
+              <i class="ti-view-grid"></i>
+            </div>
+          </li> -->
        
     </div>
     <div class="tab-content" id="v-pills-tabContent">
@@ -241,10 +249,10 @@
 
                             </div>
 
-                            <div>
+                            <!-- <div>
                                 <input type="file" (change)="handleImageChange($event)">
                                 <button (click)="updateMemo()">update</button>
-                            </div>
+                            </div> -->
                     <form>   
                         <div class="row">
                             <div class="col-md-6">
@@ -289,6 +297,270 @@
                     </form>
                 </div>
             </div>
+        </div>
+
+        <div class="tab-pane fade" id="v-pills-signature" role="tabpanel" aria-labelledby="v-pills-signature-tab">
+            <div class="esignatures-container">
+                <div class="content-title">       
+                    <h4>E-Signatures Management</h4>
+                </div>
+                <form  (ngSubmit)="addESignature()" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" class="form-control" [(ngModel)]="esignature.title" name="title" required>
+                    </div>
+              
+                  <label for="image">Upload Image:</label>
+                  <input type="file" id="image" (change)="fileChange($event)" accept="image/*" required>
+              
+                  <!-- <button  class="btn btn-primary" type="submit"> {{data&&data.length>0?"Updata E Signature":"Add E-Signature"}}</button> -->
+                  <button [disabled]="isLoading" class="btn btn-primary my-5" type="submit">
+                    {{ isLoading ? 'Loading.....' : (data && data.length > 0 ? 'Update E-Signature' : 'Add E-Signature') }}
+                </button>
+                </div>
+            </div>
+                </form>
+              
+                  <div class="card border-0">
+                    <div class="table-responsive">
+                        <table id="user-list" class="table table-borderless table-hover">
+                            <thead *ngIf="returnData() && returnData().length > 0">
+                            <tr>
+                                <th>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="user-list-select-all">
+                                        <label class="custom-control-label" for="user-list-select-all"></label>
+                                    </div>
+                                </th>
+                                
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Image</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr *ngFor="let signature of returnData()">
+                                    <!-- <td>{{ signature.id }}</td> -->
+                                     <td></td>
+                                    <td>{{ signature.Title }}</td>
+                                    <td>{{ signature.CreatedAt | date:'medium' }}</td> <!-- Format the date as needed -->
+                                    <td>
+                                        <img [src]="signature.ESignFile" class="signature-image" alt="E-Signature" width="100">
+                                    </td>
+                                    <!-- <button>Action</button> -->
+                                </tr>
+                           
+                            
+                           
+                            
+                            <!-- <tr>
+                                <td></td>
+                                <td>
+                                    <a href="#">
+                                        <figure class="avatar avatar-sm mr-2">
+                                            <img src="../../assets/media/image/user/women_avatar5.jpg" class="rounded-circle" alt="avatar">
+                                        </figure>
+                                        Mariann Pepperrall
+                                    </a>
+                                </td>
+                                <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="375a47524747524545565b5b017743455e475653415e4458451954585a">[email&#160;protected]</a></td>
+                                <td>
+                                    <div class="progress" style="height: 5px">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 67%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>Admin</td>
+                                <td>
+                                    <span class="badge bg-success-bright text-success">Active</span>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                            <i class="ti-more-alt"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
+                                            <a href="#" class="dropdown-item">Edit</a>
+                                            <a href="#" class="dropdown-item">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="#">
+                                        <figure class="avatar avatar-sm mr-2">
+                                            <img src="../../assets/media/image/user/man_avatar5.jpg" class="rounded-circle" alt="avatar">
+                                        </figure>
+                                        Erl Srutton
+                                    </a>
+                                </td>
+                                <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="442137363130302b2a730423212b272d302d21376a2e34">[email&#160;protected]</a></td>
+                                <td>
+                                    <div class="progress" style="height: 5px">
+                                        <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>Admin</td>
+                                <td>
+                                    <span class="badge bg-danger-bright text-danger">Blocked</span>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                            <i class="ti-more-alt"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
+                                            <a href="#" class="dropdown-item">Edit</a>
+                                            <a href="#" class="dropdown-item">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="#">
+                                        <figure class="avatar avatar-sm mr-2">
+                                            <img src="../../assets/media/image/user/women_avatar1.jpg" class="rounded-circle" alt="avatar">
+                                        </figure>
+                                        Luce Meddings
+                                    </a>
+                                </td>
+                                <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0bcbdb5b4b4b9beb7a3e890a5a3b1feb7bfa6">[email&#160;protected]</a></td>
+                                <td>
+                                    <div class="progress" style="height: 5px">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>Staff</td>
+                                <td>
+                                    <span class="badge bg-success-bright text-success">Active</span>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                            <i class="ti-more-alt"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
+                                            <a href="#" class="dropdown-item">Edit</a>
+                                            <a href="#" class="dropdown-item">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="#">
+                                        <figure class="avatar avatar-sm mr-2">
+                                            <img src="../../assets/media/image/user/man_avatar2.jpg" class="rounded-circle" alt="avatar">
+                                        </figure>
+                                        Osbourne Wiskar
+                                    </a>
+                                </td>
+                                <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e689918f958d8794dfa68b8a84c885898b">[email&#160;protected]</a></td>
+                                <td>
+                                    <div class="progress" style="height: 5px">
+                                        <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>Staff</td>
+                                <td>
+                                    <span class="badge bg-success-bright text-success">Active</span>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                            <i class="ti-more-alt"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
+                                            <a href="#" class="dropdown-item">Edit</a>
+                                            <a href="#" class="dropdown-item">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="#">
+                                        <figure class="avatar avatar-sm mr-2">
+                                            <img src="../../assets/media/image/user/women_avatar3.jpg" class="rounded-circle" alt="avatar">
+                                        </figure>
+                                        Jeannette Daintith
+                                    </a>
+                                </td>
+                                <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfb5bbbeb6b1abb6abb7be9fbdb3b0b8b8baadf1bcb0b2">[email&#160;protected]</a></td>
+                                <td>
+                                    <div class="progress" style="height: 5px">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 67%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>Staff</td>
+                                <td>
+                                    <span class="badge bg-danger-bright text-danger">Blocked</span>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                            <i class="ti-more-alt"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
+                                            <a href="#" class="dropdown-item">Edit</a>
+                                            <a href="#" class="dropdown-item">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="#">
+                                        <figure class="avatar avatar-sm mr-2">
+                                            <img src="../../assets/media/image/user/man_avatar1.jpg" class="rounded-circle" alt="avatar">
+                                        </figure>
+                                        Payton Espinola
+                                    </a>
+                                </td>
+                                <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="26564355564f48494a4744664e4e5508414950">[email&#160;protected]</a></td>
+                                <td>
+                                    <div class="progress" style="height: 5px">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>Staff</td>
+                                <td>
+                                    <span class="badge bg-danger-bright text-danger">Blocked</span>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                            <i class="ti-more-alt"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item" data-sidebar-target="#folder-info">View Detail</a>
+                                            <a href="#" class="dropdown-item">Edit</a>s
+                                            <a href="#" class="dropdown-item">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                  
+               
+        </div>
         </div>
     </div>
             </div>

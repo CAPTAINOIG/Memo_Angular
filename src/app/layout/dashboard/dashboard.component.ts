@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header.component';
-import { SidebargroupComponent } from '../../page/sidebargroup/sidebargroup.component';
 import { SidebarformsComponent } from '../../page/sidebarforms/sidebarforms.component';
 
   @Component({
@@ -9,7 +8,7 @@ import { SidebarformsComponent } from '../../page/sidebarforms/sidebarforms.comp
     standalone: true,
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
-    imports: [RouterModule,HeaderComponent,SidebargroupComponent,SidebarformsComponent],
+    imports: [RouterModule,HeaderComponent,SidebarformsComponent],
 })
 export class DashboardComponent {
   prop:boolean=false;

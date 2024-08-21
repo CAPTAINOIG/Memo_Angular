@@ -4,15 +4,15 @@ import { HttpRequestService } from '../../service/HttpRequest/http-request.servi
 import { HeaderComponent } from "../../components/header/header.component"
 import { NavigationComponent } from '../../components/navigation/navigation.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { SidebargroupComponent } from '../sidebargroup/sidebargroup.component';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
+import { RouterLink } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, NavigationComponent, SidebarComponent, SidebargroupComponent],
+  imports: [CommonModule, NavigationComponent, SidebarComponent, RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -23,6 +23,8 @@ export class DashboardComponent implements OnInit {
   recentFiles: any = []
   isLoading = true;
   sidebarVisible: boolean = false; // Sidebar is hidden by default
+  recent: any;
+  file: any;
 
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible; // Toggle the sidebar visibility
@@ -31,7 +33,9 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private httpRequest: HttpRequestService,
-    private handleModal: ServicesidebarService
+    private handleModal: ServicesidebarService,
+    private userData: ServicesidebarService,
+    private editMemo: ServicesidebarService,
   ) {
 
   }
@@ -58,7 +62,7 @@ export class DashboardComponent implements OnInit {
       this.isLoading = false;
     })
     // /recent_files
-    this.httpRequest?.makeGetRequest("/dashboard/recent_files").subscribe((response: any) => {
+    this.httpRequest?.makeGetRequest("/dashboard/files/recent").subscribe((response: any) => {
       this.recentFiles = response.data
       this.isLoading = false;
       // console.log(this.recentFiles);
@@ -72,4 +76,26 @@ export class DashboardComponent implements OnInit {
   openModal(){
     this.handleModal.showMother("create_memo")
   }
+  // createMemo(){
+  //   this.handleModal.showMother("create_memo")
+  // }
+
+  viewFiles(recent: any){
+    console.log(recent);    
+    this.httpRequest.makeGetRequest('/memo/single?id='+recent.MemUniqueId).subscribe((response)=>{
+      this.handleModal.showMother("forms")
+      console.log(response);
+      this.userData.setUserData(response.data)
+    })
+  }
+  editFiles(file: any) {
+    if (!file) {
+      console.error('No file passed to editFiles method.');
+      return;
+    }
+    this.handleModal.showMother("edit_files");
+    console.log(file); 
+    this.editMemo.setEditMemo(file)
+  }
+  
 }

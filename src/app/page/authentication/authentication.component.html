@@ -1,0 +1,17 @@
+
+<div class="px-5 mb-5">
+    <p>User Authentication Page<p>
+    <p>Scan your Qr Code</p>
+    <form [formGroup]="createAuthForm" (ngSubmit)="onSubmit()">
+        <!-- <form> -->
+        <p class="qrcode"><img [src]="authData.url" alt="User Image"></p>
+
+        <div class="form-group">
+            <label for="otp">Otp Code</label>
+            <input formControlName="otp" type="otp" class="form-control" placeholder="Enter Otp Code">
+        </div>
+        <button type="submit" [disabled]="isLoading" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700">
+            {{ isLoading ? 'Submitting...' : 'Submit' }}
+        </button>
+    </form>
+</div>
