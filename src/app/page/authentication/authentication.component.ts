@@ -3,12 +3,11 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
-import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-authentication',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.css'
 })
@@ -17,7 +16,7 @@ isLoading = false;
 createAuthForm: FormGroup;
 authData: any;
 
-  constructor(private sidebarService: ServicesidebarService, private fb: FormBuilder,private httpRequest: HttpRequestService, private router: Router,) {}
+  constructor(private sidebarService: ServicesidebarService, private fb: FormBuilder,private httpRequest: HttpRequestService) {}
 
   ngOnInit() {
     this.authData = this.sidebarService.getAuthData();
@@ -38,7 +37,6 @@ authData: any;
       // console.log(auth);
       this.httpRequest.makePostRequest('/users_management/verify_auth', auth).subscribe((response)=>{
         console.log(response);
-        this.router.navigate(['/portal/dashboard']);
         this.isLoading = false
       }, (error)=>{
         console.log(error);

@@ -3,14 +3,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocalstorageService } from '../../service/LocalstorageService/localstorage.service';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css"; 
 
 @Component({
   selector: 'app-twofactorauth',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './twofactorauth.component.html',
   styleUrls: ['./twofactorauth.component.css']
 })
