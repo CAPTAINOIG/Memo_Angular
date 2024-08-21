@@ -34,8 +34,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private httpRequest: HttpRequestService,
     private handleModal: ServicesidebarService,
-    private userData: ServicesidebarService,
-    private editMemo: ServicesidebarService,
+    private userData: ServicesidebarService
   ) {
 
   }
@@ -46,7 +45,7 @@ export class DashboardComponent implements OnInit {
     // recent_folder
     this.httpRequest?.makeGetRequest("/dashboard/folder/recent").subscribe((response: any) => {
       this.data = response.data;
-      // console.log(this.data);
+      console.log(this.data);
       this.isLoading = false;
     }, (error: any) => {
       // console.log('Error fetching data', error);
@@ -65,7 +64,7 @@ export class DashboardComponent implements OnInit {
     this.httpRequest?.makeGetRequest("/dashboard/files/recent").subscribe((response: any) => {
       this.recentFiles = response.data
       this.isLoading = false;
-      // console.log(this.recentFiles);
+      console.log(this.recentFiles);
     }, (error: any) => {
       console.log('Error fetching data', error);
       this.isLoading = false;
@@ -75,6 +74,7 @@ export class DashboardComponent implements OnInit {
 
   openModal(){
     this.handleModal.showMother("create_memo")
+    this.handleModal.toggleCheck('hello')
   }
   // createMemo(){
   //   this.handleModal.showMother("create_memo")
@@ -89,13 +89,15 @@ export class DashboardComponent implements OnInit {
     })
   }
   editFiles(file: any) {
-    if (!file) {
-      console.error('No file passed to editFiles method.');
-      return;
-    }
-    this.handleModal.showMother("edit_files");
-    console.log(file); 
-    this.editMemo.setEditMemo(file)
+
+    this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
+      this.handleModal.setEditMemo(response.data)
+      console.log(response.data)
+      this.handleModal.showMother("edit_files");
+    }, (error: any) => {
+      console.log('Error fetching data', error);
+      this.isLoading = false;
+    })
   }
   
 }

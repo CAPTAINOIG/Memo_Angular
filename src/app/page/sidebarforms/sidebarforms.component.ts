@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { NgxEditorModule, Editor } from 'ngx-editor';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { NewuserComponent } from '../newuser/newuser.component';
 import Toastify from 'toastify-js';
-import "toastify-js/src/toastify.css";  
+import "toastify-js/src/toastify.css";
 import { UserdetailComponent } from '../../userdetail/userdetail.component';
 import { AuthenticationComponent } from "../authentication/authentication.component";
 import { EsignatureComponent } from '../esignature/esignature.component';
@@ -25,22 +25,22 @@ import { EditmemoComponent } from '../editmemo/editmemo.component';
     AuthenticationComponent,
     EsignatureComponent,
     EditmemoComponent
-],
+  ],
   templateUrl: './sidebarforms.component.html',
   styleUrls: ['./sidebarforms.component.css']
 })
-export class SidebarformsComponent implements OnInit, OnDestroy {
+export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   @ViewChild('fileInput') fileInput!: ElementRef;
   step: any;
   memoForm: FormGroup;
   editor: Editor;
   allowed_ips: string[] = [];
-  ip_address: string = ''; 
+  ip_address: string = '';
   location: string | null = null;
   ipAddress: string = '';
-  areaName:string = ''
-  locationDetails: any ={};
-  area_location: string[]=[];
+  areaName: string = ''
+  locationDetails: any = {};
+  area_location: string[] = [];
   template: any = [];
   memId: string;
   memo_attachments = [
@@ -57,11 +57,16 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
     public handleModals: ServicesidebarService,
     private httpRequest: HttpRequestService,
     private fb: FormBuilder
-    
+
   ) {
+
+
+
     this.memoForm = new FormGroup({
-      title: new FormControl('', Validators.required),
-      memo: new FormControl('', Validators.required),
+      title: new FormControl('',
+        Validators.required),
+      memo: new FormControl('',
+        Validators.required),
       include_signature: new FormControl(false),
       security_type: new FormControl(''),
       secureByEmailOtp: new FormControl(false),
@@ -78,69 +83,177 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
       email: new FormControl(''),
       phone: new FormControl(''),
     });
+
   }
 
   ngOnInit(): void {
-    this.editor = new Editor();
-    this.getMemo();
-  }
 
+    this.editor = new Editor();
+
+  }
+  ngDoCheck(): void {
+    if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
+      const check = this.handleModals.show == "edit_files"
+      this.memoForm.setValue({
+        title: check ? this.handleModals?.editMemo?.MemTitle : '',
+        memo: check ? this.handleModals?.editMemo?.MemContents : '',
+        include_signature: false,
+        security_type: false,
+        secureByEmailOtp: false,
+        secureBySmsOtp: false,
+        secureByIp: false,
+        secureByGeoLocation: false,
+        areaName: '',
+        ip_address: '',
+        create_as_template: false,
+        access: '',
+
+        name: '',
+        email: '',
+        phone: '',
+      })
+      this.handleModals.toggleCheck("hello")
+    }
+  }
+  
   ngOnDestroy(): void {
     this.editor.destroy();
   }
 
   close() {
     this.handleModals.showMother("undefined");
+    this.handleModals.toggleCheck("nothing")
   }
 
 
-// DRAFT / CREATE MEMO
+  // DRAFT / CREATE MEMO
+  // draftMemo(): void {
+  //   if (this.memoForm.valid) {
+  //     const memoData = this.memoForm.value;
+  //     console.log(memoData);
+  //     this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
+  //       (response: any) => {
+  //         console.log(response);
+  //         this.memId = response.id
+  //         // console.log(this.memId);
+  //         Toastify({
+  //           text: "success",
+  //           duration: 3000,
+  //           gravity: "top", 
+  //           position: "right", 
+  //           backgroundColor: "green",
+  //         }).showToast();
+  //       },
+
+  //       (error) => {
+  //         console.error('Error saving draft:', error);
+  //         Toastify({
+  //           text: `${error}`,
+  //           duration: 3000,
+  //           gravity: "top", 
+  //           position: "right", 
+  //           backgroundColor: "red",
+  //         }).showToast();
+  //       }
+  //     );
+  //   } else {
+  //     console.error('Form is not valid!');
+  //     Toastify({
+  //       text: 'Form is not valid',
+  //       duration: 3000,
+  //       gravity: "top", 
+  //       position: "right", 
+  //       backgroundColor: "red",
+  //     }).showToast();
+  //   }
+  // }
+
   draftMemo(): void {
     if (this.memoForm.valid) {
       const memoData = this.memoForm.value;
       console.log(memoData);
-      this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
-        (response: any) => {
-          console.log(response);
-          this.memId = response.id
-          // console.log(this.memId);
-          Toastify({
-            text: "success",
-            duration: 3000,
-            gravity: "top", 
-            position: "right", 
-            backgroundColor: "green",
-          }).showToast();
-        },
-        
-        (error) => {
-          console.error('Error saving draft:', error);
-          Toastify({
-            text: `${error}`,
-            duration: 3000,
-            gravity: "top", 
-            position: "right", 
-            backgroundColor: "red",
-          }).showToast();
-        }
-      );
+
+      // Determine the correct API endpoint and action based on the state
+      if (this.handleModals.show === 'edit_files') {
+        // Create the memo object using form values
+        const memo = {
+          title: this.handleModals?.editMemo?.MemTitle || this.memoForm.value.title,
+          memo: this.memoForm.value.memo,
+          memId: this.handleModals?.editMemo?.MemUniqueId || this.memoForm.value.MemUniqueId,
+          memFold: this.handleModals?.editMemo?.MemFoldId || this.memoForm.value.MemFoldId || null,
+        };
+
+        console.log(memo); // Log the memo object to check its structure
+
+        // Make the PATCH request
+        this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
+          (response) => {
+            // console.log(response);
+            this.memoForm.reset();
+            Toastify({
+              text: "Memo updated successfully",
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "green",
+            }).showToast();
+          },
+          (error) => {
+            console.error('Error updating memo:', error);
+            Toastify({
+              text: `${error}`,
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "red",
+            }).showToast();
+          }
+        );
+      } else {
+        // API call for creating a new memo
+        this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
+          (response: any) => {
+            // console.log(response);
+            this.memId = response.id;
+            Toastify({
+              text: "Memo created successfully",
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "green",
+            }).showToast();
+          },
+          (error) => {
+            console.error('Error saving draft:', error);
+            Toastify({
+              text: `${error}`,
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "red",
+            }).showToast();
+          }
+        );
+      }
     } else {
       console.error('Form is not valid!');
       Toastify({
         text: 'Form is not valid',
         duration: 3000,
-        gravity: "top", 
-        position: "right", 
+        gravity: "top",
+        position: "right",
         backgroundColor: "red",
       }).showToast();
     }
   }
 
 
+
+
   addIP(ip_address: string) {
     if (ip_address && !this.allowed_ips.includes(ip_address)) {
       this.allowed_ips.push(ip_address);
-      this.ip_address = ''; 
+      this.ip_address = '';
     } else {
       console.warn('IP address already exists or is invalid.');
       Toastify({
@@ -154,24 +267,24 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
   }
 
   onsubmit() {
-    const formValues = { ...this.memoForm.value, ipData: this.allowed_ips, geolocationData:Object.values(this.locationDetails), memId: this.memId, new: this.area_location};
+    const formValues = { ...this.memoForm.value, ipData: this.allowed_ips, geolocationData: Object.values(this.locationDetails), memId: this.memId, new: this.area_location };
     console.log('Form Values:', formValues);
     // this.createMemo(formValues); 
-    this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response)=>{
+    this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response) => {
       console.log(response);
       Toastify({
         text: 'success',
         duration: 3000,
-        gravity: "top", 
-        position: "right", 
+        gravity: "top",
+        position: "right",
         backgroundColor: "green",
       }).showToast();
-    }, (error)=>{
+    }, (error) => {
       Toastify({
         text: `${error}`,
         duration: 3000,
-        gravity: "top", 
-        position: "right", 
+        gravity: "top",
+        position: "right",
         backgroundColor: "red",
       }).showToast();
     })
@@ -179,12 +292,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
 
   onCheckboxChange(event: any) {
     // Logic to handle checkbox change if needed
-}
+  }
 
-// FOR AREA 
- fetchAreaDetails() {
+  // FOR AREA 
+  fetchAreaDetails() {
     this.areaName = this.memoForm.get('areaName')?.value;
-    
+
     this.area_location.push(this.areaName);
     console.log('Area Name:', this.areaName);
     if (this.areaName) {
@@ -197,8 +310,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
               Toastify({
                 text: 'success',
                 duration: 3000,
-                gravity: "top", 
-                position: "right", 
+                gravity: "top",
+                position: "right",
                 backgroundColor: "green",
               }).showToast();
               this.locationDetails[this.areaName] = {
@@ -209,8 +322,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
               Toastify({
                 text: 'No location fetch for this area',
                 duration: 3000,
-                gravity: "top", 
-                position: "right", 
+                gravity: "top",
+                position: "right",
                 backgroundColor: "red",
               }).showToast();
             }
@@ -220,8 +333,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
             Toastify({
               text: `${error}`,
               duration: 3000,
-              gravity: "top", 
-              position: "right", 
+              gravity: "top",
+              position: "right",
               backgroundColor: "red",
             }).showToast();
           }
@@ -240,11 +353,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
       Toastify({
         text: "please create a memo",
         duration: 3000,
-        gravity: "top", 
-        position: "right", 
+        gravity: "top",
+        position: "right",
         backgroundColor: "red",
       }).showToast();
-    }  
+    }
     const memoData = {
       access: values.access,
       memId: this.memId,
@@ -262,8 +375,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
         Toastify({
           text: 'success',
           duration: 3000,
-          gravity: "top", 
-          position: "right", 
+          gravity: "top",
+          position: "right",
           backgroundColor: "red",
         }).showToast();
       },
@@ -272,8 +385,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
         Toastify({
           text: `${error}`,
           duration: 3000,
-          gravity: "top", 
-          position: "right", 
+          gravity: "top",
+          position: "right",
           backgroundColor: "red",
         }).showToast();
       }
@@ -282,23 +395,23 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
 
 
 
-  getMemo() {
-    // Implement your logic to fetch memo data
-    this.httpRequest.makeGetRequest('/memo/single?id=y89356548697887').subscribe((response)=>{
-      // console.log(response);
-    }, (error)=>{
-      console.log(error);
-      
-    })
-  }
+  // getMemo() {
+  //   // Implement your logic to fetch memo data
+  //   this.httpRequest.makeGetRequest('/memo/single?id=y89356548697887').subscribe((response)=>{
+  //     // console.log(response);
+  //   }, (error)=>{
+  //     console.log(error);
+
+  //   })
+  // }
 
   getMemoAttachments() {
     // Implement your logic to fetch memo attachments
-    this.httpRequest.makeGetRequest(`/memo/memo_attachment?${this.memId}`).subscribe((response)=>{
+    this.httpRequest.makeGetRequest(`/memo/memo_attachment?${this.memId}`).subscribe((response) => {
       console.log(response);
-    }, (error)=>{
+    }, (error) => {
       console.log(error);
-      
+
     })
   }
 
@@ -315,21 +428,21 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
       );
     }
   }
-  
-        // uploadLogo.append('memId', this.memId);
-// FILE ATTACHMENT 
-// Create Attachment
+
+  // uploadLogo.append('memId', this.memId);
+  // FILE ATTACHMENT 
+  // Create Attachment
   chooseFile() {
     this.fileInput.nativeElement.click();
   }
   fileChangeEvent(event: any): void {
     const uploadLogo = new FormData();
     const image = event.target.files[0];
-    
+
     if (image) {
       console.log(image);
       uploadLogo.append('image', image, image.name);
-      this.httpRequest.makePostRequest('/memo/upload_image', uploadLogo,true).subscribe(
+      this.httpRequest.makePostRequest('/memo/upload_image', uploadLogo, true).subscribe(
         (response) => {
           console.log(response);
         },
@@ -344,22 +457,22 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
   }
 
 
-    // Implement your logic to handle security type changes
-    changeSecurityType(): void {
-      const selectedValue = (event.target as HTMLSelectElement).value;
-      if (selectedValue === 'template') {
-        this.saveTemplate();
-      }
+  // Implement your logic to handle security type changes
+  changeSecurityType(): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    if (selectedValue === 'template') {
+      this.saveTemplate();
     }
-  
-    saveTemplate(){
-      this.httpRequest.makeGetRequest('/memo/mem_secure_rule/all').subscribe((response)=>{
-        console.log(response.data);
-        this.template = response.data
+  }
+
+  saveTemplate() {
+    this.httpRequest.makeGetRequest('/memo/mem_secure_rule/all').subscribe((response) => {
+      console.log(response.data);
+      this.template = response.data
       // console.log(this.template);
-      })
-    }
-  
+    })
+  }
+
 
 
   // SELECT ACCESS TYPE. SHARING PAGE
@@ -369,11 +482,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy {
   handleChangeEvent(event: any): void {
     const uploadLogo = new FormData();
     const image = event.target.files[0];
-    
+
     if (image) {
       console.log(image);
       uploadLogo.append('image', image, image.name);
-      this.httpRequest.makePostRequest('/memo/access_type/create', uploadLogo,true).subscribe(
+      this.httpRequest.makePostRequest('/memo/access_type/create', uploadLogo, true).subscribe(
         (response) => {
           console.log(response);
         },

@@ -17,10 +17,6 @@
     border-radius: 6px; /* Rounded corners */
 }
 
-#folder::-webkit-scrollbar-thumb:hover {
-    /* background: whitesmoke;  */
-}
-
 /* Custom Scrollbar for Firefox */
 #folder {
     scrollbar-width: thin; /* Thin scrollbar */

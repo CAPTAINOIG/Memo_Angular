@@ -1,30 +1,40 @@
-<div class="sidebar-content">
-  <form [formGroup]="createEditForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" formControlName="title" class="form-control" id="title" placeholder="">
+<!-- <div class="editMemo-edit-form px-5 mb-2">
+    <h2>Edit Memo</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group" *ngIf="editMemo.MemTitle">
+        <label for="title">Title:</label>
+        <input id="title" [(ngModel)]="editMemo.MemTitle" name="MemTitle" class="form-control" />
       </div>
-      
-      <div class="form-group">
-          <label for="memo">Memo</label>
-          <div class="NgxEditor__Wrapper">
-              <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
-              <ngx-editor
-                  [editor]="editor"
-                  formControlName="memo"
-                  [disabled]="false"
-                  [placeholder]="'Type here...'"
-              ></ngx-editor>
-          </div>
+      <div class="form-group" *ngIf="editMemo.MemContents">
+        <label for="contents">Contents:</label>
+        <textarea id="contents" [(ngModel)]="editMemo.MemContents" name="MemContents" class="form-control"></textarea>
       </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+   -->
 
-      <button [disabled]="isLoading" type="submit" class="btn btn-primary">
-          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          Save Draft
-      </button>
-      
-      <div *ngIf="isLoading" class="loading-message">
-          Saving... Please wait.
-      </div>
-  </form>
-</div>
+   <!-- <div class="sidebar-content">
+    <form [formGroup]="createEditForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" [(ngModel)]="editMemo.MemTitle" name="MemTitle" formControlName="title" class="form-control" id="title" placeholder="">
+        </div>
+        
+        <div class="form-group">
+            <label for="memo">Memo</label>
+            <div class="NgxEditor__Wrapper">
+                <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+                <ngx-editor
+                    [editor]="editor"
+                    formControlName="memo"
+                    [disabled]="false"
+                    [placeholder]="'Type here...'"
+                    [(ngModel)]="editMemo.MemContents"
+                ></ngx-editor>
+            </div>
+        </div>
+        <button  [disabled]="isLoading" type="submit" class="btn btn-primary">Save Draft</button>
+    </form>
+  </div>
+   -->

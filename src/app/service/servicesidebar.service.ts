@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ServicesidebarService {
   // Existing variable for the first implementation
   show: any = "undefined";
+  check="nothing";
   public userData: any;
   public authData: any;
   public UserDetail: any;
@@ -19,6 +20,9 @@ export class ServicesidebarService {
   // Existing method to show or hide the sidebar
   public showMother(data: string): void {
     this.show = data;
+  }
+  public toggleCheck(data): void {
+    this.check = data;
   }
 
   setUserData(data: any) {
@@ -46,8 +50,13 @@ export class ServicesidebarService {
   }
 
   setEditMemo(data:any){
+    console.log(data)
     this.editMemo = data
   }
+
+
+
+
 
   getEditMemo(){
     return this.editMemo

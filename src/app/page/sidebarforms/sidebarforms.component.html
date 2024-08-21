@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <div *ngIf="handleModals.show=='edit_files'" class="sidebar-group-forms d-print-none"  >
+    <!-- <div *ngIf="handleModals.show=='edit_files'" class="sidebar-group-forms d-print-none"  >
         <div class="sidebar primary-sidebar show" id="storage">
             <div class="sidebar-header">
                 <h4>Edit Memo</h4>
@@ -46,7 +46,7 @@
             </div>
             <app-editmemo></app-editmemo>
         </div>
-    </div>
+    </div> -->
 
     <div *ngIf="handleModals.show=='authentication'" class="sidebar-group-forms d-print-none"  >
         <div class="sidebar primary-sidebar show" id="storage">
@@ -60,11 +60,16 @@
         </div>
     </div>
 
-    <div *ngIf="handleModals.show=='create_memo'" class="sidebar-group-forms d-print-none"  >
+    <div *ngIf=" ['edit_files','create_memo'].includes(handleModals.show)" class="sidebar-group-forms d-print-none"  >
         <!-- Sidebar - Storage -->
         <div class="sidebar primary-sidebar show" id="storage">
             <div class="sidebar-header">
-                <h4>New Memo</h4>
+                <h4>
+                    {{handleModals.show === 'edit_files' ? 'Edit Memo' : 'New Memo'}}
+                  </h4>
+                  <!-- <ng-template #newMemo>
+                    <h4>New Memo</h4>
+                  </ng-template> -->
                 <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
                     <i class="ti-angle-right"></i>
                 </a>
@@ -94,7 +99,6 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Title</label>
                                 <input type="text" formControlName="title" class="form-control" id="title" name="title" aria-describedby="emailHelp" placeholder="">
-                                 
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Memo</label>
@@ -113,7 +117,7 @@
                                 <input type="checkbox" name="include_signature" formControlName="include_signature" class="form-check-input" id="include_signature">
                                 <label class="form-check-label" for="exampleCheck1">Include Signature</label>
                             </div>
-                            <button type="submit" class="btn btn-primary">Save Draft</button>
+                            <button type="submit" class="btn btn-primary">{{handleModals.show === 'edit_files' ? 'Save Edit' : 'Save Draft'}}</button>
                         </form>
                     </div>
                     
@@ -311,11 +315,6 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="sharing" role="tabpanel" aria-labelledby="sharing-tab">
-
-
-
-
-
                         <form [formGroup]="memoForm" (ngSubmit)="createMemo(memoForm.value)">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Select Access Type</label>

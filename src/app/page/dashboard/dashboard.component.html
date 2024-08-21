@@ -113,7 +113,8 @@
                 <tr>
                     <th>Name</th>
                     <th>Date Created</th>
-                    <th>Label</th>
+                    <th>Folder Name</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody *ngFor="let recent of recentFiles">
@@ -129,7 +130,7 @@
                         </a>
                     </td>
                     
-                    <td>{{recent.CreatedAt}}</td>
+                    <td>{{recent?.CreatedAt}}</td>
                    
                     <td>
                         {{recent?.MemFold?.MemFoldName}}
@@ -141,14 +142,7 @@
                                 <i class="ti-more-alt"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <span (click)="viewFiles(recent)" class="dropdown-item cursor-pointer" data-sidebar-target="#view-detail">View Details</span>
-                                <span class="dropdown-item cursor-pointer" (click)="editFiles(recent)" data-sidebar-target="#view-file">Edit</span>
-
-                                <!-- <a href="#" class="dropdown-item">Download</a>
-                                <a href="#" class="dropdown-item">Copy to</a>
-                                <a href="#" class="dropdown-item">Move to</a>
-                                <a href="#" class="dropdown-item">Rename</a>
-                                <a href="#" class="dropdown-item">Delete</a> -->
+                                <span class="dropdown-item cursor-pointer" (click)="editFiles(recent?.MemUniqueId)" data-sidebar-target="#view-file">Edit</span>
                             </div>
                         </div>
                     </td>

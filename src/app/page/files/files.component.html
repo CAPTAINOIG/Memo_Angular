@@ -40,32 +40,26 @@
             <div class="content-title mt-0">
                 <h4>Documents</h4>
             </div>
+           
             <div class="d-md-flex justify-content-between mb-4">
                 <ul class="list-inline mb-3">
-                    <!-- <li class="list-inline-item mb-0">
-                        <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
-                            Add
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">New Folder</a>
-                            <a class="dropdown-item" href="#">New File</a>
-                        </div>
-                    </li> -->
-                    <span class="list-inline-item mb-0">
-                        <button [disabled]="isLoadingPrevious" class="btn btn-primary" (click)="previous()">
-                            <span *ngIf="isLoadingPrevious" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            {{isLoadingPrevious ? ('Loading...') : ('Previous')}}
-                        </button>
-                    </span>
-                    <span class="list-inline-item mb-0">
-                        <button [disabled]="isLoadingNext" class="btn btn-primary" (click)="next()">
-                            <span *ngIf="isLoadingNext" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            {{isLoadingNext ? ('Loading...') : ('Next')}}
-                        </button>
-                    </span>
-                    
+                  <span class="list-inline-item mb-0">
+                    <button [disabled]="isLoadingNext" class="btn btn-primary" (click)="previous()">
+                      <span *ngIf="isLoadingPrevious" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      {{ isLoadingPrevious ? 'Loading...' : 'Previous' }}
+                    </button>
+                  </span>
+                  <span class="list-inline-item mb-0">
+                    <button [disabled]="isLoadingPrevious" class="btn btn-primary" (click)="next()">
+                      <span *ngIf="isLoadingNext" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      {{ isLoadingNext ? 'Loading...' : 'Next' }}
+                    </button>
+                  </span>
                 </ul>
-                <div id="file-actions" class="d-none">
+              </div>
+              
+                  
+                <!-- <div id="file-actions" class="d-none">
                     <ul class="list-inline">
                         <li class="list-inline-item mb-0">
                             <a href="#" class="btn btn-outline-light" data-toggle="tooltip" title="Move">
@@ -83,22 +77,22 @@
                             </a>
                         </li>
                     </ul>
-                </div>
-            </div>
+                </div> -->
+            
             <div class="table-responsive">
                 <table id="table-files" class="table table-borderless table-hover">
                     <thead>
                     <tr>
                         <th>
-                            <div class="custom-control custom-checkbox">
+                            <!-- <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="files-select-all">
                                 <label class="custom-control-label" for="files-select-all"></label>
-                            </div>
+                            </div> -->
                         </th>
                         <th>Name</th>
-                        <th>Modified</th>
-                        <th>Label</th>
-                        <th>Members</th>
+                        <th>Date</th>
+                        <!-- <th>Content</th> -->
+                        <th>Folder Name</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -120,10 +114,11 @@
                                         </span>
                             </a>
                         </td>
-                        <td>3/9/19, 2:40PM</td>
-                        <td>
-                            <div class="badge bg-info-bright text-info">Design</div>
-                        </td>
+                        <td>{{item.CreatedAt}}</td>
+                        <!-- <td [innerHTML]="item.MemContents">
+                            {{item.MemContents}}
+                        </td> -->
+                        <td>{{item.MemFoldName}}</td>
                         <td>
                         </td>
                         <td class="text-right">
