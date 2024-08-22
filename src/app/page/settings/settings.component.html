@@ -1,6 +1,6 @@
 <div class="layout-wrapper">
     <!-- Header -->
-    <div class="header d-print-none">
+    <!-- <div class="header d-print-none">
         <div class="header-container">
             <div class="header-body">
                 <div class="header-body-left">
@@ -195,7 +195,7 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div> -->
     <!-- ./ Header -->
 
     <!-- Content wrapper -->
@@ -234,17 +234,20 @@
             <div class="row">
                 <div class="col-md-6">
                    
-                            <div class="d-flex mb-3">
+                            <div class=" mb-3">
 
                                 <div>
-                                    <img [src]="imageSrc" alt="Avatar" (click)="fileInput.click()"  
-                                        style="cursor: pointer; width: 100px; height: 100px; border-radius: 50%;"/>
-                                    <input type="file" #fileInput (change)="onFileChange($event)" 
-                                        accept="image/*" style="display: none;" />
+                                    <!-- <img [src]="imageSrc" alt="Avatar" (click)="fileInput.click()"  
+                                        style="cursor: pointer; width: 100px; height: 100px; border-radius: 50%;"/> -->
+                                    <!-- <input type="file" #fileInput (change)="onFileChange($event)" 
+                                        accept="image/*" style="display: none;" /> -->
+                                        <input type="file" #fileInput (change)="onFileChange($event)" 
+                                        accept="image/*"/>
                                 </div>
                                 <div>
-                                    <p>Roxana Roussell</p>
-                                    <button (click)="uploadImage()" class="btn btn-outline-primary mr-2">Change Avatar</button>
+                                    <p>{{user?.last_name}}</p>
+                                    <button (click)="uploadImage()" class="btn btn-outline-primary mr-2">
+                                       {{isLoadingImage ? 'Loading...' : 'Change Avatar'}} </button>
                                 </div>
 
                             </div>
@@ -258,7 +261,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" value="Roxana Roussell">
+                                    <input type="text" class="form-control" value="{{user?.last_name}}">
                                 </div>
                                
                             </div>
@@ -328,12 +331,12 @@
                         <table id="user-list" class="table table-borderless table-hover">
                             <thead *ngIf="returnData() && returnData().length > 0">
                             <tr>
-                                <th>
+                                <!-- <th>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="user-list-select-all">
                                         <label class="custom-control-label" for="user-list-select-all"></label>
                                     </div>
-                                </th>
+                                </th> -->
                                 
                                 <th>Title</th>
                                 <th>Date</th>
@@ -567,7 +570,7 @@
             <!-- ./ Content -->
 
             <!-- Footer -->
-            <footer class="content-footer d-print-none">
+            <!-- <footer class="content-footer d-print-none">
                 <div>© 2020 Filedash - <a href="http://laborasyon.com" target="_blank">Laborasyon</a></div>
                 <div>
                     <nav class="nav">
@@ -576,7 +579,7 @@
                         <a href="#" class="nav-link">Get Help</a>
                     </nav>
                 </div>
-            </footer>
+            </footer> -->
             <!-- ./ Footer -->
         </div>
         <!-- ./ Content body -->

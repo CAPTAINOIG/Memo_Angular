@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
     // recent_folder
     this.httpRequest?.makeGetRequest("/dashboard/folder/recent").subscribe((response: any) => {
       this.data = response.data;
-      console.log(this.data);
+      // console.log(this.data);
       this.isLoading = false;
     }, (error: any) => {
       // console.log('Error fetching data', error);
@@ -81,10 +81,10 @@ export class DashboardComponent implements OnInit {
   // }
 
   viewFiles(recent: any){
-    console.log(recent);    
-    this.httpRequest.makeGetRequest('/memo/single?id='+recent.MemUniqueId).subscribe((response)=>{
+    // console.log(recent);    
+    this.httpRequest?.makeGetRequest('/memo/single?id='+recent.MemUniqueId).subscribe((response)=>{
       this.handleModal.showMother("forms")
-      console.log(response);
+      // console.log(response);
       this.userData.setUserData(response.data)
     })
   }
@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
 
     this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
       this.handleModal.setEditMemo(response.data)
-      console.log(response.data)
+      // console.log(response.data)
       this.handleModal.showMother("edit_files");
     }, (error: any) => {
       console.log('Error fetching data', error);

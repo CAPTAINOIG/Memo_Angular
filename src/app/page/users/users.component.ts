@@ -8,13 +8,14 @@ import { LocalstorageService } from '../../service/LocalstorageService/localstor
 import { FormsModule } from '@angular/forms';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { NewuserComponent } from '../newuser/newuser.component';
+import { HeaderComponent } from '../../components/header/header.component';
 
 
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, NavigationComponent, SidebarComponent, RouterLink, FormsModule, NewuserComponent],
+  imports: [CommonModule, NavigationComponent, HeaderComponent, SidebarComponent, RouterLink, FormsModule, NewuserComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -124,10 +125,10 @@ createUser() {
   this.handleModal.showMother("new_user")
 }
 authentication(user:string){
-  console.log(user);
+  // console.log(user);
   this.httpRequest.makePostRequest('/users_management/create_authenticator_secret', {identity:user}).subscribe((response)=>{
     this.handleModal.showMother("authentication")
-    console.log(response);
+    // console.log(response);
     // this.authData = response.data;
     this.authData.setAuthData(response)
 

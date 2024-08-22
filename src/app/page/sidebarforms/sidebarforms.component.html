@@ -64,12 +64,12 @@
         <!-- Sidebar - Storage -->
         <div class="sidebar primary-sidebar show" id="storage">
             <div class="sidebar-header">
-                <h4>
-                    {{handleModals.show === 'edit_files' ? 'Edit Memo' : 'New Memo'}}
-                  </h4>
-                  <!-- <ng-template #newMemo>
+                <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
+                    <h4>Edit Memo</h4>
+                  </ng-container>
+                  <ng-template #newMemo>
                     <h4>New Memo</h4>
-                  </ng-template> -->
+                  </ng-template>
                 <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
                     <i class="ti-angle-right"></i>
                 </a>

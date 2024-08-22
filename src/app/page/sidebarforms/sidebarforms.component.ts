@@ -123,6 +123,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   close() {
     this.handleModals.showMother("undefined");
     this.handleModals.toggleCheck("nothing")
+    this.memoForm.reset()
   }
 
 
@@ -188,7 +189,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         // Make the PATCH request
         this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
           (response) => {
-            // console.log(response);
+            console.log(response);
             this.memoForm.reset();
             Toastify({
               text: "Memo updated successfully",
@@ -213,7 +214,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         // API call for creating a new memo
         this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
           (response: any) => {
-            // console.log(response);
+            console.log(response);
             this.memId = response.id;
             Toastify({
               text: "Memo created successfully",

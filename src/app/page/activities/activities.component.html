@@ -14,45 +14,50 @@
         <h2>Activities</h2>
         <ul class="nav justify-content-end mt-4 mt-md-0">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Today</a>
+                <a class="nav-link active" href="#">Memo</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Yesterday</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">This Week</a>
-            </li>
+            </li> -->
         </ul>
     </div>
 
-    <div class="row">
+
+    <div *ngIf="isLoading" class="spinner-container">
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="row mb-5" *ngIf="!isLoading">
         <div class="col-md-12">
             <div class="timeline">
-                <div class="timeline-item">
+                <div class="timeline-item" *ngFor="let item of activities">
                     <div>
                         <figure class="avatar mr-3">
-                            <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
+                            <img src="../../assets/media/image/user/avatar2.jpg" class="rounded-circle" alt="image">
                         </figure>
                     </div>
                     <div>
-                        <h6 class="d-md-flex justify-content-between mb-3">
+                        <h6 style="margin-top: 50ppx;" class="d-md-flex justify-content-between mt-3">
                             <span class="d-block">
-                                <a href="#" class="link-1">Lisle Essam</a> shared a link
-                            </span>
-                            <span class="text-muted font-weight-normal">4h</span>
+                                <a class="link-1">
+                                  <p>{{item?.ViewEmail}} from {{item?.ViewLoc}} viewed this memo on {{format(item?.CreatedAt)}} at approximately {{formatTime(item?.CreatedAt)}}.</p>
+                                </a>
+                              </span>
+                              
+                            <!-- <span class="text-muted font-weight-normal">{{format(item?.CreatedAt)}}</span> -->
+                            <!-- <span>{{formatTime(item?.CreatedAt)}}</span> -->
                         </h6>
                         <a href="#">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet, velit.</p>
-                            <span class="text-primary">https://envato.com/</span>
+                            <!-- <p [innerHTML]="item?.Mem?.MemContents">/p> -->
+                            <!-- <span class="text-primary">{{item?.Mem.MemFullLink}}</span> -->
                         </a>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div>
-                        <figure class="avatar mr-3">
-                            <span class="avatar-title bg-success rounded-circle">C</span>
-                        </figure>
-                    </div>
+                <!-- <div class="timeline-item">
+                    
                     <div>
                         <h6 class="d-md-flex justify-content-between mb-3">
                             <span class="d-block">
@@ -65,19 +70,19 @@
                                 <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
                             </figure>
                             <figure class="avatar" title="Baxie Roseblade" data-toggle="tooltip">
-                                <img src="../../assets/media/image/user/man_avatar5.jpg" class="rounded-circle" alt="image">
+                                <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
                             </figure>
                             <figure class="avatar" title="Baxie Roseblade" data-toggle="tooltip">
-                                <span class="avatar-title bg-secondary rounded-pill">A</span>
+                                <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
                             </figure>
                             <figure class="avatar" title="Jo Hugill" data-toggle="tooltip">
-                                <img src="../../assets/media/image/user/man_avatar1.jpg" class="rounded-circle" alt="image">
+                                <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
                             </figure>
                             <figure class="avatar" title="Cullie Philcott" data-toggle="tooltip">
-                                <img src="../../assets/media/image/user/women_avatar5.jpg" class="rounded-circle" alt="image">
+                                <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
                             </figure>
                             <figure class="avatar" title="Cullie Philcott" data-toggle="tooltip">
-                                <span class="avatar-title bg-warning rounded-pill">Z</span>
+                                <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
                             </figure>
                         </div>
                     </div>
@@ -85,7 +90,7 @@
                 <div class="timeline-item">
                     <div>
                         <figure class="avatar mr-3">
-                            <img src="../../assets/media/image/user/man_avatar1.jpg" class="rounded-circle" alt="avatar">
+                            <img src="../../assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
                         </figure>
                     </div>
                     <div>
@@ -204,7 +209,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -213,7 +218,7 @@
             <!-- ./ Content -->
 
             <!-- Footer -->
-            <footer class="content-footer d-print-none">
+            <!-- <footer class="content-footer d-print-none">
                 <div>© 2020 Filedash - <a href="http://laborasyon.com" target="_blank">Laborasyon</a></div>
                 <div>
                     <nav class="nav">
@@ -222,7 +227,7 @@
                         <a href="#" class="nav-link">Get Help</a>
                     </nav>
                 </div>
-            </footer>
+            </footer> -->
             <!-- ./ Footer -->
         </div>
         <!-- ./ Content body -->

@@ -19,7 +19,9 @@ export class SettingsComponent {
   base64Image: string | null = null; // To store the Base64 string
   memoImage: string | null = null;
   data: any = undefined;
+  user: any = {};
   isLoading = false
+  isLoadingImage = false
   esignature = {
     title: '',
     image: ''
@@ -28,6 +30,14 @@ export class SettingsComponent {
 
   ngOnInit(): void {
     this.checkForExistingRecord();
+
+    const userName = this.http.makeGetRequest('/auth/user').subscribe((response)=>{
+      this.user = response.data;
+      console.log(this.user);
+      
+    }, (error)=>{
+      console.log(error);
+    })
   }
 
   constructor(private http: HttpRequestService, private handleModal: ServicesidebarService) { }
@@ -45,18 +55,27 @@ export class SettingsComponent {
     }
   }
 
+  // const userName = this.http.makeGetRequest('/auth/user').subscribe((response)=>{
+  //   this.user = response.data;
+  // }, (error)=>{
+  //   console.log(error);
+  // })
+
   uploadImage(): void {
+    this.isLoadingImage = true;
     if (this.base64Image) {
-      console.log(this.base64Image);
+      // console.log(this.base64Image);
       const payload = {
         image: this.base64Image
       };
       this.http.makePatchRequest('/users_management/admin/change_profile_picture', payload).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
+          this.isLoadingImage=false
         },
         (error) => {
           console.error(error);
+          this.isLoadingImage = false;
         }
       );
     } else {

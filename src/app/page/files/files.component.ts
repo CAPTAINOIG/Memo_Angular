@@ -21,14 +21,15 @@ foldId=undefined
 page=1
 allFile: any  = [];
 allFolder: any = [];
+isLoading = true;
 recent: any;
   constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService) { }
 
   ngOnInit(): void {
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response)=>{
       this.allFile = response.data;
-      console.log(this.allFile);
-    
+      // console.log(this.allFile);
+      this.isLoading = false
     },(error)=>{
       console.log(error);
     })
@@ -36,7 +37,7 @@ recent: any;
 
     this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response)=>{
       this.allFolder = response.data;
-      console.log(this.allFolder);
+      // console.log(this.allFolder);
     
     },(error)=>{
       console.log(error);
@@ -49,7 +50,7 @@ recent: any;
     if(this.page>0){
       this.httpRequest.makeGetRequest(`/dashboard/files/all?page=${this.page}&foldId=${this.foldId}`).subscribe((response)=>{
         this.allFile = response.data;
-        console.log(this.allFile);
+        // console.log(this.allFile);
       this.isLoadingPrevious= false;
       
       },(error)=>{
@@ -64,28 +65,33 @@ recent: any;
     this.page+=1
     this.httpRequest.makeGetRequest(`/dashboard/files/all?page=${this.page}&foldId=${this.foldId}`).subscribe((response)=>{
       this.allFile = response.data;
-      console.log(this.allFile);
+      // console.log(this.allFile);
       this.isLoadingNext= false;
     },(error)=>{
       console.log(error);
       this.isLoadingNext= false;
     })
   }
-  editFiles(file: any){
-    if (!file) {
-      console.error('No file passed to editFiles method.');
-      return;
-    }
-    this.handleModal.showMother("edit_files");
-    console.log(file); 
-    this.editMemo.setEditMemo(file)
+
+  editFiles(file: any) {
+    this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
+      this.handleModal.setEditMemo(response.data)
+      // console.log(response.data)
+      this.handleModal.showMother("edit_files");
+    }, (error: any) => {
+      console.log('Error fetching data', error);
+      this.isLoading = false;
+    })
   }
   foldName(id:any|number){
+    this.isLoading = true
     this.foldId=id
     this.page=1
     this.httpRequest.makeGetRequest('/dashboard/files/all?page=1&foldId='+id).subscribe((response)=>{
       this.allFile = response.data;
+      this.isLoading = false;
     })
   }
+  
   }
   

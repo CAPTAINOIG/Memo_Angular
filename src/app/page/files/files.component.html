@@ -20,18 +20,27 @@
         </a>
     </div>
 
+
     <div class="row">
         <div class="col-xl-3 files-sidebar">
             <div class="card border-0" id="folder">
-                <h6 class="card-title" >My Folders</h6>
+                <h6 class="card-title">My Folders</h6>
                 <div *ngFor="let item of allFolder" id="files"  class="jstree jstree-1 jstree-default" role="tree" aria-multiselectable="true" tabindex="0"
                     aria-activedescendant="j1_1" aria-busy="false">
+
                     <ul class="jstree-container-ul jstree-children jstree-no-dots" role="group">
-                        <li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j1_1_anchor"
-                            aria-expanded="false" id="j1_1" class="jstree-node  jstree-closed"><i class="jstree-icon jstree-ocl"
-                                role="presentation"></i><a (click)="foldName(item.Id)" class="jstree-anchor cursor-pointer ms-5" tabindex="-1" id="j1_1_anchor"><i
+
+                        <li *ngIf="!isLoading" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j1_1_anchor"
+                            aria-expanded="false" id="j1_1" class="jstree-node  jstree-closed">
+                            <!-- <li class="jstree-icon jstree-ocl"
+                                role="presentation">
+                            </li> -->
+                                <a (click)="foldName(item.Id)" class="jstree-anchor cursor-pointer ms-5" tabindex="-1" id="j1_1_anchor">
+                                    <i
                                     class="jstree-icon jstree-themeicon ti-folder text-warning jstree-themeicon-custom"
-                                    role="presentation"></i>{{item?.MemFoldName}}</a></li>
+                                    role="presentation"></i><span style="margin-left: 10px;">{{item?.MemFoldName}}</span>
+                                </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -40,7 +49,6 @@
             <div class="content-title mt-0">
                 <h4>Documents</h4>
             </div>
-           
             <div class="d-md-flex justify-content-between mb-4">
                 <ul class="list-inline mb-3">
                   <span class="list-inline-item mb-0">
@@ -78,16 +86,14 @@
                         </li>
                     </ul>
                 </div> -->
-            
-            <div class="table-responsive">
+                <div *ngIf="isLoading" class="spinner-container">
+                    <div class="spinner"></div>
+                </div>
+            <div class="table-responsive" *ngIf="!isLoading">
                 <table id="table-files" class="table table-borderless table-hover">
                     <thead>
                     <tr>
                         <th>
-                            <!-- <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="files-select-all">
-                                <label class="custom-control-label" for="files-select-all"></label>
-                            </div> -->
                         </th>
                         <th>Name</th>
                         <th>Date</th>
@@ -127,14 +133,16 @@
                                     <i class="ti-more-alt"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item" data-sidebar-target="#view-detail">View
-                                        Details</a>
-                                    <a href="#" class="dropdown-item">Share</a>
+                                    <!-- <a href="#" class="dropdown-item" data-sidebar-target="#view-detail">View
+                                        Details</a> -->
+                                   <!-- <a href="#" class="dropdown-item">Share</a>
                                     <a href="#" class="dropdown-item">Download</a>
-                                    <a href="#" class="dropdown-item">Copy to</a>
-                                    <a href="#" class="dropdown-item">Move to</a>
-                                    <a href="#" class="dropdown-item">Rename</a>
-                                    <a href="#" class="dropdown-item">Delete</a>
+                                    <a href="#" class="dropdown-item">Copy to</a> -->
+                                    <span class="dropdown-item cursor-pointer" (click)="editFiles(item?.MemUniqueId)">Edit</span>
+                                    <!-- <a href="#" class="dropdown-item">Rename</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <span class="dropdown-item cursor-pointer" (click)="editFiles(item?.MemUniqueId)" data-sidebar-target="#view-file">Edit</span>
+                                    </div> -->
                                 </div>
                             </div>
                         </td>
@@ -452,16 +460,7 @@
             <!-- ./ Content -->
 
             <!-- Footer -->
-            <footer class="content-footer d-print-none">
-                <div>© 2020 Filedash - <a href="http://laborasyon.com" target="_blank">Laborasyon</a></div>
-                <div>
-                    <nav class="nav">
-                        <a href="https://themeforest.net/licenses/standard" class="nav-link">Licenses</a>
-                        <a href="#" class="nav-link">Change Log</a>
-                        <a href="#" class="nav-link">Get Help</a>
-                    </nav>
-                </div>
-            </footer>
+           
             <!-- ./ Footer -->
         </div>
         <!-- ./ Content body -->

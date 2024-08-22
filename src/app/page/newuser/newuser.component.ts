@@ -41,7 +41,7 @@ export class NewuserComponent {
     // Fetch user roles from the API and populate the dropdown
     this.httpRequest.makeGetRequest("/users_management/user_roles/all").subscribe((response: any) => {
       this.userRoles = response.data;
-      console.log(this.userRoles);
+      // console.log(this.userRoles);
     });
   }
 
@@ -50,12 +50,12 @@ export class NewuserComponent {
     if (this.createUserForm.valid) {  // Ensure the form is valid before submission
       this.isLoading = true;
       const data = this.createUserForm.value;
-      console.log("Form Data:", data);  // Log form data to verify
+      // console.log("Form Data:", data);  // Log form data to verify
 
 
       this.httpRequest.makePostRequest('/users_management/create_new_user', data).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           this.isLoading = false;
 
           if (response.status) {

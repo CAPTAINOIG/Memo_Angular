@@ -5,6 +5,7 @@
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- begin::navigation -->
+         <app-header></app-header>
         <app-navigation></app-navigation>
         <!-- end::navigation -->
 
@@ -69,7 +70,7 @@
                         </th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Storage</th>
+                        <!-- <th>Storage</th> -->
                         <th>Role</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -86,7 +87,7 @@
                         <td>
                           <a href="#">
                             <figure class="avatar avatar-sm mr-2">
-                              <img src="../../assets/media/image/user/man_avatar3.jpg" class="rounded-circle" alt="avatar">
+                              <img src="../../assets/media/image/user/avatar2.jpg" class="rounded-circle" alt="image">
                             </figure>
                             {{user?.full_name}}
                           </a>
@@ -94,11 +95,11 @@
                         <td>
                           <a href="mailto:{{user?.email}}">{{user?.email}}</a>
                         </td>
-                        <td>
+                        <!-- <td>
                           <div class="progress" style="height: 5px">
                             <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
-                        </td>
+                        </td> -->
                         <td>{{user?.UserRole?.RoleName}}</td>
                         <td>
                           <span [class]="!user.is_locked_out?'badge bg-success-bright text-success':'bg-danger-bright text-danger badge'">{{user.is_locked_out?"Block":"Active"}}</span>
@@ -134,7 +135,7 @@
             <!-- ./ Content -->
 
             <!-- Footer -->
-            <footer class="content-footer d-print-none">
+            <!-- <footer class="content-footer d-print-none">
                 <div>© 2020 Filedash - <a href="http://laborasyon.com" target="_blank">Laborasyon</a></div>
                 <div>
                     <nav class="nav">
@@ -143,7 +144,7 @@
                         <a href="#" class="nav-link">Get Help</a>
                     </nav>
                 </div>
-            </footer>
+            </footer> -->
             <!-- ./ Footer -->
         </div>
         <!-- ./ Content body -->
