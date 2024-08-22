@@ -8,6 +8,7 @@ import { LocalstorageService } from '../../service/LocalstorageService/localstor
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";  
 import { ServicesidebarService } from '../../service/servicesidebar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent {
   isLoading = false;
 
   constructor(
+    private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private router: Router,
     private local:LocalstorageService,
@@ -38,38 +40,30 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isLoading = true;
       const json = this.loginForm.value;
-      console.log(json);
-    
+      
       this.HttpRequest.makePostRequest(`/auth/login`, json).subscribe({
-        next: (data:any) => {
-          console.log(data);
-          this.userDetail.setUserDetail(data)
+        next: (data: any) => {
           this.isLoading = false;
           if (data.status) {
-            Toastify({
-              text: "Authentication successful!",
+            this.snackBar.open('Authentication successful!', 'Close', {
               duration: 3000,
-              gravity: "top", // `top` or `bottom`
-              position: "right", // `left`, `center` or `right`
-              backgroundColor: "green",
-            }).showToast();
-            console.log(data)
-          // this.local.write("auth-token", { token: data.token })
-          this.local.write("data",  (data.token))
-          this.router.navigate(['/auth']);
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+              panelClass: ['mat-toolbar', 'mat-primary']
+            });
+            this.local.write("data", (data.token));
+            this.router.navigate(['/auth']);
           }
         },
-        error: (err:any) => {
+        error: (err: any) => {
           this.isLoading = false;
           const errMsg = err?.error?.message ?? err.message;
-          console.log(err);
-          Toastify({
-            text: `Error: ${errMsg}`,
+          this.snackBar.open(`Error: ${errMsg}`, 'Close', {
             duration: 3000,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            backgroundColor: "red",
-          }).showToast();
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['mat-toolbar', 'mat-warn']
+          });
         }
       });
     }
