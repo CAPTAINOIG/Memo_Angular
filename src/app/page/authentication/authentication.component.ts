@@ -3,6 +3,8 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css"; 
 
 @Component({
   selector: 'app-authentication',
@@ -38,9 +40,23 @@ authData: any;
       this.httpRequest.makePostRequest('/users_management/verify_auth', auth).subscribe((response)=>{
         console.log(response);
         this.isLoading = false
+        Toastify({
+          text: "successful!",
+          duration: 3000,
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          backgroundColor: "green",
+        }).showToast();
       }, (error)=>{
         console.log(error);
         this.isLoading = false
+        Toastify({
+          text: "Error",
+          duration: 3000,
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          backgroundColor: "red",
+        }).showToast();
         
       })
     }

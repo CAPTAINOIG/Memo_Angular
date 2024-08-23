@@ -10,10 +10,15 @@
         <!-- end::navigation -->
 
         <!-- Content body -->
+         
         <div class="content-body">
             <!-- Content -->
+            <div *ngIf="isLoading" class="spinner-container">
+                <div class="spinner"></div>
+            </div>
             <div class="content">
                     <div class="page-header d-flex justify-content-between">
+                        
         <h2>Files</h2>
         <a href="#" class="files-toggler">
             <i class="ti-menu"></i>
@@ -50,6 +55,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="col-xl-9">
             <div class="content-title mt-0">
                 <h4>Documents</h4>
@@ -95,9 +101,7 @@
                         </li>
                     </ul>
                 </div> -->
-                <div *ngIf="isLoading" class="spinner-container">
-                    <div class="spinner"></div>
-                </div>
+              
             <div class="table-responsive" *ngIf="!isLoading">
                 <table id="table-files" class="table table-borderless table-hover">
                     <thead>

@@ -27,6 +27,7 @@ export class CreatefolderComponent {
       (response) => {
         this.folder = response.data
         console.log(this.folder);
+        this.isLoading = false;
         Toastify({
           text: "successful!",
           duration: 3000,
@@ -34,7 +35,6 @@ export class CreatefolderComponent {
           position: "right", // `left`, `center` or `right`
           backgroundColor: "green",
         }).showToast();
-      this.isLoading = false;
       },
       (error) => {
         console.error('Error updating memo:', error);
