@@ -23,12 +23,13 @@ allFile: any  = [];
 allFolder: any = [];
 isLoading = true;
 recent: any;
+searchTerm: string = '';
   constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService) { }
 
   ngOnInit(): void {
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response)=>{
       this.allFile = response.data;
-      // console.log(this.allFile);
+      console.log(this.allFile);
       this.isLoading = false
     },(error)=>{
       console.log(error);
@@ -42,6 +43,7 @@ recent: any;
     },(error)=>{
       console.log(error);
     })
+    
   }
 
   previous (){
@@ -76,7 +78,7 @@ recent: any;
   editFiles(file: any) {
     this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
       this.handleModal.setEditMemo(response.data)
-      // console.log(response.data)
+      console.log(response.data)
       this.handleModal.showMother("edit_files");
     }, (error: any) => {
       console.log('Error fetching data', error);
@@ -92,6 +94,30 @@ recent: any;
       this.isLoading = false;
     })
   }
+
+  publish(memId:any){
+    console.log(memId)
+    this.handleModal.showMother("otp");
+    this.handleModal.setPublishMemId(memId);
+  }
+
+  filteredFiles() {
+    return this.allFile.filter(item => 
+      item.MemTitle.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  format=(dateT:any)=> {
+    const date= (new Date(dateT))
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+   }
   
+   createFolders(){
+    this.handleModal.showMother  ("create_folder")
+   }
+
   }
   

@@ -11,6 +11,8 @@ import { UserdetailComponent } from '../../userdetail/userdetail.component';
 import { AuthenticationComponent } from "../authentication/authentication.component";
 import { EsignatureComponent } from '../esignature/esignature.component';
 import { EditmemoComponent } from '../editmemo/editmemo.component';
+import { OtpconfirmationComponent } from '../otpconfirmation/otpconfirmation.component';
+import { CreatefolderComponent } from '../createfolder/createfolder.component';
 
 @Component({
   selector: 'app-sidebarforms',
@@ -24,7 +26,9 @@ import { EditmemoComponent } from '../editmemo/editmemo.component';
     UserdetailComponent,
     AuthenticationComponent,
     EsignatureComponent,
-    EditmemoComponent
+    EditmemoComponent,
+    OtpconfirmationComponent,
+    CreatefolderComponent,
   ],
   templateUrl: './sidebarforms.component.html',
   styleUrls: ['./sidebarforms.component.css']
@@ -42,6 +46,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   locationDetails: any = {};
   area_location: string[] = [];
   template: any = [];
+  selectedAllFolder: any = [];
   memId: string;
   memo_attachments = [
     {
@@ -59,9 +64,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     private fb: FormBuilder
 
   ) {
-
-
-
     this.memoForm = new FormGroup({
       title: new FormControl('',
         Validators.required),
@@ -78,7 +80,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       // ipAddress: new FormControl('') ,
       create_as_template: new FormControl(false),
       access: new FormControl(''),
-      // access_type: ['', Validators.required],
+      // change_folder: new FormControl (''),
       name: new FormControl(''),
       email: new FormControl(''),
       phone: new FormControl(''),
@@ -89,6 +91,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   ngOnInit(): void {
 
     this.editor = new Editor();
+    this.fetchFolders()
 
   }
   ngDoCheck(): void {
@@ -107,7 +110,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         ip_address: '',
         create_as_template: false,
         access: '',
-
         name: '',
         email: '',
         phone: '',
@@ -472,6 +474,33 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.template = response.data
       // console.log(this.template);
     })
+  }
+
+
+  // changeFolder(event:Event): void {
+  //   const selectedValue = (event.target as HTMLSelectElement).value;
+  //   if (selectedValue === 'folder') {
+  //     this.selectedFolder();
+  //   }
+  // }
+
+  // selectedFolder() {
+  //   this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {
+  //     console.log(response.data);
+  //     this.selectedAllFolder = response.data
+  //     // console.log(this.template);
+  //   })
+  // }
+
+  fetchFolders(): void {
+    this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe(
+      (response) => {
+        this.selectedAllFolder = response.data; // Assuming the data is in `response.data`
+      },
+      (error) => {
+        console.error('Error fetching folders:', error);
+      }
+    );
   }
 
 

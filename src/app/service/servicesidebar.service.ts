@@ -11,6 +11,7 @@ export class ServicesidebarService {
   public authData: any;
   public UserDetail: any;
   public editMemo: any;
+  public publishMemId:any;
 
   // Object to track the visibility of different components
   private componentStates: { [key: string]: boolean } = {};
@@ -49,6 +50,7 @@ export class ServicesidebarService {
     return this.UserDetail
   }
 
+  setPublishMemId=(data)=>this.publishMemId=data
   setEditMemo(data:any){
     console.log(data)
     this.editMemo = data

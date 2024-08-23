@@ -1,1 +1,3 @@
 /* You can add global styles to this file, and also import other style files */
+/* In styles.scss or a component's SCSS file */
+@import 'toastify-js/src/toastify.css';

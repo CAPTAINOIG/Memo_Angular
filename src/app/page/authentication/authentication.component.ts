@@ -43,7 +43,6 @@ authData: any;
         this.isLoading = false
         
       })
-      
     }
   }
 }

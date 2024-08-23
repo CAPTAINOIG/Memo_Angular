@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   sidebarVisible: boolean = false; // Sidebar is hidden by default
   recent: any;
   file: any;
+  activities: any;
 
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible; // Toggle the sidebar visibility
@@ -41,6 +42,19 @@ export class DashboardComponent implements OnInit {
 
   // ngOnInit => onload
   ngOnInit(): void {
+
+    // memoAcitivities() {
+      this.isLoading = true;
+      this.httpRequest.makeGetRequest('/memo/memo_activities').subscribe((response)=>{
+        this.activities = response.data;
+        // console.log(this.activities);
+        this.isLoading = false;
+      }, (error)=>{
+        console.log(error);
+        this.isLoading = false;
+      })
+  //   }
+  // }
     // this.isLoading = true
     // recent_folder
     this.httpRequest?.makeGetRequest("/dashboard/folder/recent").subscribe((response: any) => {
@@ -64,7 +78,7 @@ export class DashboardComponent implements OnInit {
     this.httpRequest?.makeGetRequest("/dashboard/files/recent").subscribe((response: any) => {
       this.recentFiles = response.data
       this.isLoading = false;
-      console.log(this.recentFiles);
+      // console.log(this.recentFiles);
     }, (error: any) => {
       console.log('Error fetching data', error);
       this.isLoading = false;
@@ -89,7 +103,6 @@ export class DashboardComponent implements OnInit {
     })
   }
   editFiles(file: any) {
-
     this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
       this.handleModal.setEditMemo(response.data)
       // console.log(response.data)
@@ -99,5 +112,26 @@ export class DashboardComponent implements OnInit {
       this.isLoading = false;
     })
   }
-  
+
+  format=(dateT:any)=> {
+    const date= (new Date(dateT))
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+   }
+   
+   formatTime(dateT: any): string {
+     const date = new Date(dateT);
+     const hours = String(date.getHours()).padStart(2, '0');
+     const minutes = String(date.getMinutes()).padStart(2, '0');
+     const seconds = String(date.getSeconds()).padStart(2, '0');
+     return `${hours}:${minutes}:${seconds}`;
+   }
+   
+   publish(memId: any){
+    console.log(memId)
+    this.handleModal.showMother("otp");
+    this.handleModal.setPublishMemId(memId);
+  }
 }

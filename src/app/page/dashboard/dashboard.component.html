@@ -130,7 +130,7 @@
                         </a>
                     </td>
                     
-                    <td>{{recent?.CreatedAt}}</td>
+                    <td>{{format(recent?.CreatedAt)}}</td>
                    
                     <td>
                         {{recent?.MemFold?.MemFoldName}}
@@ -143,6 +143,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <span class="dropdown-item cursor-pointer" (click)="editFiles(recent?.MemUniqueId)" data-sidebar-target="#view-file">Edit</span>
+                                <span class="dropdown-item cursor-pointer" (click)="publish(recent.Id)">     {{recent.isPublished ? "UnPublish" : "Publish" }}</span>
                             </div>
                         </div>
                     </td>
@@ -157,7 +158,43 @@
         <h4>Last Activities</h4>
     </div>
 
-    <div class="timeline">
+
+
+    <div *ngIf="isLoading" class="spinner-container">
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="row mb-5" *ngIf="!isLoading">
+        <div class="col-md-12">
+            <div class="timeline">
+                <div class="timeline-item" *ngFor="let item of activities">
+                    <div>
+                        <figure class="avatar mr-3">
+                            <img src="../../assets/media/image/user/avatar2.jpg" class="rounded-circle" alt="image">
+                        </figure>
+                    </div>
+                    <div>
+                        <h6 style="margin-top: 50ppx;" class="d-md-flex justify-content-between mt-3">
+                            <span class="d-block">
+                                <a class="link-1">
+                                  <p>{{item?.ViewEmail}} from {{item?.ViewLoc}} viewed this memo on {{format(item?.CreatedAt)}} at approximately {{formatTime(item?.CreatedAt)}}.</p>
+                                </a>
+                              </span>
+                              
+                            <!-- <span class="text-muted font-weight-normal">{{format(item?.CreatedAt)}}</span> -->
+                            <!-- <span>{{formatTime(item?.CreatedAt)}}</span> -->
+                        </h6>
+                        <a href="#">
+                            <!-- <p [innerHTML]="item?.Mem?.MemContents">/p> -->
+                            <!-- <span class="text-primary">{{item?.Mem.MemFullLink}}</span> -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="timeline">
         <div class="timeline-item">
             <div>
                 <figure class="avatar mr-3">
@@ -279,7 +316,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
             </div>
             <!-- ./ Content -->
 

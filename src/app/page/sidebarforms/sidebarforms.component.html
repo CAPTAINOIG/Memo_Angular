@@ -36,17 +36,17 @@
         </div>
     </div>
 
-    <!-- <div *ngIf="handleModals.show=='edit_files'" class="sidebar-group-forms d-print-none"  >
+   <div *ngIf="handleModals.show=='otp'" class="sidebar-group-forms d-print-none"  >
         <div class="sidebar primary-sidebar show" id="storage">
             <div class="sidebar-header">
-                <h4>Edit Memo</h4>
+                <h4>Otp Confirmation</h4>
                 <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
                     <i class="ti-angle-right"></i>
                 </a>
             </div>
-            <app-editmemo></app-editmemo>
+            <app-otpconfirmation></app-otpconfirmation>
         </div>
-    </div> -->
+    </div>
 
     <div *ngIf="handleModals.show=='authentication'" class="sidebar-group-forms d-print-none"  >
         <div class="sidebar primary-sidebar show" id="storage">
@@ -57,6 +57,18 @@
                 </a>
             </div>
             <app-authentication></app-authentication>
+        </div>
+    </div>
+
+    <div *ngIf="handleModals.show=='create_folder'" class="sidebar-group-forms d-print-none"  >
+        <div class="sidebar primary-sidebar show" id="storage">
+            <div class="sidebar-header">
+                <h4>Create Folder</h4>
+                <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
+                    <i class="ti-angle-right"></i>
+                </a>
+            </div>
+            <app-createfolder></app-createfolder>
         </div>
     </div>
 
@@ -100,6 +112,41 @@
                                 <label for="exampleInputEmail1">Title</label>
                                 <input type="text" formControlName="title" class="form-control" id="title" name="title" aria-describedby="emailHelp" placeholder="">
                             </div>
+
+                             <!-- <div class="form-group">
+                                <label for="exampleFormControlSelect1">Folder</label>
+                                <select (change)="changeFolder($event)" name="security_type" formControlName="security_type" class="form-control" id="exampleFormControlSelect1">
+                                    <option></option>
+                                    <option value="folder">Select from folders</option>
+                                    <option value=""></option>
+                                </select>
+                                <div *ngFor="let item of selectedAllFolder"></div>
+                            </div>  -->
+
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Folder</label>
+                                <select formControlName="security_type" class="form-control" id="exampleFormControlSelect1">
+                                  <option value="">Select a folder</option>
+                                  <!-- Dynamically populate options based on the fetched folders -->
+                                  <ng-container *ngIf="selectedAllFolder && selectedAllFolder.length > 0">
+                                    <option *ngFor="let item of selectedAllFolder" [value]="item.Id">{{ item.MemFoldName }}</option>
+                                  </ng-container>
+                                </select>
+                              </div>
+                              
+
+                            <!-- <div class="form-group">
+                                <label for="exampleFormControlSelect1">Folder</label>
+                                <select (change)="changeFolder($event)" name="change_folder" formControlName="change_folder" class="form-control" id="exampleFormControlSelect1">
+                                  <option value="">Select an option</option>
+                                  <option value="folder">Select from folders</option>
+                                  
+                                  <ng-container *ngIf="selectedAllFolder && selectedAllFolder.length > 0">
+                                    <option *ngFor="let item of selectedAllFolder" [value]="item.MemFoldName">{{ item.MemFoldName }}</option>
+                                  </ng-container>
+                                </select>
+                              </div>                               - -->
+                            
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Memo</label>
                                
@@ -153,7 +200,7 @@
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                         <form [formGroup]="memoForm" (ngSubmit)="onsubmit()">
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">Security Types</label>
+                                <!-- <label for="exampleFormControlSelect1">Security Types</label> -->
                                 <select (change)="changeSecurityType()" name="security_type" formControlName="security_type" class="form-control" id="exampleFormControlSelect1">
                                     <option></option>
                                     <option value="template">Select from Templates</option>
