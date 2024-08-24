@@ -8,8 +8,9 @@ import {
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, isDevMode } from '@angular/core';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     importProvidersFrom(HttpClientModule),
-    importProvidersFrom(BrowserAnimationsModule)
+    importProvidersFrom(BrowserAnimationsModule), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          })
   ]
 };

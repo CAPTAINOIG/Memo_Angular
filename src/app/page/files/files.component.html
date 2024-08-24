@@ -10,15 +10,10 @@
         <!-- end::navigation -->
 
         <!-- Content body -->
-         
         <div class="content-body">
             <!-- Content -->
-            <div *ngIf="isLoading" class="spinner-container">
-                <div class="spinner"></div>
-            </div>
             <div class="content">
                     <div class="page-header d-flex justify-content-between">
-                        
         <h2>Files</h2>
         <a href="#" class="files-toggler">
             <i class="ti-menu"></i>
@@ -27,7 +22,7 @@
 
 
     <div class="row">
-        <div class="col-xl-3 files-sidebar">
+        <div class="col-xl-3 files-sidebar" *ngIf="!isLoading">
             <div class="card border-0" id="folder">
                 <h6 class="card-title">My Folders</h6>
                 <span class="list-inline-item mb-0">
@@ -55,13 +50,12 @@
                 </div>
             </div>
         </div>
-        
         <div class="col-xl-9">
             <div class="content-title mt-0">
                 <h4>Documents</h4>
             </div>
             <div class="d-md-flex justify-content-between mb-4">
-                <ul class="list-inline mb-3">
+                <ul class="list-inline mb-3" *ngIf="!isLoading">
                   <span class="list-inline-item mb-0">
                     <button [disabled]="isLoadingNext" class="btn btn-primary" (click)="previous()">
                       <span *ngIf="isLoadingPrevious" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -101,7 +95,9 @@
                         </li>
                     </ul>
                 </div> -->
-              
+                <div *ngIf="isLoading" class="spinner-container">
+                    <div class="spinner"></div>
+                </div>
             <div class="table-responsive" *ngIf="!isLoading">
                 <table id="table-files" class="table table-borderless table-hover">
                     <thead>
@@ -110,9 +106,9 @@
                         </th>
                         <th>Name</th>
                         <th>Date</th>
-                        <!-- <th>Content</th> -->
                         <th>Folder Name</th>
-                        <th></th>
+                        <th>Link</th>
+                        <th>QrCode</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -128,16 +124,18 @@
                                 </figure>
                                 <span class="d-flex flex-column">
                 
-                                            <span class="text-primary">{{item.MemTitle}}</span>
-                                            <!-- <span class="small font-italic">12 KB</span> -->
-                                        </span>
-                            </a>
+                                            <span>{{item.MemTitle}}</span>
+                                </span>
+                             </a>
                         </td>
                         <td>{{format(item.CreatedAt)}}</td>
-                        <!-- <td [innerHTML]="item.MemContents">
-                            {{item.MemContents}}
-                        </td> -->
                         <td>{{item.MemFoldName}}</td>
+                        <td class="text-primary cursor-pointer">{{item.MemFullLink}}</td>
+                        <!-- <td>{{item.MemQuickResponse}}</td> -->
+                        <td class="qrcode">
+                            <img [src]="item.MemQuickResponse" alt="User Image" style="width: 60px; height: 60px; object-fit: contain;">
+                        </td>
+                        
                         <td>
                         </td>
                         <td class="text-right">
