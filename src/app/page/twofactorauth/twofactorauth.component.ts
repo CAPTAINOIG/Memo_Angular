@@ -54,7 +54,7 @@ export class TwofactorauthComponent {
           this.isLoading = false;
           console.log(err);
           Toastify({
-            text: `Error: ${err}`,
+            text: 'invalid',
             duration: 3000,
             gravity: "top", // `top` or `bottom`
             position: "right", // `left`, `center` or `right`

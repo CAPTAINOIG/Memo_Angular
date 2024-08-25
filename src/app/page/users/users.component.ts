@@ -87,7 +87,7 @@ this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((
 }
 
 makeFilter=()=>{
-  console.log(this.users)
+  // console.log(this.users)
   // console.log(typeof this.selectedValue)
   // console.log( this.selectedValue)
     if(!isNaN(this.selectedValue)){

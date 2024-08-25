@@ -64,7 +64,7 @@ export class LoginComponent {
           const errMsg = err?.error?.message ?? err.message;
           console.log(err);
           Toastify({
-            text: `Error: ${errMsg}`,
+            text: 'invalid',
             duration: 3000,
             gravity: "top", // `top` or `bottom`
             position: "right", // `left`, `center` or `right`

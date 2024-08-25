@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder, Form } from '@angular/forms';
 import { NgxEditorModule, Editor } from 'ngx-editor';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
@@ -37,6 +37,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   @ViewChild('fileInput') fileInput!: ElementRef;
   step: any;
   memoForm: FormGroup;
+  qrForm:FormGroup;
   editor: Editor;
   allowed_ips: string[] = [];
   ip_address: string = '';
@@ -48,6 +49,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   template: any = [];
   selectedAllFolder: any = [];
   memId: string;
+  isUsed: any[] = [];
+  isLoading = false;
+  
+
   memo_attachments = [
     {
       name: "Sample",
@@ -92,6 +97,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
     this.editor = new Editor();
     this.fetchFolders()
+    this.fetchQrCode();
+
+    this.qrForm = this.fb.group({
+      qrInput: [{ value: '', disabled: true }]
+    });
 
   }
   ngDoCheck(): void {
@@ -250,9 +260,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-
-
-
   addIP(ip_address: string) {
     if (ip_address && !this.allowed_ips.includes(ip_address)) {
       this.allowed_ips.push(ip_address);
@@ -347,8 +354,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-
-
   // CREATING ACCESS MEMMO
   createMemo(values: any) {
     // console.log(values);
@@ -396,8 +401,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     );
   }
 
-
-
   // getMemo() {
   //   // Implement your logic to fetch memo data
   //   this.httpRequest.makeGetRequest('/memo/single?id=y89356548697887').subscribe((response)=>{
@@ -431,7 +434,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       );
     }
   }
-
   // uploadLogo.append('memId', this.memId);
   // FILE ATTACHMENT 
   // Create Attachment
@@ -458,7 +460,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       console.warn('No file selected.');
     }
   }
-
 
   // Implement your logic to handle security type changes
   changeSecurityType(): void {
@@ -503,8 +504,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     );
   }
 
-
-
   // SELECT ACCESS TYPE. SHARING PAGE
   selectFile() {
     this.fileInput.nativeElement.click();
@@ -529,5 +528,64 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       console.warn('No file selected.');
     }
   }
+
+
+  createQrCode(value: any) {
+    if(this.qrForm.valid){
+      const data = this.qrForm.value
+      console.log(data);
+    } else {
+      Toastify({
+        text: "invalid",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
+    }
+  } 
+
+  fetchQrCode(){
+    this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response)=>{
+      console.log(response);
+      this.isUsed = response.data;
+      if (this.isUsed.length > 0) {
+        const item = this.isUsed[0];
+        this.qrForm.patchValue({
+          qrInput: item.MemUniqueId
+        });
+        this.qrForm.get('qrInput')?.disable();
+      }
+    }, (error)=>{
+      console.log(error);
+      
+    })
+  }
+
+  
+    
+    // this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
+    //   (response) => {
+    //     console.log(response);
+    //     Toastify({
+    //       text: 'success',
+    //       duration: 3000,
+    //       gravity: "top",
+    //       position: "right",
+    //       backgroundColor: "red",
+    //     }).showToast();
+    //   },
+  //     (error) => {
+  //       console.log(error);
+  //       Toastify({
+  //         text: `${error}`,
+  //         duration: 3000,
+  //         gravity: "top",
+  //         position: "right",
+  //         backgroundColor: "red",
+  //       }).showToast();
+  //     }
+  //   );
+ 
 
 }
