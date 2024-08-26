@@ -24,6 +24,7 @@ allFolder: any = [];
 isLoading = true;
 recent: any;
 searchTerm: string = '';
+
   constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService) { }
 
   ngOnInit(): void {
@@ -86,11 +87,13 @@ searchTerm: string = '';
     })
   }
   foldName(id:any|number){
-    this.isLoading = true
-    this.foldId=id
-    this.page=1
+    this.isLoading = true;
+    this.foldId = id
+    this.page = 1
     this.httpRequest.makeGetRequest('/dashboard/files/all?page=1&foldId='+id).subscribe((response)=>{
       this.allFile = response.data;
+      console.log(this.allFile);
+      
       this.isLoading = false;
     })
   }

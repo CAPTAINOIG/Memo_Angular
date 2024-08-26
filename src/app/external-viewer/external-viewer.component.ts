@@ -15,11 +15,14 @@ export class ExternalViewerComponent implements OnInit {
   itemId: string | null = null;
   constructor(private http:HttpRequestService,private route: ActivatedRoute){
   }
+  
   public data:any=undefined;
+
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.itemId = params.get('id');
     });
+
    this.getData()
     
   }

@@ -115,17 +115,6 @@
                                 <label for="exampleInputEmail1">Title</label>
                                 <input type="text" formControlName="title" class="form-control" id="title" name="title" aria-describedby="emailHelp" placeholder="">
                             </div>
-
-                             <!-- <div class="form-group">
-                                <label for="exampleFormControlSelect1">Folder</label>
-                                <select (change)="changeFolder($event)" name="security_type" formControlName="security_type" class="form-control" id="exampleFormControlSelect1">
-                                    <option></option>
-                                    <option value="folder">Select from folders</option>
-                                    <option value=""></option>
-                                </select>
-                                <div *ngFor="let item of selectedAllFolder"></div>
-                            </div>  -->
-
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Folder</label>
                                 <select formControlName="security_type" class="form-control" id="exampleFormControlSelect1">
@@ -167,7 +156,17 @@
                                 <input type="checkbox" name="include_signature" formControlName="include_signature" class="form-check-input" id="include_signature">
                                 <label class="form-check-label" for="exampleCheck1">Include Signature</label>
                             </div>
-                            <button type="submit" class="btn btn-primary">{{handleModals.show === 'edit_files' ? 'Save Edit' : 'Save Draft'}}</button>
+                            <!-- <button type="submit" class="btn btn-primary">{{handleModals.show === 'edit_files' ? 'Save Edit' : 'Save Draft'}}</button> -->
+                            <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                                <ng-container *ngIf="isLoading; else buttonText">
+                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                  Loading...
+                                </ng-container>
+                                <ng-template #buttonText>
+                                  {{ handleModals.show === 'edit_files' ? 'Save Edit' : 'Save Draft' }}
+                                </ng-template>
+                              </button>
+                              
                         </form>
                     </div>
                     
@@ -420,7 +419,7 @@
                             </div>
                             <button type="submit" [disabled]="isLoading" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
                                 {{ isLoading ? 'Submitting...' : 'Submit' }}
-                              </button>
+                            </button>
                         </form>
                        
                           

@@ -94,7 +94,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnInit(): void {
-
     this.editor = new Editor();
     this.fetchFolders()
     this.fetchQrCode();
@@ -183,9 +182,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
   draftMemo(): void {
     if (this.memoForm.valid) {
+      this.isLoading = true;
       const memoData = this.memoForm.value;
       console.log(memoData);
-
       // Determine the correct API endpoint and action based on the state
       if (this.handleModals.show === 'edit_files') {
         // Create the memo object using form values
@@ -202,6 +201,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
           (response) => {
             console.log(response);
+            this.isLoading = false;
             this.memoForm.reset();
             Toastify({
               text: "Memo updated successfully",
@@ -213,6 +213,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           },
           (error) => {
             console.error('Error updating memo:', error);
+            this.isLoading = false;
             Toastify({
               text: `${error}`,
               duration: 3000,
@@ -227,6 +228,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
           (response: any) => {
             console.log(response);
+            this.isLoading = false;
             this.memId = response.id;
             Toastify({
               text: "Memo created successfully",
@@ -238,6 +240,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           },
           (error) => {
             console.error('Error saving draft:', error);
+            this.isLoading = false;
             Toastify({
               text: `${error}`,
               duration: 3000,
@@ -250,6 +253,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }
     } else {
       console.error('Form is not valid!');
+      this.isLoading = false;
       Toastify({
         text: 'Form is not valid',
         duration: 3000,
