@@ -1,3 +1,3 @@
-<p>
-    <span [innerHTML]="data.MemContents"></span>
+<p class="text-center my-5" style="margin-top: 100px;">
+   {{ data ? 'Contents:' : ''}} <span [innerHTML]="data.MemContents"></span>
 </p>
