@@ -549,10 +549,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response)=>{
       console.log(response);
       this.isUsed = response.data;
-      if (this.isUsed.length > 0) {
+      if (this.isUsed?.length > 0) {
         const item = this.isUsed[0];
-        this.qrForm.patchValue({
-          qrInput: item.MemUniqueId
+        this.qrForm?.patchValue({
+          qrInput: item?.MemUniqueId
         });
         this.qrForm.get('qrInput')?.disable();
       }
