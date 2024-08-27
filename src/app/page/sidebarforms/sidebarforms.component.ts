@@ -53,6 +53,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   isLoading = false;
   qrCodeCheckInterval: any;
   updateMemoMemUniqueId: any;
+  showSubmitButton: boolean = false;
   
 
   memo_attachments = [
@@ -599,9 +600,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   
   fetchQrCode(){
     this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response)=>{
-      // console.log(response);
+      console.log(response);
       this.isUsed = response.data;
-      if (this.isUsed?.length > 0) {
+      this.showSubmitButton = this.isUsed?.length > 0
+      if (this.showSubmitButton) {
         const item = this.isUsed[0];
         this.qrForm?.patchValue({
           qrInput: item?.MemUniqueId

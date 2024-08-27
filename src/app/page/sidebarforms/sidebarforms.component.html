@@ -418,7 +418,7 @@
                                   <img [src]="item.MemQrCode" alt="Generated QR Code">
                                 </div>
                             </div>
-                            <button type="submit" [disabled]="isLoading" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
+                            <button *ngIf="showSubmitButton" type="submit" [disabled]="isLoading" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
                                 {{ isLoading ? 'Submitting...' : 'Submit' }}
                             </button>
                         </form>
