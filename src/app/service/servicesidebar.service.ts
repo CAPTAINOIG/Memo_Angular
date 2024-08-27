@@ -12,6 +12,10 @@ export class ServicesidebarService {
   public UserDetail: any;
   public editMemo: any;
   public publishMemId:any;
+  public memId:any
+  createMemoTab=undefined
+  qrCodeData=undefined;
+
 
   // Object to track the visibility of different components
   private componentStates: { [key: string]: boolean } = {};
@@ -19,15 +23,35 @@ export class ServicesidebarService {
   constructor() { }
 
   // Existing method to show or hide the sidebar
+
+
+  setQrCodeData(data:any){
+    this.qrCodeData=data
+
+  }
+  
   public showMother(data: string): void {
+
+    
     this.show = data;
   }
   public toggleCheck(data): void {
     this.check = data;
   }
 
+  setCreateMemoTabs(data:any){
+    this.createMemoTab=data
+    if(!data){
+      this.setQrCodeData(undefined)
+    }
+
+  }
   setUserData(data: any) {
     this.userData = data;
+  }
+
+  setMemId(data:any){
+    this.memId=data
   }
 
   getUserData(){

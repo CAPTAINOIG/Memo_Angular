@@ -7,7 +7,7 @@ import { LocalstorageService } from '../LocalstorageService/localstorage.service
 })
 export class HttpRequestService {
   
-  private baseUrl = 'https://31eb-102-89-45-48.ngrok-free.app/api'; 
+  private baseUrl = 'https://8548-102-89-47-196.ngrok-free.app/api'; 
   private geoApiKey = '39f835849b07490f9ada6d2e31447933';
   
   constructor(

@@ -1,8 +1,10 @@
 <div>
-    <div *ngIf="handleModals.show=='new_user'" class="sidebar-group-forms d-print-none"  >
-        <div class="sidebar primary-sidebar show" id="storage">
-            <div class="sidebar-header">
-                <h4>New user</h4>
+    
+    <!-- <div *ngIf="handleModals.handleValue" class="sidebar-group-forms d-print-none"  > -->
+        <div *ngIf="handleModals.show=='new_user'" class="sidebar-group-forms d-print-none"  >
+            <div class="sidebar primary-sidebar show" id="storage">
+                <div class="sidebar-header">
+                    <h4>New user</h4>
                 <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
                     <i class="ti-angle-right"></i>
                 </a>
@@ -71,7 +73,7 @@
         </div>
     </div>
 
-    <div *ngIf=" ['edit_files','create_memo'].includes(handleModals.show)" class="sidebar-group-forms d-print-none"  >
+    <div *ngIf=" ['edit_files','create_memo'].includes(this.handleModals.show)" class="sidebar-group-forms d-print-none"  >
         <!-- Sidebar - Storage -->
         <div class="sidebar primary-sidebar show" id="storage">
             <div class="sidebar-header">
@@ -88,23 +90,23 @@
             <div class="sidebar-content">
                 <ul class="nav nav-tabs mb-3" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" (click)="handle()" role="tab"
                          aria-controls="home" aria-selected="true">Content</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" (click)="handle()" role="tab"
                          aria-controls="profile" aria-selected="false">Attachments</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" (click)="handle()" role="tab"
                          aria-controls="contact" aria-selected="false">Security</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="sharing-tab" data-toggle="tab" href="#sharing" role="tab"
+                        <a class="nav-link" id="sharing-tab" data-toggle="tab" href="#sharing"  (click)="handle()" role="tab"
                            aria-controls="sharing" aria-selected="false">Sharing</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="qrcode-tab" data-toggle="tab" href="#qrcode" role="tab"
+                        <a class="nav-link" id="qrcode-tab" data-toggle="tab" href="#qrcode" (click)="handle('hello')"  role="tab"
                            aria-controls="qrcode" aria-selected="false">QR Code</a>
                     </li>
                   </ul>
@@ -404,27 +406,12 @@
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>
                     </div>
+                    <div class="tab-pane fade" id="qrcode" role="tabpanel" aria-labelledby="qrcode">
 
-                    <div class="tab-pane fade" id="qrcode" role="tabpanel" aria-labelledby="qrcode-tab">
-                        <h3>Scan your physical QR Code</h3>
-                         <form [formGroup]="qrForm" (ngSubmit)="createQrCode(qrForm.value)">
-                            <div class="form-group">
-                                <label for="qrInput">Enter URL or Text:</label>
-                                 <input type="text" formControlName="qrInput" class="form-control" id="qrInput">
-                                <div *ngIf="qrForm.get('qrInput').invalid && (qrForm.get('qrInput').dirty || qrForm.get('qrInput').touched)" class="text-danger">
-                                  <div *ngIf="qrForm.get('qrInput').errors?.required">This field is required.</div>
-                                </div>
-                                <div *ngFor="let item of isUsed">
-                                  <img [src]="item.MemQrCode" alt="Generated QR Code">
-                                </div>
-                            </div>
-                            <button *ngIf="showSubmitButton" type="submit" [disabled]="isLoading" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
-                                {{ isLoading ? 'Submitting...' : 'Submit' }}
-                            </button>
-                        </form>
-                       
-                          
+                        <app-createqrcode ></app-createqrcode>
                     </div>
+
+                    
                   </div>
             </div>
         </div>

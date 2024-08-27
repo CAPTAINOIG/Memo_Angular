@@ -6,13 +6,14 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { NewuserComponent } from '../newuser/newuser.component';
 import Toastify from 'toastify-js';
-import "toastify-js/src/toastify.css";
+
 import { UserdetailComponent } from '../../userdetail/userdetail.component';
 import { AuthenticationComponent } from "../authentication/authentication.component";
 import { EsignatureComponent } from '../esignature/esignature.component';
 import { EditmemoComponent } from '../editmemo/editmemo.component';
 import { OtpconfirmationComponent } from '../otpconfirmation/otpconfirmation.component';
 import { CreatefolderComponent } from '../createfolder/createfolder.component';
+import { CreateqrcodeComponent } from '../../createqrcode/createqrcode.component';
 
 @Component({
   selector: 'app-sidebarforms',
@@ -29,6 +30,7 @@ import { CreatefolderComponent } from '../createfolder/createfolder.component';
     EditmemoComponent,
     OtpconfirmationComponent,
     CreatefolderComponent,
+    CreateqrcodeComponent
   ],
   templateUrl: './sidebarforms.component.html',
   styleUrls: ['./sidebarforms.component.css']
@@ -37,7 +39,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   @ViewChild('fileInput') fileInput!: ElementRef;
   step: any;
   memoForm: FormGroup;
-  qrForm:FormGroup;
   editor: Editor;
   allowed_ips: string[] = [];
   ip_address: string = '';
@@ -49,11 +50,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   template: any = [];
   selectedAllFolder: any = [];
   memId: string;
-  isUsed: any[] = [];
+
   isLoading = false;
   qrCodeCheckInterval: any;
   updateMemoMemUniqueId: any;
   showSubmitButton: boolean = false;
+
   
 
   memo_attachments = [
@@ -70,7 +72,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     public handleModals: ServicesidebarService,
     private httpRequest: HttpRequestService,
     private fb: FormBuilder
-
   ) {
     this.memoForm = new FormGroup({
       title: new FormControl('',
@@ -95,17 +96,16 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     });
 
   }
+  
+  handle(data:any=undefined){
+    this.handleModals.setCreateMemoTabs(data)
+   
+  }
 
   ngOnInit(): void {
     this.editor = new Editor();
     this.fetchFolders()
-    // this.fetchQrCode();
-    this.startQrCodeCheck();
-
-    this.qrForm = this.fb.group({
-      qrInput: [{ value: '', disabled: true }]
-    });
-
+   
   }
   ngDoCheck(): void {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
@@ -243,6 +243,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
             console.log(response);
             this.isLoading = false;
             this.memId = response.id;
+            this.handleModals.setMemId( response.id )
             Toastify({
               text: "Memo created successfully",
               duration: 3000,
@@ -548,74 +549,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   }
 
 
-  createQrCode(value: any) {
-    // console.log(value);
-    if (!this.memId) {
-      this.isLoading = false;
-      Toastify({
-        text: "please create a memo",
-        duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "red",
-      }).showToast();
-    }
-      this.isLoading = true;
-      let updateMemoMemUniqueId = ({
-        memId:this.memId,
-        memqrcodeId: value.qrInput,
-      })
-      // console.log(updateMemoMemUniqueId);
-      this.httpRequest.makePatchRequest('/memo/update_memo_memuniqueid', updateMemoMemUniqueId).subscribe((response)=>{
-        this.updateMemoMemUniqueId = response;
-        // console.log(this.updateMemoMemUniqueId)
-        Toastify({
-          text: "success",
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "green",
-        }).showToast();
-        this.isLoading = false;
-      }, (error)=>{
-        this.isLoading = false;
-        console.log(error)
-          Toastify({
-            text: "invalid",
-            duration: 3000,
-            gravity: "top",
-            position: "right",
-            backgroundColor: "red",
-          }).showToast();
-      })
-    }
-
-
-  startQrCodeCheck() {
-    // Use setInterval to call fetchQrCode every second
-    this.qrCodeCheckInterval = setInterval(() => {
-      this.fetchQrCode();
-    }, 1000); // 1000 ms = 1 second
-  }
   
-  fetchQrCode(){
-    this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response)=>{
-      console.log(response);
-      this.isUsed = response.data;
-      this.showSubmitButton = this.isUsed?.length > 0
-      if (this.showSubmitButton) {
-        const item = this.isUsed[0];
-        this.qrForm?.patchValue({
-          qrInput: item?.MemUniqueId
-        });
-        this.qrForm.get('qrInput')?.disable();
-      }
-    }, (error)=>{
-      console.log(error);
-      
-    })
-  }
 
+
+  
     
     // this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
     //   (response) => {

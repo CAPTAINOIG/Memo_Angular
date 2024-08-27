@@ -85,6 +85,7 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  
 
   openModal(){
     this.handleModal.showMother("create_memo")
