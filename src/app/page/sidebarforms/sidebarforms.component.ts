@@ -295,11 +295,24 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   onsubmit() {
+    this.isLoading = false;
+    if (!this.memId) {
+      Toastify({
+        text: "please create a memo",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
+      return;
+    }
+    this.isLoading = true;
     const formValues = { ...this.memoForm.value, ipData: this.allowed_ips, geolocationData: Object.values(this.locationDetails), memId: this.memId, new: this.area_location };
-    console.log('Form Values:', formValues);
+    console.log(formValues);
     // this.createMemo(formValues); 
     this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response) => {
       console.log(response);
+      this.isLoading = false;
       Toastify({
         text: 'success',
         duration: 3000,
@@ -308,6 +321,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         backgroundColor: "green",
       }).showToast();
     }, (error) => {
+      console.log(error);
+      this.isLoading = false;
       Toastify({
         text: `${error}`,
         duration: 3000,

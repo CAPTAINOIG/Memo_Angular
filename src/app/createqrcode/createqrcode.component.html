@@ -7,7 +7,7 @@
     <input type="text" [(ngModel)]="handleModals.qrCodeData.MemUniqueId" class="form-control" id="qrInput" disabled>
     <img [src]="handleModals?.qrCodeData?.MemQrCode" alt="Generated QR Code">
     </div>
-    <button  type="submit"  class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
+    <button (click)="createQrCode()"  type="submit"  class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
         {{ isLoading ? 'Submitting...' : 'Submit' }} 
     </button>
 </div>

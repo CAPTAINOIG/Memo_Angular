@@ -65,7 +65,6 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
   }
   createQrCode() {
     if (!this.handleModals.memId) {
-      this.isLoading = false;
       Toastify({
         text: "please create a memo",
         duration: 3000,
@@ -73,9 +72,9 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
         position: "right",
         backgroundColor: "red",
       }).showToast();
+      this.isLoading = false;
       return
     }
-
       this.isLoading = true;
       let updateMemoMemUniqueId = ({
         memId:this.handleModals.memId,
@@ -83,7 +82,7 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
       })
       // console.log(updateMemoMemUniqueId);
       this.httpRequest.makePatchRequest('/memo/update_memo_memuniqueid', updateMemoMemUniqueId).subscribe((response)=>{
-   
+        console.log(response);
         // console.log(this.updateMemoMemUniqueId)
         Toastify({
           text: "success",
@@ -94,8 +93,8 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
         }).showToast();
         this.isLoading = false;
       }, (error)=>{
-        this.isLoading = false;
         console.log(error)
+        this.isLoading = false;
           Toastify({
             text: "invalid",
             duration: 3000,
