@@ -19,11 +19,16 @@ export class SecurityCheckComponent  implements OnInit{
     email = '';
     otp = '';
     message = '';
+    latitude: number | undefined;
+     longitude: number | undefined;
+    errorMessage: string | undefined;
+    
   
     constructor(private httpRequest: HttpRequestService) {}
   
     ngOnInit() {
       this.performSecurityChecks();
+      this.getUserLocation();
     }
   
     performSecurityChecks() {
@@ -108,4 +113,38 @@ export class SecurityCheckComponent  implements OnInit{
         this.isLoading = false;
       });
     }
+
+  getUserLocation() {
+    if (navigator.geolocation) {
+      console.log(navigator.geolocation);
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log(position);
+          
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+          console.log(`Latitude: ${this.latitude}, Longitude: ${this.longitude}`); // Logging location
+        },
+        (error) => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              this.errorMessage = 'User denied the request for Geolocation.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              this.errorMessage = 'Location information is unavailable.';
+              break;
+            case error.TIMEOUT:
+              this.errorMessage = 'The request to get user location timed out.';
+              break;
+            // case error.UNKNOWN_ERROR:
+            //   this.errorMessage = 'An unknown error occurred.';
+            //   break;
+          }
+        }
+      );
+    } else {
+      this.errorMessage = 'Geolocation is not supported by this browser.';
+    }
+  }
   }

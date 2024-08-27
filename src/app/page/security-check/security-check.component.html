@@ -25,4 +25,18 @@
   </div>
 
   <div *ngIf="message">{{ message }}</div>
+
+
+
+
+
+  <div *ngIf="latitude && longitude">
+    <h2>Your current location is:</h2>
+    <p>Latitude: {{ latitude }}</p>
+    <p>Longitude: {{ longitude }}</p>
+  </div>
+  <div *ngIf="errorMessage">
+    <p>Error: {{ errorMessage }}</p>
+  </div>
+  
 </div>

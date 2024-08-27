@@ -257,7 +257,7 @@
                                 <button (click)="updateMemo()">update</button>
                             </div> -->
                     <form>   
-                        <div class="row">
+                        <div class="row my-4">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name</label>
@@ -271,12 +271,9 @@
                                     <label>Phone</label>
                                     <input type="text" class="form-control" value="{{user?.phone}}">
                                 </div>
-                                
-                               
                             </div>
-                           
                         </div>
-                        <button class="btn btn-primary">Save Changes</button>
+                        <button class="btn btn-primary mb-5">Save Changes</button>
                     </form>
                 </div>
             </div>
@@ -316,9 +313,9 @@
                 <div class="content-title">       
                     <h4>E-Signatures Management</h4>
                 </div>
-                <form  (ngSubmit)="addESignature()" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-md-6">
+    <form  (ngSubmit)="addESignature()" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="title">Title:</label>
                         <input type="text" id="title" class="form-control" [(ngModel)]="esignature.title" name="title" required>
@@ -330,23 +327,16 @@
                   <!-- <button  class="btn btn-primary" type="submit"> {{data&&data.length>0?"Updata E Signature":"Add E-Signature"}}</button> -->
                   <button [disabled]="isLoading" class="btn btn-primary my-5" type="submit">
                     {{ isLoading ? 'Loading.....' : (data && data.length > 0 ? 'Update E-Signature' : 'Add E-Signature') }}
-                </button>
-                </div>
+                  </button>
             </div>
-                </form>
+        </div>
+    </form>
               
                   <div class="card border-0">
                     <div class="table-responsive">
                         <table id="user-list" class="table table-borderless table-hover">
                             <thead *ngIf="returnData() && returnData().length > 0">
                             <tr>
-                                <!-- <th>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="user-list-select-all">
-                                        <label class="custom-control-label" for="user-list-select-all"></label>
-                                    </div>
-                                </th> -->
-                                
                                 <th>Title</th>
                                 <th>Date</th>
                                 <th>Image</th>
@@ -358,7 +348,7 @@
                                     <!-- <td>{{ signature.id }}</td> -->
                                     <td>{{ signature.Title }}</td>
                                    
-                                    <td>{{ signature.CreatedAt | date:'medium' }}</td> <!-- Format the date as needed -->
+                                    <td>{{ signature.CreatedAt | date:'medium' }}</td>
                                     <td>
                                         <img [src]="signature.ESignFile" class="signature-image" alt="E-Signature" width="100">
                                     </td>
@@ -576,20 +566,6 @@
         </div>
     </div>
             </div>
-            <!-- ./ Content -->
-
-            <!-- Footer -->
-            <!-- <footer class="content-footer d-print-none">
-                <div>© 2020 Filedash - <a href="http://laborasyon.com" target="_blank">Laborasyon</a></div>
-                <div>
-                    <nav class="nav">
-                        <a href="https://themeforest.net/licenses/standard" class="nav-link">Licenses</a>
-                        <a href="#" class="nav-link">Change Log</a>
-                        <a href="#" class="nav-link">Get Help</a>
-                    </nav>
-                </div>
-            </footer> -->
-            <!-- ./ Footer -->
         </div>
         <!-- ./ Content body -->
 

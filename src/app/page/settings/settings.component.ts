@@ -55,12 +55,6 @@ export class SettingsComponent {
     }
   }
 
-  // const userName = this.http.makeGetRequest('/auth/user').subscribe((response)=>{
-  //   this.user = response.data;
-  // }, (error)=>{
-  //   console.log(error);
-  // })
-
   uploadImage(): void {
     this.isLoadingImage = true;
     if (this.base64Image) {
@@ -150,12 +144,15 @@ export class SettingsComponent {
 
   addESignature() {
     if (!this.data) return;
-    this.isLoading = true
+    this.isLoading = true;
     try {
       if (this.data.length > 0) {
-    this.isLoading = true
+        this.isLoading = true;
         this.http.makePatchRequest(`/memo/mem_e_signature/update/`, { ...this.esignature, identity: this.data[0].id }).subscribe((response) => {
           this.data[0] = response.data
+          console.log(response);
+          
+          console.log(this.data[0]);
           this.isLoading = false
         });
       }

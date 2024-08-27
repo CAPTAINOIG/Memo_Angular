@@ -51,6 +51,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   memId: string;
   isUsed: any[] = [];
   isLoading = false;
+  qrCodeCheckInterval: any;
+  updateMemoMemUniqueId: any;
   
 
   memo_attachments = [
@@ -96,7 +98,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   ngOnInit(): void {
     this.editor = new Editor();
     this.fetchFolders()
-    this.fetchQrCode();
+    // this.fetchQrCode();
+    this.startQrCodeCheck();
 
     this.qrForm = this.fb.group({
       qrInput: [{ value: '', disabled: true }]
@@ -129,6 +132,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   
   ngOnDestroy(): void {
     this.editor.destroy();
+    if (this.qrCodeCheckInterval) {
+      clearInterval(this.qrCodeCheckInterval);
+    }
   }
 
   close() {
@@ -185,6 +191,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.isLoading = true;
       const memoData = this.memoForm.value;
       console.log(memoData);
+      // const memoData = {
+      //   title:  this.memoForm.value.title,
+      //   memo: this.memoForm.value.memo,
+      //   include_signature: this.memoForm.value.memo,
+      // };
+
       // Determine the correct API endpoint and action based on the state
       if (this.handleModals.show === 'edit_files') {
         // Create the memo object using form values
@@ -195,7 +207,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           memFold: this.handleModals?.editMemo?.MemFoldId || this.memoForm.value.MemFoldId || null,
         };
 
-        console.log(memo); // Log the memo object to check its structure
+        console.log(memo);
 
         // Make the PATCH request
         this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
@@ -369,6 +381,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         position: "right",
         backgroundColor: "red",
       }).showToast();
+      this.isLoading = false;
     }
     const memoData = {
       access: values.access,
@@ -535,23 +548,58 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
 
   createQrCode(value: any) {
-    if(this.qrForm.valid){
-      const data = this.qrForm.value
-      console.log(data);
-    } else {
+    // console.log(value);
+    if (!this.memId) {
+      this.isLoading = false;
       Toastify({
-        text: "invalid",
+        text: "please create a memo",
         duration: 3000,
         gravity: "top",
         position: "right",
         backgroundColor: "red",
       }).showToast();
     }
-  } 
+      this.isLoading = true;
+      let updateMemoMemUniqueId = ({
+        memId:this.memId,
+        memqrcodeId: value.qrInput,
+      })
+      // console.log(updateMemoMemUniqueId);
+      this.httpRequest.makePatchRequest('/memo/update_memo_memuniqueid', updateMemoMemUniqueId).subscribe((response)=>{
+        this.updateMemoMemUniqueId = response;
+        // console.log(this.updateMemoMemUniqueId)
+        Toastify({
+          text: "success",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "green",
+        }).showToast();
+        this.isLoading = false;
+      }, (error)=>{
+        this.isLoading = false;
+        console.log(error)
+          Toastify({
+            text: "invalid",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "red",
+          }).showToast();
+      })
+    }
 
+
+  startQrCodeCheck() {
+    // Use setInterval to call fetchQrCode every second
+    this.qrCodeCheckInterval = setInterval(() => {
+      this.fetchQrCode();
+    }, 1000); // 1000 ms = 1 second
+  }
+  
   fetchQrCode(){
     this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response)=>{
-      console.log(response);
+      // console.log(response);
       this.isUsed = response.data;
       if (this.isUsed?.length > 0) {
         const item = this.isUsed[0];
@@ -566,7 +614,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     })
   }
 
-  
     
     // this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
     //   (response) => {
@@ -590,6 +637,5 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   //       }).showToast();
   //     }
   //   );
- 
 
 }

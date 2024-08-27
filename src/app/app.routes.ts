@@ -11,6 +11,7 @@ import { authGuard } from './guards/auth.guard';
 import { NewuserComponent } from './page/newuser/newuser.component';
 import { SecurityCheckComponent } from './page/security-check/security-check.component';
 import { ExternalViewerComponent } from './external-viewer/external-viewer.component';
+import { PagenotfoundComponent } from './page/pagenotfound/pagenotfound.component';
 
 export const routes: Routes = [
     {'path':'', component:LoginComponent},
@@ -25,6 +26,7 @@ export const routes: Routes = [
     ]},
     {'path': 'securitycheck', component: SecurityCheckComponent},
     {'path': 'viewer/:id', component: ExternalViewerComponent},
+    {'path': '**', component: PagenotfoundComponent},
 
 ];
 
