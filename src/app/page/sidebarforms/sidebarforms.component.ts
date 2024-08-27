@@ -384,6 +384,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         backgroundColor: "red",
       }).showToast();
       this.isLoading = false;
+      return;
     }
     const memoData = {
       access: values.access,
