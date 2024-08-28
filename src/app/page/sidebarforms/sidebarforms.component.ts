@@ -44,7 +44,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   ip_address: string = '';
   location: string | null = null;
   ipAddress: string = '';
-  areaName: string = ''
+  areaName: string = '';
   locationDetails: any = {};
   area_location: string[] = [];
   template: any = [];
@@ -282,6 +282,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     if (ip_address && !this.allowed_ips.includes(ip_address)) {
       this.allowed_ips.push(ip_address);
       this.ip_address = '';
+      this.memoForm.get('ip_address')?.reset();
     } else {
       console.warn('IP address already exists or is invalid.');
       Toastify({
@@ -291,6 +292,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         position: "right", // `left`, `center` or `right`
         backgroundColor: "red",
       }).showToast();
+      this.memoForm.get('ip_address')?.reset(); 
     }
   }
 
@@ -321,10 +323,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         backgroundColor: "green",
       }).showToast();
     }, (error) => {
-      console.log(error);
+      console.log(error.error.message);
       this.isLoading = false;
       Toastify({
-        text: `${error}`,
+        text: 'something went wrong',
         duration: 3000,
         gravity: "top",
         position: "right",
@@ -344,10 +346,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.area_location.push(this.areaName);
     console.log('Area Name:', this.areaName);
     if (this.areaName) {
-      this.httpRequest.fetchAreaDetails(this.areaName)
-        .subscribe(
-          (data: any) => {
-            // console.log(data);
+      this.httpRequest.fetchAreaDetails(this.areaName).subscribe((data: any) => {
+            console.log(data);
             if (data.results && data.results.length > 0) {
               const result = data.results[0].annotations.DMS; // Get the first result
               Toastify({
@@ -358,13 +358,14 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
                 backgroundColor: "green",
               }).showToast();
               this.locationDetails[this.areaName] = {
-                latitude: result.lat,
-                longitude: result.lng,
+                Lat: this.dmsToDecimal(result.lat),
+                Lng: this.dmsToDecimal(result.lng),
               };
+              console.log(this.locationDetails);
             } else {
               Toastify({
                 text: 'No location fetch for this area',
-                duration: 3000,
+                duration: 5000,
                 gravity: "top",
                 position: "right",
                 backgroundColor: "red",
@@ -382,6 +383,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
             }).showToast();
           }
         );
+        this.memoForm.get('areaName')?.reset(); 
     } else {
       this.locationDetails = null; // Reset if no area name is provided
     }
@@ -389,6 +391,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
   // CREATING ACCESS MEMMO
   createMemo(values: any) {
+    this.isLoading = false;
     // console.log(values);
     if (!this.memId) {
       Toastify({
@@ -398,9 +401,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         position: "right",
         backgroundColor: "red",
       }).showToast();
-      this.isLoading = false;
       return;
     }
+    this.isLoading = true;
     const memoData = {
       access: values.access,
       memId: this.memId,
@@ -415,6 +418,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
       (response) => {
         console.log(response);
+    this.isLoading = false;
         Toastify({
           text: 'success',
           duration: 3000,
@@ -565,6 +569,20 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   }
 
 
+  dmsToDecimal(dms: string): number {
+    const parts = dms.split(/°|'|"| /).filter(part => part);
+    const degrees = parseFloat(parts[0]);
+    const minutes = parseFloat(parts[1]) / 60;
+    const seconds = parseFloat(parts[2]) / 3600;
+    const direction = parts[3];
+
+    let decimal = degrees + minutes + seconds;
+    if (direction === 'S' || direction === 'W') {
+        decimal *= -1;
+    }
+    return decimal;
+}
+  
   
 
 

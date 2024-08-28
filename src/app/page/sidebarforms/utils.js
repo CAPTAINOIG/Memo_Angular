@@ -313,3 +313,8 @@
 //     );
 //   }
 // }
+this.locationDetails[this.areaName] = {
+    Lat: this.dmsToDecimal(result.lat),
+    Lng: this.dmsToDecimal(result.lng),
+  };
+  console.log(this.locationDetails);

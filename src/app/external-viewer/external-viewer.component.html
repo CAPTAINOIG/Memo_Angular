@@ -1,3 +1,18 @@
-<p class="text-center my-5" style="margin-top: 100px;">
-   {{ data ? 'Contents:' : ''}} <span [innerHTML]="data?.MemContents"></span>
-</p>
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background-color: #f0f4f8; font-family: Arial, sans-serif;">
+
+   <ng-container *ngIf="status === 'data'">
+     <div style="background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); padding: 20px; max-width: 600px; width: 100%; text-align: center;">
+       <h2 style="color: #333; margin-bottom: 20px;">Contents:</h2>
+       <span [innerHTML]="data?.MemContents" style="color: #555; line-height: 1.5;"></span>
+     </div>
+   </ng-container>
+ 
+   <div *ngIf="status === 'error'" style="color: red; font-size: 18px; margin-top: 20px;">
+     <p>{{ message }}</p>
+   </div>
+ 
+   <div *ngIf="status === 'isLoading'" class="spinner-container" style="margin-top: 20px;">
+      <div class="spinner"></div>
+   </div>
+ </div>
+ 
