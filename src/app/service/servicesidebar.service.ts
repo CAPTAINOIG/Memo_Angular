@@ -25,9 +25,9 @@ export class ServicesidebarService {
   // Existing method to show or hide the sidebar
 
 
+  // we brought the data here because we want it to be cleared after every secs so we brought it to service
   setQrCodeData(data:any){
     this.qrCodeData=data
-
   }
   
   public showMother(data: string): void {
@@ -79,10 +79,6 @@ export class ServicesidebarService {
     console.log(data)
     this.editMemo = data
   }
-
-
-
-
 
   getEditMemo(){
     return this.editMemo

@@ -320,7 +320,9 @@
                                         <input class="card" type="text" formControlName="areaName" placeholder="Enter Area Name"
                                             class="form-control">
                                         <button class="btn btn-primary mb-2 my-3" type="button"
-                                            (click)="fetchAreaDetails()">Get Location Details</button>
+                                            (click)="fetchAreaDetails()">
+                                            Get Location Details
+                                        </button>
                                     </div>
 
                                     <div *ngIf="!locationDetails && memoForm.get('areaName')?.value">No location found

@@ -50,12 +50,12 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
     if(this.handleModals.createMemoTab && ['edit_files','create_memo'].includes(this.handleModals.show)){
       this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response)=>{
         if(response.data[0]){
+          // we set it to services here so as to be clearing it every secs
           this.handleModals.setQrCodeData(response.data[0])
           // this.item = response.data[0];
           // this.qrInput=response?.data[0]?.MemUniqueId
         }
         // console.log(response.data)
-        
       }, (error)=>{
         console.log(error);
         
