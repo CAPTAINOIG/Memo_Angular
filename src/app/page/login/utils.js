@@ -8,7 +8,6 @@
 // import Toastify from 'toastify-js';
 // import "toastify-js/src/toastify.css";  
 // import { ServicesidebarService } from '../../service/servicesidebar.service';
-// import { MatSnackBar } from '@angular/material/snack-bar';
 
 // @Component({
 //   selector: 'app-login',
@@ -22,7 +21,6 @@
 //   isLoading = false;
 
 //   constructor(
-//     private snackBar: MatSnackBar,
 //     private fb: FormBuilder,
 //     private router: Router,
 //     private local:LocalstorageService,
@@ -40,30 +38,38 @@
 //     if (this.loginForm.valid) {
 //       this.isLoading = true;
 //       const json = this.loginForm.value;
-      
+//       console.log(json);
+    
 //       this.HttpRequest.makePostRequest(`/auth/login`, json).subscribe({
-//         next: (data: any) => {
+//         next: (data:any) => {
+//           console.log(data);
+//           this.userDetail.setUserDetail(data)
 //           this.isLoading = false;
 //           if (data.status) {
-//             this.snackBar.open('Authentication successful!', 'Close', {
+//             Toastify({
+//               text: "Authentication successful!",
 //               duration: 3000,
-//               horizontalPosition: 'right',
-//               verticalPosition: 'top',
-//               panelClass: ['mat-toolbar', 'mat-primary']
-//             });
-//             this.local.write("data", (data.token));
-//             this.router.navigate(['/auth']);
+//               gravity: "top", // `top` or `bottom`
+//               position: "right", // `left`, `center` or `right`
+//               backgroundColor: "blue",
+//             }).showToast();
+//             console.log(data)
+//           // this.local.write("auth-token", { token: data.token })
+//           this.local.write("data",  (data.token))
+//           this.router.navigate(['/auth']);
 //           }
 //         },
-//         error: (err: any) => {
+//         error: (err:any) => {
 //           this.isLoading = false;
 //           const errMsg = err?.error?.message ?? err.message;
-//           this.snackBar.open(`Error: ${errMsg}`, 'Close', {
+//           console.log(err);
+//           Toastify({
+//             text: errMsg,
 //             duration: 3000,
-//             horizontalPosition: 'right',
-//             verticalPosition: 'top',
-//             panelClass: ['mat-toolbar', 'mat-warn']
-//           });
+//             gravity: "top", // `top` or `bottom`
+//             position: "right", // `left`, `center` or `right`
+//             backgroundColor: "red",
+//           }).showToast();
 //         }
 //       });
 //     }

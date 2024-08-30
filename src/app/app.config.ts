@@ -36,6 +36,7 @@ import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom, isDevMode } from '@angular/core';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideServiceWorker } from '@angular/service-worker';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -47,7 +48,7 @@ export const appConfig: ApplicationConfig = {
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
-    }),
+    }), provideAnimationsAsync(),
     // Add other providers here if needed
   ]
 };
