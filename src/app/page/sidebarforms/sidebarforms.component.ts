@@ -587,7 +587,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       (error) => {
         console.log(error);
         Toastify({
-          text: `${error}`,
+          text: 'Error saving memo',
           duration: 3000,
           gravity: "top",
           position: "right",
