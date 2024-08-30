@@ -51,7 +51,7 @@ export class LoginComponent {
               duration: 3000,
               gravity: "top", // `top` or `bottom`
               position: "right", // `left`, `center` or `right`
-              backgroundColor: "green",
+              backgroundColor: "blue",
             }).showToast();
             console.log(data)
           // this.local.write("auth-token", { token: data.token })

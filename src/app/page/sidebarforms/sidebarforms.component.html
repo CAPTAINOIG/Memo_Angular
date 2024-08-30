@@ -299,8 +299,6 @@
                                         </div>
                                     </div>
 
-
-
                                     <div class="card card-body mb-3 d-flex justify-content-between flex-row">
                                         <div>
                                             <a href="#">
@@ -317,8 +315,8 @@
                                         </div>
                                     </div>
                                     <div *ngIf="memoForm.controls['secureByGeoLocation'].value">
-                                        <input class="card" type="text" formControlName="areaName" placeholder="Enter Area Name"
-                                            class="form-control">
+                                        <input class="card" type="text" formControlName="areaName"
+                                            placeholder="Enter Area Name" class="form-control">
                                         <button class="btn btn-primary mb-2 my-3" type="button"
                                             (click)="fetchAreaDetails()">
                                             Get Location Details
@@ -364,9 +362,9 @@
                                         <button type="button" class="btn btn-primary">Save Template</button>
                                     </div>
                                 </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">{{isLoading ? 'Loading.....' :
+                            <button type="submit" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">{{isLoading ? 'Loading.....' :
                                 'Save'}}</button>
+                            </div>
                         </form>
                     </div>
 
@@ -379,6 +377,10 @@
                                     <option value="public">Public</option>
                                     <option value="restricted">Restricted</option>
                                 </select>
+                            </div>
+                            <div *ngIf="memoForm.controls['access'].value == 'public'" style="margin: 16px 0px;">
+                                <button  type="submit" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">{{isLoading ? 'Loading.....' :
+                                'Save'}}</button>
                             </div>
                             <div *ngIf="memoForm.controls['access'].value == 'restricted'" style="margin: 16px 0px;">
                                 <button (click)="selectFile()" class="btn btn-lg btn-block btn-outline-primary"><i
@@ -406,14 +408,12 @@
                                             placeholder="Enter phone number">
                                     </div>
                                 </div>
-
-                            </div>
-
-
-                            <button type="submit" class="btn btn-primary">{{isLoading ? 'Loading.....' :
+                            <button type="submit" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">{{isLoading ? 'Loading.....' :
                                 'Save'}}</button>
+                            </div>
                         </form>
                     </div>
+                    
                     <div class="tab-pane fade" id="qrcode" role="tabpanel" aria-labelledby="qrcode">
                         <app-createqrcode></app-createqrcode>
                     </div>

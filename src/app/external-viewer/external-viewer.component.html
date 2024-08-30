@@ -14,5 +14,21 @@
    <div *ngIf="status === 'isLoading'" class="spinner-container" style="margin-top: 20px;">
       <div class="spinner"></div>
    </div>
+   
+
+   <div >
+     <div *ngIf="status=='requireAccess'" id="verification">
+       <h3 class="text-center">This is a restricted Document</h3>
+    <p>Please enter your email or phone number to receive an OTP:</p>
+    <input type="text" [(ngModel)]="identity" placeholder="Enter email or phone number" class="form-control">
+    <button (click)="sendIdentityOtp()" style="box-shadow: 2rem;" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">{{isLoader ? 'Loading ...' : ' Send OTP'}}</button>
+    </div>
+
+    <div *ngIf="status==='Next_token'" id="verification">
+      <p>Enter the OTP sent to your email:</p>
+      <input type="text" [(ngModel)]="identityOtp" placeholder="Enter OTP" class="form-control" style="padding: 8px; margin-bottom: 10px;">
+      <button (click)="verifyEmailOtp()" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">Verify OTP</button>
+    </div>
+  </div>
  </div>
  

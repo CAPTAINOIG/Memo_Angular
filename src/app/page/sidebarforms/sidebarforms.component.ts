@@ -72,7 +72,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     public handleModals: ServicesidebarService,
     private httpRequest: HttpRequestService,
     private fb: FormBuilder
-  ) {
+  ) 
+  {
     this.memoForm = new FormGroup({
       title: new FormControl('',
         Validators.required),
@@ -89,7 +90,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       // ipAddress: new FormControl('') ,
       create_as_template: new FormControl(false),
       access: new FormControl(''),
-      // change_folder: new FormControl (''),
+      public: new FormControl (''),
       name: new FormControl(''),
       email: new FormControl(''),
       phone: new FormControl(''),
@@ -99,13 +100,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   
   handle(data:any=undefined){
     this.handleModals.setCreateMemoTabs(data)
-   
   }
 
   ngOnInit(): void {
     this.editor = new Editor();
     this.fetchFolders()
-   
   }
   ngDoCheck(): void {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
@@ -142,6 +141,20 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     const ipPattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     return ipPattern.test(ip_address);
   }
+
+  dmsToDecimal(dms: string): number {
+    const parts = dms.split(/°|'|"| /).filter(part => part);
+    const degrees = parseFloat(parts[0]);
+    const minutes = parseFloat(parts[1]) / 60;
+    const seconds = parseFloat(parts[2]) / 3600;
+    const direction = parts[3];
+
+    let decimal = degrees + minutes + seconds;
+    if (direction === 'S' || direction === 'W') {
+        decimal *= -1;
+    }
+    return decimal;
+}
 
   // Example of a simple area name validation method
   isValidAreaName(areaName: string): boolean {
@@ -247,7 +260,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
               duration: 3000,
               gravity: "top",
               position: "right",
-              backgroundColor: "green",
+              backgroundColor: "blue",
             }).showToast();
           },
           (error) => {
@@ -304,34 +317,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  // addIP(ip_address: string) {
-  //   if(!this.ip_address || !ip_address){
-  //     Toastify({
-  //       text: 'Fill in appropriately',
-  //       duration: 3000,
-  //       gravity: "top",
-  //       position: "right",
-  //       backgroundColor: "red",
-  //     }).showToast();
-  //     return;
-  //   }
-  //    else if (ip_address && !this.allowed_ips.includes(ip_address)) {
-  //     this.allowed_ips.push(ip_address);
-  //     // this.ip_address = '';
-  //     this.memoForm.get('ip_address')?.reset();
-  //   } else {
-  //     console.warn('IP address already exists or is invalid.');
-  //     Toastify({
-  //       text: 'IP address already exists or is invalid.',
-  //       duration: 3000,
-  //       gravity: "top", // `top` or `bottom`
-  //       position: "right", // `left`, `center` or `right`
-  //       backgroundColor: "red",
-  //     }).showToast();
-  //     this.memoForm.get('ip_address')?.reset(); 
-  //   }
-  // }
-
 
   addIP(ip_address: string) {
     // Check if ip_address is provided and valid
@@ -345,7 +330,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }).showToast();
       return;
     }
-  
     // Check if the IP address is already in the allowed list
     if (this.allowed_ips.includes(ip_address)) {
       Toastify({
@@ -363,12 +347,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         duration: 3000,
         gravity: "top",
         position: "right",
-        backgroundColor: "green",
+        backgroundColor: "blue",
       }).showToast();
     }
-  
     // Clear the input field
-    this.ip_address = '';
     this.memoForm.get('ip_address')?.reset();
   }
 
@@ -396,7 +378,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         duration: 3000,
         gravity: "top",
         position: "right",
-        backgroundColor: "green",
+        backgroundColor: "blue",
       }).showToast();
     }, (error) => {
       console.log(error.error.message);
@@ -526,7 +508,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
             duration: 3000,
             gravity: "top",
             position: "right",
-            backgroundColor: "green",
+            backgroundColor: "blue",
           }).showToast();
           this.locationDetails[this.areaName] = {
             Lat: this.dmsToDecimal(result.lat).toFixed(6),
@@ -560,6 +542,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   }
   
   
+  // accessPublic(){
+  //   alert()
+  // }
 
   // CREATING ACCESS MEMMO
   createMemo(values: any) {
@@ -586,7 +571,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         },
       ],
     };
-    // console.log(memoData);
+    console.log(memoData);
     this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
       (response) => {
         console.log(response);
@@ -596,7 +581,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           duration: 3000,
           gravity: "top",
           position: "right",
-          backgroundColor: "red",
+          backgroundColor: "blue",
         }).showToast();
       },
       (error) => {
@@ -739,21 +724,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       console.warn('No file selected.');
     }
   }
-
-
-  dmsToDecimal(dms: string): number {
-    const parts = dms.split(/°|'|"| /).filter(part => part);
-    const degrees = parseFloat(parts[0]);
-    const minutes = parseFloat(parts[1]) / 60;
-    const seconds = parseFloat(parts[2]) / 3600;
-    const direction = parts[3];
-
-    let decimal = degrees + minutes + seconds;
-    if (direction === 'S' || direction === 'W') {
-        decimal *= -1;
-    }
-    return decimal;
-}
     
     // this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
     //   (response) => {

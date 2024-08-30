@@ -21,6 +21,18 @@ export class CreatefolderComponent {
 
   
   onSubmit() {
+    if(!this.name){
+      console.log('here');
+      Toastify({
+        text: 'invalid',
+        gravity: 'top',
+        duration: 3000,
+        backgroundColor: 'red',
+        position: 'right',
+      }).showToast();
+      return;
+    }
+
     this.isLoading = true;
     console.log(this.name)
     this.httpRequest.makePostRequest('/memo/folder/create', { name: this.name }).subscribe(
@@ -33,7 +45,7 @@ export class CreatefolderComponent {
           duration: 3000,
           gravity: "top", // `top` or `bottom`
           position: "right", // `left`, `center` or `right`
-          backgroundColor: "green",
+          backgroundColor: "blue",
         }).showToast();
       },
       (error) => {

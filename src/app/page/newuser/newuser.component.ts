@@ -64,7 +64,7 @@ export class NewuserComponent {
               duration: 3000,
               gravity: "top",
               position: "right",
-              backgroundColor: "green",
+              backgroundColor: "blue",
             }).showToast();
 
             this.local.write("auth-token", { token: response.token });

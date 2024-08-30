@@ -46,7 +46,7 @@ export class TwofactorauthComponent {
             duration: 3000,
             gravity: "top", // `top` or `bottom`
             position: "right", // `left`, `center` or `right`
-            backgroundColor: "green",
+            backgroundColor: "blue",
           }).showToast();
           this.router.navigate(['/portal/dashboard']);
         },

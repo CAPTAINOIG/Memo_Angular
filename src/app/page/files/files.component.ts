@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { CommonModule } from '@angular/common';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
+import Toastify from 'toastify-js';
 
 @Component({
   selector: 'app-files',
@@ -121,6 +122,27 @@ searchTerm: string = '';
    createFolders(){
     this.handleModal.showMother  ("create_folder")
    }
+
+
+     
+  copyToClipboard(text: string): void {
+    const textarea = document.createElement('textarea');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    Toastify({
+      text: 'Link copied to clipboard!',
+      duration: '3000',
+      position: 'right',
+      gravity:'top',
+      backgroundColor: 'blue',
+    }).showToast();
+  }
 
   }
   

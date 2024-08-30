@@ -36,15 +36,6 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
   ngOnInit(): void {
     this.startQrCodeCheck()
   }
-  // ngDoCheck(): void {
-  //   if(this.handleModals.createMemoTab && ['edit_files','create_memo'].includes(this.handleModals.show)){
-  //     // this.item=undefined
-  //     // this.handleModals.setCreateMemoTabs(undefined)
-    
-  //   }
-    
-  // }
-
   
   fetchQrCode(){
     if(this.handleModals.createMemoTab && ['edit_files','create_memo'].includes(this.handleModals.show)){
@@ -93,7 +84,7 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
           duration: 3000,
           gravity: "top",
           position: "right",
-          backgroundColor: "green",
+          backgroundColor: "blue",
         }).showToast();
         this.isLoading = false;
       }, (error)=>{
