@@ -5,7 +5,8 @@ import { HeaderComponent } from "../../components/header/header.component"
 import { NavigationComponent } from '../../components/navigation/navigation.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import Toastify from 'toastify-js';
 
 
 
@@ -35,7 +36,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private httpRequest: HttpRequestService,
     private handleModal: ServicesidebarService,
-    private userData: ServicesidebarService
+    private userData: ServicesidebarService,
+    private router: Router
   ) {
 
   }
@@ -52,6 +54,17 @@ export class DashboardComponent implements OnInit {
       }, (error)=>{
         console.log(error);
         this.isLoading = false;
+        if(error.error.message){
+          Toastify({
+            text: "Token Expired!",
+            duration: 3000,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            backgroundColor: "red",
+          }).showToast();
+          localStorage.removeItem('token')
+          this.router.navigate(['/']);
+        }
       })
   //   }
   // }
