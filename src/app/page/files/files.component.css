@@ -1,0 +1,73 @@
+#folder {
+  max-height: 70vh;
+  overflow-y: auto; 
+}
+
+/* Custom Scrollbar for WebKit browsers */
+#folder::-webkit-scrollbar {
+  width: 2px; /* Further reduced width of the scrollbar */
+}
+
+#folder::-webkit-scrollbar-track {
+  background: transparent; /* Make the track background transparent */
+}
+
+#folder::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.5);  /* Slightly transparent color for the thumb */
+  border-radius: 6px; /* Rounded corners */
+}
+
+/* Custom Scrollbar for Firefox */
+#folder {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: rgba(136, 136, 136, 0.5) transparent; /* Thumb color and track color */
+}
+
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen height */
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .qrcode1{
+    border: 2px solid blue;
+    height: 10px;
+    width: 10px;
+}
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 3px;
+  margin-top: -4px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.btn-icon i {
+  font-size: 14px;
+}
+
+.btn-icon:hover i {
+  color: blue;
+}

@@ -1,0 +1,13 @@
+<div class="layout-wrapper">
+      
+    <!-- Header -->
+    <app-header (dataEmitter)="handleClick($event)"></app-header>
+    
+    <router-outlet ></router-outlet>
+    <!-- <ng-template > -->
+        <!-- <app-sidebargroup [prop]="prop" (dataEmitter)="handleClick($event)" ></app-sidebargroup> -->
+        <app-sidebarforms ></app-sidebarforms>
+    <!-- </ng-template> -->
+   
+</div>
+
