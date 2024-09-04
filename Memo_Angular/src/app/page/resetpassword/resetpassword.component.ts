@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './resetPassword.component.html',
-  styleUrls: ['./resetPassword.component.css']  // Corrected the property name from styleUrl to styleUrls
+  styleUrls: ['./resetPassword.component.css'] 
 })
 export class ResetPasswordComponent implements OnInit {
   resetPassword: FormGroup;
