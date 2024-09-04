@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { LocalstorageService } from '../../service/LocalstorageService/localstorage.service';
 import Toastify from 'toastify-js';
-import "toastify-js/src/toastify.css";  
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({

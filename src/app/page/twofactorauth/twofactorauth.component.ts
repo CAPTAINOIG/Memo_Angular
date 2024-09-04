@@ -4,8 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { LocalstorageService } from '../../service/LocalstorageService/localstorage.service';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { Router, RouterLink } from '@angular/router';
-import Toastify from 'toastify-js';
-import "toastify-js/src/toastify.css"; 
+import Toastify from 'toastify-js'; 
 
 @Component({
   selector: 'app-twofactorauth',

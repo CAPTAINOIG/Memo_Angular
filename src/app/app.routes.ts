@@ -12,10 +12,20 @@ import { NewuserComponent } from './page/newuser/newuser.component';
 import { SecurityCheckComponent } from './page/security-check/security-check.component';
 import { ExternalViewerComponent } from './external-viewer/external-viewer.component';
 import { PagenotfoundComponent } from './page/pagenotfound/pagenotfound.component';
+import { ForgotpasswordComponent } from './page/forgotpassword/forgotpassword.component';
+import { PasswordauthComponent } from './page/passwordauth/passwordauth.component';
+import { ResetPasswordComponent } from './page/resetpassword/resetpassword.component';
+
+
+
+
 
 export const routes: Routes = [
     {'path':'', component:LoginComponent},
     {path: 'auth', component: TwofactorauthComponent},
+    {'path':'forgotpassword', component: ForgotpasswordComponent},
+    {path: 'passwordAuth', component: PasswordauthComponent},
+    {'path': 'resetPassword', component: ResetPasswordComponent},
     {'path':'portal', component:DashboardLayout, canActivate:[authGuard], children:[
         {'path':'dashboard', component:DashboardComponent},
         {'path':'files', component:FilesComponent},
