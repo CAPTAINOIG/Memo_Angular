@@ -14,7 +14,8 @@ import { ExternalViewerComponent } from './external-viewer/external-viewer.compo
 import { PagenotfoundComponent } from './page/pagenotfound/pagenotfound.component';
 import { ForgotpasswordComponent } from './page/forgotpassword/forgotpassword.component';
 import { PasswordauthComponent } from './page/passwordauth/passwordauth.component';
-// import { ResetpasswordComponent } from './page/resetpassword/resetpassword.component';
+import { PasswordresetComponent } from './page/passwordreset/passwordreset.component';
+
 
 
 
@@ -25,7 +26,7 @@ export const routes: Routes = [
     {path: 'auth', component: TwofactorauthComponent},
     {'path':'forgotpassword', component: ForgotpasswordComponent},
     {path: 'passwordAuth', component: PasswordauthComponent},
-    // {'path': 'resetPassword', component: ResetpasswordComponent},
+    {'path': 'resetPassword', component: PasswordresetComponent},
     {'path':'portal', component:DashboardLayout, canActivate:[authGuard], children:[
         {'path':'dashboard', component:DashboardComponent},
         {'path':'files', component:FilesComponent},
