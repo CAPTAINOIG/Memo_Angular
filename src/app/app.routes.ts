@@ -14,7 +14,7 @@ import { ExternalViewerComponent } from './external-viewer/external-viewer.compo
 import { PagenotfoundComponent } from './page/pagenotfound/pagenotfound.component';
 import { ForgotpasswordComponent } from './page/forgotpassword/forgotpassword.component';
 import { PasswordauthComponent } from './page/passwordauth/passwordauth.component';
-import { PasswordresetComponent } from './page/passwordreset/passwordreset.component';
+import { PasswordresetComponent } from './passwordreset/passwordreset.component';
 
 
 
