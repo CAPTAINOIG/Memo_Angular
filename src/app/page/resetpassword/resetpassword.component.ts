@@ -6,13 +6,13 @@ import Toastify from 'toastify-js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
-  selector: 'app-resetPassword',
+  selector: 'app-resetpassword',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './resetPassword.component.html',
-  styleUrls: ['./resetPassword.component.css']  // Corrected the property name from styleUrl to styleUrls
+  templateUrl: './resetpassword.component.html',
+  styleUrls: ['./resetpassword.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetpasswordComponent implements OnInit {
   resetPassword: FormGroup;
   isLoading = false;
   token: string;
