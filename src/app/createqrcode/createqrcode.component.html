@@ -4,8 +4,7 @@
         <div>
             <div class="form-group">
                 <label for="qrInput">Enter URL or Text:</label>
-                <input type="text" [(ngModel)]="handleModals.qrCodeData.MemUniqueId" class="form-control" id="qrInput"
-                    disabled>
+                <input type="text" [(ngModel)]="handleModals.qrCodeData.MemUniqueId" class="form-control" id="qrInput" disabled>
                 <img [src]="handleModals?.qrCodeData?.MemQrCode" alt="Generated QR Code">
             </div>
             <button (click)="createQrCode()" type="submit"

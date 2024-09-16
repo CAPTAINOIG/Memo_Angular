@@ -55,6 +55,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   qrCodeCheckInterval: any;
   updateMemoMemUniqueId: any;
   showSubmitButton: boolean = false;
+  fetchLatAndLng: any;
+  fetchLatAndLngInterval: any;
+  iframeVisible = false;
+  countrySelected = false;
+  selectedCountry: string = '';
 
   
 
@@ -104,7 +109,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
   ngOnInit(): void {
     this.editor = new Editor();
-    this.fetchFolders()
+    this.fetchFolders();
+    this.getIp();
+    // this.latAndLng();
   }
   ngDoCheck(): void {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
@@ -129,13 +136,51 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.handleModals.toggleCheck("hello")
     }
   }
+
+  showIframe(){
+    this.iframeVisible = true;
+  }
+
   
+  fetchAreaDetails() {
+    this.areaName = this.memoForm.get('areaName')?.value;
+    this.area_location.push(this.areaName);
+    console.log('Area Name:', this.areaName); 
+    this.memoForm.get('areaName')?.reset();
+  }
+  // latAndLng() {
+  //   // the setInterval takes 2 parameter, the functions and time
+  //   this.fetchLatAndLngInterval = setInterval(() => {this.getIp()}, 1000); // Fetch every 1 second
+  // }
+
   ngOnDestroy(): void {
     this.editor.destroy();
-    if (this.qrCodeCheckInterval) {
-      clearInterval(this.qrCodeCheckInterval);
-    }
+      // clearInterval(this.fetchLatAndLngInterval);
+      // if (this.fetchLatAndLngInterval) {
+      //   clearInterval(this.fetchLatAndLngInterval); // Clear the interval to prevent memory leaks
+      // }
   }
+
+  getIp() {
+    this.httpRequest.makeGetRequest('/memo/memgeotemp').subscribe((response)=>{
+      console.log(response.data);
+      const lat = response.data.lat;
+      const lng = response.data.lng;
+      const location = `Lat: ${lat}, Lng: ${lng}`;
+      this.memoForm.controls['areaName'].setValue(location);
+      this.memoForm.reset();
+      this.countrySelected = false;
+      this.iframeVisible = false;
+      // disable input here
+      this.memoForm.controls['areaName'].disable();
+    }, (error)=>{
+      console.log(error);
+    })
+  }
+
+
+
+
 // FOR THE IP ADDRESS VERIFICATION
   isValidIP(ip_address: string): boolean {
     const ipPattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
@@ -186,49 +231,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.handleModals.toggleCheck("nothing")
     this.memoForm.reset()
   }
-
-
-  // DRAFT / CREATE MEMO
-  // draftMemo(): void {
-  //   if (this.memoForm.valid) {
-  //     const memoData = this.memoForm.value;
-  //     console.log(memoData);
-  //     this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
-  //       (response: any) => {
-  //         console.log(response);
-  //         this.memId = response.id
-  //         // console.log(this.memId);
-  //         Toastify({
-  //           text: "success",
-  //           duration: 3000,
-  //           gravity: "top", 
-  //           position: "right", 
-  //           backgroundColor: "green",
-  //         }).showToast();
-  //       },
-
-  //       (error) => {
-  //         console.error('Error saving draft:', error);
-  //         Toastify({
-  //           text: `${error}`,
-  //           duration: 3000,
-  //           gravity: "top", 
-  //           position: "right", 
-  //           backgroundColor: "red",
-  //         }).showToast();
-  //       }
-  //     );
-  //   } else {
-  //     console.error('Form is not valid!');
-  //     Toastify({
-  //       text: 'Form is not valid',
-  //       duration: 3000,
-  //       gravity: "top", 
-  //       position: "right", 
-  //       backgroundColor: "red",
-  //     }).showToast();
-  //   }
-  // }
 
   draftMemo(): void {
     if (this.memoForm.valid) {
@@ -455,91 +457,92 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   //   }
   // }
 
-  fetchAreaDetails() {
-    // Ensure areaName is filled in
-    this.areaName = this.memoForm.get('areaName')?.value;
+
+  // fetchAreaDetails() {
+
+  //   this.areaName = this.memoForm.get('areaName')?.value;
   
-    if (!this.areaName) {
-      Toastify({
-        text: 'Please fill in the area name.',
-        duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "red",
-      }).showToast();
-      return;
-    }
+  //   // if (!this.areaName) {
+  //   //   Toastify({
+  //   //     text: 'Please fill in the area name.',
+  //   //     duration: 3000,
+  //   //     gravity: "top",
+  //   //     position: "right",
+  //   //     backgroundColor: "red",
+  //   //   }).showToast();
+  //   //   return;
+  //   // }
   
-    // Check if the Area address is already in the area_location list
-    if (this.area_location.includes(this.areaName)) {
-      Toastify({
-        text: 'Area address already exists.',
-        duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "red",
-      }).showToast();
-      return;
-    }
-    // Check if the area name is valid using a custom validation method
-    if (!this.isValidAreaName(this.areaName)) {
-      Toastify({
-        text: 'Invalid area name.',
-        duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "red",
-      }).showToast();
-      return;
-    }
+  //   // Check if the Area address is already in the area_location list
+  //   // if (this.area_location.includes(this.areaName)) {
+  //   //   Toastify({
+  //   //     text: 'Area address already exists.',
+  //   //     duration: 3000,
+  //   //     gravity: "top",
+  //   //     position: "right",
+  //   //     backgroundColor: "red",
+  //   //   }).showToast();
+  //   //   return;
+  //   // }
+  //   // Check if the area name is valid using a custom validation method
+  //   // if (!this.isValidAreaName(this.areaName)) {
+  //   //   Toastify({
+  //   //     text: 'Invalid area name.',
+  //   //     duration: 3000,
+  //   //     gravity: "top",
+  //   //     position: "right",
+  //   //     backgroundColor: "red",
+  //   //   }).showToast();
+  //   //   return;
+  //   // }
   
-    // Add area name to area_location array
-    this.area_location.push(this.areaName);
-    console.log('Area Name:', this.areaName);
+  //   // Add area name to area_location array
+  //   this.area_location.push(this.areaName);
+  //   console.log('Area Name:', this.areaName);
   
-    // Fetch area details
-    this.httpRequest.fetchAreaDetails(this.areaName).subscribe(
-      (data: any) => {
-        console.log(data);
-        if (data.results && data.results.length > 0) {
-          const result = data.results[0].annotations.DMS; // Get the first result
-          Toastify({
-            text: 'Location fetched successfully.',
-            duration: 3000,
-            gravity: "top",
-            position: "right",
-            backgroundColor: "blue",
-          }).showToast();
-          this.locationDetails[this.areaName] = {
-            Lat: this.dmsToDecimal(result.lat).toFixed(6),
-            Lng: this.dmsToDecimal(result.lng).toFixed(6),
-          };
-          console.log(this.locationDetails);
-        } else {
-          Toastify({
-            text: 'No location data available for this area.',
-            duration: 5000,
-            gravity: "top",
-            position: "right",
-            backgroundColor: "red",
-          }).showToast();
-        }
-      },
-      error => {
-        console.error(error);
-        Toastify({
-          text: `Error fetching location: ${error.message || error}`,
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "red",
-        }).showToast();
-      }
-    );
+  //   // Fetch area details
+  //   // this.httpRequest.fetchAreaDetails(this.areaName).subscribe(
+  //   //   (data: any) => {
+  //   //     console.log(data);
+  //   //     if (data.results && data.results.length > 0) {
+  //   //       const result = data.results[0].annotations.DMS; // Get the first result
+  //   //       Toastify({
+  //   //         text: 'Location fetched successfully.',
+  //   //         duration: 3000,
+  //   //         gravity: "top",
+  //   //         position: "right",
+  //   //         backgroundColor: "blue",
+  //   //       }).showToast();
+  //   //       this.locationDetails[this.areaName] = {
+  //   //         Lat: this.dmsToDecimal(result.lat).toFixed(6),
+  //   //         Lng: this.dmsToDecimal(result.lng).toFixed(6),
+  //   //       };
+  //   //       console.log(this.locationDetails);
+  //   //     } else {
+  //   //       Toastify({
+  //   //         text: 'No location data available for this area.',
+  //   //         duration: 5000,
+  //   //         gravity: "top",
+  //   //         position: "right",
+  //   //         backgroundColor: "red",
+  //   //       }).showToast();
+  //   //     }
+  //   //   },
+  //   //   error => {
+  //   //     console.error(error);
+  //   //     Toastify({
+  //   //       text: `Error fetching location: ${error.message || error}`,
+  //   //       duration: 3000,
+  //   //       gravity: "top",
+  //   //       position: "right",
+  //   //       backgroundColor: "red",
+  //   //     }).showToast();
+  //   //   }
+  //   // );
   
-    // Reset the areaName field
-    this.memoForm.get('areaName')?.reset();
-  }
+  //   // Reset the areaName field
+  //   this.memoForm.get('areaName')?.reset();
+  // }
   
   
   // accessPublic(){
@@ -597,15 +600,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     );
   }
 
-  // getMemo() {
-  //   // Implement your logic to fetch memo data
-  //   this.httpRequest.makeGetRequest('/memo/single?id=y89356548697887').subscribe((response)=>{
-  //     // console.log(response);
-  //   }, (error)=>{
-  //     console.log(error);
-
-  //   })
-  // }
 
   getMemoAttachments() {
     // Implement your logic to fetch memo attachments

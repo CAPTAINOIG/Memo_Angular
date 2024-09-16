@@ -24,10 +24,9 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
 
   }
   startQrCodeCheck() {
-    // Use setInterval to call fetchQrCode every second
     this.qrCodeCheckInterval = setInterval(() => {
       this.fetchQrCode();
-    }, 1000); // 1000 ms = 1 second
+    }, 1000); 
   }
 
   ngOnDestroy(): void {
