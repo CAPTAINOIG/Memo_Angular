@@ -73,7 +73,7 @@ export class PasswordauthComponent {
             position: 'right',
             duration: 3000,
           }).showToast();
-          this.router.navigate(['/resetPassword']); 
+          // this.router.navigate(['/resetpassword']); 
         },
         (error) => {
           this.isLoading = false;
