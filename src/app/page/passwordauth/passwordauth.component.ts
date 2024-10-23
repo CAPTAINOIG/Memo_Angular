@@ -28,17 +28,10 @@ export class PasswordauthComponent {
   
   ngOnInit(): void {
     this.token = JSON.parse(localStorage.getItem('passwordToken'));
-    console.log(this.token);
     this.authForm = new FormGroup({
       otp: new FormControl('', [Validators.required])
     });
   }
-  // ngOnInt(){
-  //   this.authForm = this.fb.group({
-  //     otp: ['', Validators.required],
-  //   });
-  // }
-  
   onSubmit(): void {
     if (!this.authForm.valid) {
       Toastify({
@@ -50,19 +43,14 @@ export class PasswordauthComponent {
       }).showToast();
       return;
     }
-
     this.isLoading = true;
     const otpData = this.authForm.value;
-    console.log(otpData);
-    
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`,
       'Content-Type': 'application/json',
       "ngrok-skip-browser-warning": '69420',
     });
-
-    this.http.post('https://45a5-102-88-62-203.ngrok-free.app/api/auth/verify_two_fact_auth', otpData, { headers })
+    this.http.post('https://blockchain.creditclan.com/memo/auth/verify_two_fact_auth', otpData, { headers })
       .subscribe((response: any) => {
         console.log(response);
           this.isLoading = false;
@@ -84,7 +72,6 @@ export class PasswordauthComponent {
             position: 'right',
             duration: 3000,
           }).showToast();
-          console.error(error);
         }
       );
   }

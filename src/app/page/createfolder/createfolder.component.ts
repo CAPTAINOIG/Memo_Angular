@@ -19,7 +19,6 @@ export class CreatefolderComponent {
   constructor(private httpRequest: HttpRequestService) { }
 
 
-  
   onSubmit() {
     if(!this.name){
       console.log('here');
@@ -32,9 +31,7 @@ export class CreatefolderComponent {
       }).showToast();
       return;
     }
-
     this.isLoading = true;
-    console.log(this.name)
     this.httpRequest.makePostRequest('/memo/folder/create', { name: this.name }).subscribe(
       (response) => {
         this.folder = response.data
@@ -52,7 +49,7 @@ export class CreatefolderComponent {
         console.error('Error updating memo:', error);
         this.isLoading = false;
         Toastify({
-          text: '',
+          text: `${error.error.message}`,
           duration: 3000,
           gravity: "top",
           position: "right", 
@@ -61,5 +58,4 @@ export class CreatefolderComponent {
       }
     );
   }
-
 }

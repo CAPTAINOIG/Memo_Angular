@@ -16,7 +16,7 @@ import { tick } from '@angular/core/testing';
 })
 export class SettingsComponent {
   imageSrc: string = '../../assets/media/image/user/women_avatar1.jpg';
-  base64Image: string | null = null; // To store the Base64 string
+  base64Image: string | null = null;
   memoImage: string | null = null;
   data: any = undefined;
   user: any = {};
@@ -33,7 +33,6 @@ export class SettingsComponent {
 
     const userName = this.http.makeGetRequest('/auth/user').subscribe((response)=>{
       this.user = response.data;
-      console.log(this.user);
       
     }, (error)=>{
       console.log(error);
@@ -44,27 +43,24 @@ export class SettingsComponent {
 
   onFileChange(event: any): void {
     const file = event.target.files[0];
-    console.log(file);
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         this.base64Image = reader.result as string;
-        this.imageSrc = this.base64Image; // Update imageSrc to display the Base64 string as an image
+        this.imageSrc = this.base64Image;
       };
-      reader.readAsDataURL(file); // Convert the file to Base64
+      reader.readAsDataURL(file); 
     }
   }
 
   uploadImage(): void {
     this.isLoadingImage = true;
     if (this.base64Image) {
-      // console.log(this.base64Image);
       const payload = {
         image: this.base64Image
       };
       this.http.makePatchRequest('/users_management/admin/change_profile_picture', payload).subscribe(
         (response) => {
-          // console.log(response);
           this.isLoadingImage=false
         },
         (error) => {
@@ -87,25 +83,10 @@ export class SettingsComponent {
       const reader = new FileReader()
       reader.onload = () => {
         this.memoImage = reader.result as string;
-        //  console.log(this.memoImage);
       };
-      reader.readAsDataURL(file); // Convert the file to Base64
+      reader.readAsDataURL(file);
     }
   }
-  // updateMemo(): void {
-  //   if(this.memoImage){
-  //     console.log(this.memoImage);
-  //     const payload = this.memoImage
-  //     this.http.makePostRequest('/memo/qrcode/create', payload).subscribe((response)=>{
-  //       console.log(response);
-  //     }, (error)=>{
-  //       console.log(error);
-  //     })
-  //   }
-  //   else {
-  //     console.warn('No file selected. Please select an image before uploading.');
-  //   }
-  // }
 
   eSignatures() {
     this.handleModal.showMother('esignature')
@@ -116,14 +97,14 @@ export class SettingsComponent {
     this.http.makeGetRequest('/memo/mem_e_signature/all').subscribe((response: any) => {
       console.log(response)
       this.isLoading = false
-      this.data = Array.isArray(response.data) ? response.data : []; // Extract the data array
+      this.data = Array.isArray(response.data) ? response.data : [];
       if (this.data.length > 0) {
-        this.esignature = this.data[0]; // Load the first signature
-        this.recordExists = true; // Set the recordExists flag
+        this.esignature = this.data[0]; 
+        this.recordExists = true; 
       }
       this.isLoading = false
     }, (error) => {
-      console.log(error); // Log any errors
+      console.log(error); 
       this.isLoading = false
     });
 
@@ -136,7 +117,6 @@ export class SettingsComponent {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.esignature.image = e.target.result;
-        // console.log(this.esignature.image_path);
       };
       reader.readAsDataURL(file);
     }

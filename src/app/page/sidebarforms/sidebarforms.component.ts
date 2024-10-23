@@ -71,8 +71,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
   ];
 
-  // @ViewChild('fileInput') fileInput: ElementRef;
-
   constructor(
     public handleModals: ServicesidebarService,
     private httpRequest: HttpRequestService,
@@ -92,7 +90,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       secureByGeoLocation: new FormControl(false),
       areaName: new FormControl(''),
       ip_address: new FormControl(''),
-      // ipAddress: new FormControl('') ,
       create_as_template: new FormControl(false),
       access: new FormControl(''),
       public: new FormControl (''),
@@ -111,7 +108,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.editor = new Editor();
     this.fetchFolders();
     this.getIp();
-    // this.latAndLng();
   }
   ngDoCheck(): void {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
@@ -148,17 +144,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     console.log('Area Name:', this.areaName); 
     this.memoForm.get('areaName')?.reset();
   }
-  // latAndLng() {
-  //   // the setInterval takes 2 parameter, the functions and time
-  //   this.fetchLatAndLngInterval = setInterval(() => {this.getIp()}, 1000); // Fetch every 1 second
-  // }
-
+ 
   ngOnDestroy(): void {
     this.editor.destroy();
-      // clearInterval(this.fetchLatAndLngInterval);
-      // if (this.fetchLatAndLngInterval) {
-      //   clearInterval(this.fetchLatAndLngInterval); // Clear the interval to prevent memory leaks
-      // }
   }
 
   getIp() {
@@ -171,15 +159,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.memoForm.reset();
       this.countrySelected = false;
       this.iframeVisible = false;
-      // disable input here
       this.memoForm.controls['areaName'].disable();
     }, (error)=>{
       console.log(error);
     })
   }
-
-
-
 
 // FOR THE IP ADDRESS VERIFICATION
   isValidIP(ip_address: string): boolean {
@@ -201,30 +185,16 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     return decimal;
 }
 
-  // Example of a simple area name validation method
   isValidAreaName(areaName: string): boolean {
-    const areaNamePattern = /^[a-zA-Z\s]+$/; // Modify this regex to match valid area names
+    const areaNamePattern = /^[a-zA-Z\s]+$/; 
     return areaNamePattern.test(areaName);
   }
 
-
+  // Regex to allow area names with optional commas and states (e.g., "Abule Egba, Lagos")
   isValidAreaNameWithState(areaName: string): boolean {
-    // Regex to allow area names with optional commas and states (e.g., "Abule Egba, Lagos")
     const areaNameWithStatePattern = /^[a-zA-Z\s]+(?:,\s*[a-zA-Z\s]+)?$/;
     return areaNameWithStatePattern.test(areaName);
   }
-
-    // Validate area name with state (e.g., "Abule Egba, Lagos")
-    // if (!this.isValidAreaNameWithState(this.areaName)) {
-    //   Toastify({
-    //     text: 'Invalid area name or state. Please use the format "Area, State".',
-    //     duration: 3000,
-    //     gravity: "top",
-    //     position: "right",
-    //     backgroundColor: "red",
-    //   }).showToast();
-    //   return;
-    // }
 
   close() {
     this.handleModals.showMother("undefined");
@@ -236,14 +206,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     if (this.memoForm.valid) {
       this.isLoading = true;
       const memoData = this.memoForm.value;
-      console.log(memoData);
-      // const memoData = {
-      //   title:  this.memoForm.value.title,
-      //   memo: this.memoForm.value.memo,
-      //   include_signature: this.memoForm.value.memo,
-      // };
       if (this.handleModals.show === 'edit_files') {
-        // Create the memo object using form values
         const memo = {
           title: this.handleModals?.editMemo?.MemTitle || this.memoForm.value.title,
           memo: this.memoForm.value.memo,
@@ -251,7 +214,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           memFold: this.handleModals?.editMemo?.MemFoldId || this.memoForm.value.MemFoldId || null,
         };
         console.log(memo);
-        // Make the PATCH request
         this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
           (response) => {
             console.log(response);
@@ -278,7 +240,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           }
         );
       } else {
-        // API call for creating a new memo
         this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
           (response: any) => {
             console.log(response);
@@ -321,7 +282,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
 
   addIP(ip_address: string) {
-    // Check if ip_address is provided and valid
     if (!ip_address || !this.isValidIP(ip_address)) {
       Toastify({
         text: 'Please enter a valid IP address.',
@@ -332,7 +292,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }).showToast();
       return;
     }
-    // Check if the IP address is already in the allowed list
     if (this.allowed_ips.includes(ip_address)) {
       Toastify({
         text: 'IP address already exists.',
@@ -342,7 +301,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         backgroundColor: "red",
       }).showToast();
     } else {
-      // Add the IP address to the allowed list
       this.allowed_ips.push(ip_address);
       Toastify({
         text: 'IP address added successfully.',
@@ -352,7 +310,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         backgroundColor: "blue",
       }).showToast();
     }
-    // Clear the input field
     this.memoForm.get('ip_address')?.reset();
   }
 
@@ -371,7 +328,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.isLoading = true;
     const formValues = { ...this.memoForm.value, ipData: this.allowed_ips, geolocationData: Object.values(this.locationDetails), memId: this.memId, new: this.area_location };
     console.log(formValues);
-    // this.createMemo(formValues); 
     this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response) => {
       console.log(response);
       this.isLoading = false;
@@ -396,163 +352,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   onCheckboxChange(event: any) {
-    // Logic to handle checkbox change if needed
   }
 
-  // FOR AREA 
-  // fetchAreaDetails() {
-  //   if(!this.areaName){
-  //     Toastify({
-  //       text: 'Fill in appropriately',
-  //       duration: 3000,
-  //       gravity: "top",
-  //       position: "right",
-  //       backgroundColor: "red",
-  //     }).showToast();
-  //   }
-  //   this.areaName = this.memoForm.get('areaName')?.value;
-  //   this.area_location.push(this.areaName);
-  //   console.log('Area Name:', this.areaName);
-  //   if (this.areaName) {
-  //     this.httpRequest.fetchAreaDetails(this.areaName).subscribe((data: any) => {
-  //           console.log(data);
-  //           if (data.results && data.results.length > 0) {
-  //             const result = data.results[0].annotations.DMS; // Get the first result
-  //             Toastify({
-  //               text: 'success',
-  //               duration: 3000,
-  //               gravity: "top",
-  //               position: "right",
-  //               backgroundColor: "green",
-  //             }).showToast();
-  //             this.locationDetails[this.areaName] = {
-  //               Lat: this.dmsToDecimal(result.lat).toFixed(6),
-  //               Lng: this.dmsToDecimal(result.lng).toFixed(6),
-  //             };
-  //             console.log(this.locationDetails);
-  //           } else {
-  //             Toastify({
-  //               text: 'No location fetch for this area',
-  //               duration: 5000,
-  //               gravity: "top",
-  //               position: "right",
-  //               backgroundColor: "red",
-  //             }).showToast();
-  //           }
-  //         },
-  //         error => {
-  //           console.error(error);
-  //           Toastify({
-  //             text: `${error}`,
-  //             duration: 3000,
-  //             gravity: "top",
-  //             position: "right",
-  //             backgroundColor: "red",
-  //           }).showToast();
-  //         }
-  //       );
-  //       this.memoForm.get('areaName')?.reset(); 
-  //   } else {
-  //     this.locationDetails = null; // Reset if no area name is provided
-  //   }
-  // }
-
-
-  // fetchAreaDetails() {
-
-  //   this.areaName = this.memoForm.get('areaName')?.value;
-  
-  //   // if (!this.areaName) {
-  //   //   Toastify({
-  //   //     text: 'Please fill in the area name.',
-  //   //     duration: 3000,
-  //   //     gravity: "top",
-  //   //     position: "right",
-  //   //     backgroundColor: "red",
-  //   //   }).showToast();
-  //   //   return;
-  //   // }
-  
-  //   // Check if the Area address is already in the area_location list
-  //   // if (this.area_location.includes(this.areaName)) {
-  //   //   Toastify({
-  //   //     text: 'Area address already exists.',
-  //   //     duration: 3000,
-  //   //     gravity: "top",
-  //   //     position: "right",
-  //   //     backgroundColor: "red",
-  //   //   }).showToast();
-  //   //   return;
-  //   // }
-  //   // Check if the area name is valid using a custom validation method
-  //   // if (!this.isValidAreaName(this.areaName)) {
-  //   //   Toastify({
-  //   //     text: 'Invalid area name.',
-  //   //     duration: 3000,
-  //   //     gravity: "top",
-  //   //     position: "right",
-  //   //     backgroundColor: "red",
-  //   //   }).showToast();
-  //   //   return;
-  //   // }
-  
-  //   // Add area name to area_location array
-  //   this.area_location.push(this.areaName);
-  //   console.log('Area Name:', this.areaName);
-  
-  //   // Fetch area details
-  //   // this.httpRequest.fetchAreaDetails(this.areaName).subscribe(
-  //   //   (data: any) => {
-  //   //     console.log(data);
-  //   //     if (data.results && data.results.length > 0) {
-  //   //       const result = data.results[0].annotations.DMS; // Get the first result
-  //   //       Toastify({
-  //   //         text: 'Location fetched successfully.',
-  //   //         duration: 3000,
-  //   //         gravity: "top",
-  //   //         position: "right",
-  //   //         backgroundColor: "blue",
-  //   //       }).showToast();
-  //   //       this.locationDetails[this.areaName] = {
-  //   //         Lat: this.dmsToDecimal(result.lat).toFixed(6),
-  //   //         Lng: this.dmsToDecimal(result.lng).toFixed(6),
-  //   //       };
-  //   //       console.log(this.locationDetails);
-  //   //     } else {
-  //   //       Toastify({
-  //   //         text: 'No location data available for this area.',
-  //   //         duration: 5000,
-  //   //         gravity: "top",
-  //   //         position: "right",
-  //   //         backgroundColor: "red",
-  //   //       }).showToast();
-  //   //     }
-  //   //   },
-  //   //   error => {
-  //   //     console.error(error);
-  //   //     Toastify({
-  //   //       text: `Error fetching location: ${error.message || error}`,
-  //   //       duration: 3000,
-  //   //       gravity: "top",
-  //   //       position: "right",
-  //   //       backgroundColor: "red",
-  //   //     }).showToast();
-  //   //   }
-  //   // );
-  
-  //   // Reset the areaName field
-  //   this.memoForm.get('areaName')?.reset();
-  // }
-  
-  
-  // accessPublic(){
-  //   alert()
-  // }
-
-  // CREATING ACCESS MEMMO
   createMemo(values: any) {
     this.isLoading = false;
-    // console.log(values);
     if (!this.memId) {
       Toastify({
         text: "please create a memo",
@@ -602,7 +405,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
 
   getMemoAttachments() {
-    // Implement your logic to fetch memo attachments
     this.httpRequest.makeGetRequest(`/memo/memo_attachment?${this.memId}`).subscribe((response) => {
       console.log(response);
     }, (error) => {
@@ -624,9 +426,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       );
     }
   }
-  // uploadLogo.append('memId', this.memId);
-  // FILE ATTACHMENT 
-  // Create Attachment
   chooseFile() {
     this.fileInput.nativeElement.click();
   }
@@ -651,7 +450,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  // Implement your logic to handle security type changes
   changeSecurityType(): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue === 'template') {
@@ -663,30 +461,13 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.httpRequest.makeGetRequest('/memo/mem_secure_rule/all').subscribe((response) => {
       console.log(response.data);
       this.template = response.data
-      // console.log(this.template);
     })
   }
-
-
-  // changeFolder(event:Event): void {
-  //   const selectedValue = (event.target as HTMLSelectElement).value;
-  //   if (selectedValue === 'folder') {
-  //     this.selectedFolder();
-  //   }
-  // }
-
-  // selectedFolder() {
-  //   this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {
-  //     console.log(response.data);
-  //     this.selectedAllFolder = response.data
-  //     // console.log(this.template);
-  //   })
-  // }
 
   fetchFolders(): void {
     this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe(
       (response) => {
-        this.selectedAllFolder = response.data; // Assuming the data is in `response.data`
+        this.selectedAllFolder = response.data; 
       },
       (error) => {
         console.error('Error fetching folders:', error);
@@ -719,27 +500,5 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
     
-    // this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
-    //   (response) => {
-    //     console.log(response);
-    //     Toastify({
-    //       text: 'success',
-    //       duration: 3000,
-    //       gravity: "top",
-    //       position: "right",
-    //       backgroundColor: "red",
-    //     }).showToast();
-    //   },
-  //     (error) => {
-  //       console.log(error);
-  //       Toastify({
-  //         text: `${error}`,
-  //         duration: 3000,
-  //         gravity: "top",
-  //         position: "right",
-  //         backgroundColor: "red",
-  //       }).showToast();
-  //     }
-  //   );
 
 }

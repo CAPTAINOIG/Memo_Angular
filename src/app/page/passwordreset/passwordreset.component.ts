@@ -21,7 +21,6 @@ export class PasswordresetComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = JSON.parse(localStorage.getItem('passwordToken'))
-    console.log(this.token);
     
     this.resetPassword = this.fb.group({
       password: ['', [Validators.required]],
@@ -29,14 +28,11 @@ export class PasswordresetComponent implements OnInit {
     }, { validator: this.passwordMatchValidator });
   }
 
-  // Custom validator to check if passwords match
   passwordMatchValidator(g: FormGroup) {
     return g.get('password').value === g.get('confirmPassword').value
       ? null : { passwordMismatch: true };
   }
-
   onSubmit(): void {
-
     if (this.resetPassword.errors?.passwordMismatch) {
       Toastify({
         text: 'Passwords do not match.',
@@ -50,7 +46,6 @@ export class PasswordresetComponent implements OnInit {
 if (this.resetPassword.valid) {
     this.isLoading = true;
     const data = this.resetPassword.value;
-    console.log(data)
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`,
@@ -59,7 +54,7 @@ if (this.resetPassword.valid) {
     });
 
    
-    this.http.patch('https://45a5-102-88-62-203.ngrok-free.app/api/auth/reset_password', {password:data.password}, {headers}).subscribe(
+    this.http.patch('https://blockchain.creditclan.com/memo/auth/reset_password', {password:data.password}, {headers}).subscribe(
       (response) => {
         console.log(response);
         this.isLoading = false;

@@ -18,8 +18,8 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 export class NewuserComponent {
   createUserForm: FormGroup;
   isLoading = false;
-  userRoles: any = [];  // Array to hold the user roles
-  selectedValue: number | undefined;  // Variable to hold the selected value from the dropdown
+  userRoles: any = [];
+  selectedValue: number | undefined; 
 
   constructor(
     private fb: FormBuilder,
@@ -30,34 +30,25 @@ export class NewuserComponent {
   ) { }
 
   ngOnInit(): void {
-    // Initialize the form with all necessary fields, including role_id
     this.createUserForm = this.fb.group({
       full_name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],  // Added email validator
+      email: ['', [Validators.required, Validators.email]], 
       phone: ['', Validators.required],
-      role_id: ['', Validators.required],  // Initialize the role_id field
+      role_id: ['', Validators.required],  
     });
 
-    // Fetch user roles from the API and populate the dropdown
     this.httpRequest.makeGetRequest("/users_management/user_roles/all").subscribe((response: any) => {
       this.userRoles = response.data;
-      // console.log(this.userRoles);
     });
   }
 
-  // Method to handle form submission
   onSubmit(): void {
-    if (this.createUserForm.valid) {  // Ensure the form is valid before submission
+    if (this.createUserForm.valid) {  
       this.isLoading = true;
       const data = this.createUserForm.value;
-      // console.log("Form Data:", data);  // Log form data to verify
-
-
       this.httpRequest.makePostRequest('/users_management/create_new_user', data).subscribe(
         (response) => {
-          // console.log(response);
           this.isLoading = false;
-
           if (response.status) {
             Toastify({
               text: "User created successfully!",
@@ -66,7 +57,6 @@ export class NewuserComponent {
               position: "right",
               backgroundColor: "blue",
             }).showToast();
-
             this.local.write("auth-token", { token: response.token });
             this.router.navigate(['/portal/user']);
           }

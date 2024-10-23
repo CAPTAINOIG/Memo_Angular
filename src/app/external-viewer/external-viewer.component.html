@@ -31,12 +31,6 @@
     <input type="text" [(ngModel)]="identity" placeholder="Enter email or phone number" class="form-control">
     <button (click)="sendIdentityOtp()" style="box-shadow: 2rem;" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">{{isLoader ? 'Loading ...' : ' Send OTP'}}</button>
     </div>
-
-    <div *ngIf="status==='Next_token'" id="verification">
-      <p>Enter the OTP sent to your email:</p>
-      <input type="text" [(ngModel)]="identityOtp" placeholder="Enter OTP" class="form-control" style="padding: 8px; margin-bottom: 10px;">
-      <button (click)="verifyEmailOtp()" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">Verify OTP</button>
-    </div>
   </div>
  </div>
  

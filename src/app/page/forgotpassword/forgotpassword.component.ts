@@ -35,15 +35,10 @@ export class ForgotpasswordComponent {
     if (this.forgotPasswordForm.invalid) {
       return;
     }
-  
     this.isLoading = true;
-  
     const data = this.forgotPasswordForm.value;
-    console.log(data);
-  
     this.httpRequest.makePostRequest('/auth/forgot_password', data).subscribe(
       (response) => {
-        console.log(response);
         Toastify({
           text: 'success',
           backgroundColor: 'blue',
@@ -51,18 +46,16 @@ export class ForgotpasswordComponent {
           position: 'right',
           duration: 3000,
         }).showToast();
-        console.log(response)
+
         this.local.write("passwordToken", (response.token))
         this.router.navigate(['/passwordAuth'])
-        // reset form
         this.forgotPasswordForm.reset();
         this.isLoading = false;
       },
       (error) => {
-        console.error(error);
         this.isLoading = false;
         Toastify({
-          text: 'invalid',
+          text: `${error.error.message}`,
           backgroundColor: 'red',
           gravity: 'top',
           position: 'right',

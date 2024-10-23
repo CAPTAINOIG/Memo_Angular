@@ -22,10 +22,7 @@ authData: any;
 
   ngOnInit() {
     this.authData = this.sidebarService.getAuthData();
-    // console.log(this.authData.url);
     const asciiToken = this.authData.asciiToken
-    // console.log(asciiToken);
-    
     this.createAuthForm = this.fb.group({
     otp: [''],
     asciiToken: asciiToken
@@ -36,25 +33,23 @@ authData: any;
     this.isLoading = true
     if(this.createAuthForm.valid){
       const auth = this.createAuthForm.value
-      // console.log(auth);
       this.httpRequest.makePostRequest('/users_management/verify_auth', auth).subscribe((response)=>{
         console.log(response);
         this.isLoading = false
         Toastify({
           text: "successful!",
           duration: 3000,
-          gravity: "top", // `top` or `bottom`
-          position: "right", // `left`, `center` or `right`
+          gravity: "top", 
+          position: "right",
           backgroundColor: "blue",
         }).showToast();
       }, (error)=>{
-        console.log(error);
         this.isLoading = false
         Toastify({
           text: "Error",
           duration: 3000,
-          gravity: "top", // `top` or `bottom`
-          position: "right", // `left`, `center` or `right`
+          gravity: "top", 
+          position: "right", 
           backgroundColor: "red",
         }).showToast();
         

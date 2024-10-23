@@ -37,9 +37,7 @@
 
                                 <li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j1_1_anchor"
                                     aria-expanded="false" id="j1_1" class="jstree-node  jstree-closed">
-                                    <!-- <li class="jstree-icon jstree-ocl"
-                                role="presentation">
-                            </li> -->
+                                   
                                     <a (click)="foldName(item.Id)" class="jstree-anchor cursor-pointer ms-5"
                                         tabindex="-1" id="j1_1_anchor">
                                         <i class="jstree-icon jstree-themeicon ti-folder text-warning jstree-themeicon-custom"
@@ -65,14 +63,14 @@
                                 <button [disabled]="isLoadingNext" class="btn btn-primary" (click)="previous()">
                                     <span *ngIf="isLoadingPrevious" class="spinner-border spinner-border-sm"
                                         role="status" aria-hidden="true"></span>
-                                    {{ isLoadingPrevious ? 'Loading...' : 'Previous' }}
+                                    {{ isLoadingPrevious ? '' : 'Previous' }}
                                 </button>
                             </span>
                             <span class="list-inline-item mb-0">
                                 <button [disabled]="isLoadingPrevious" class="btn btn-primary" (click)="next()">
                                     <span *ngIf="isLoadingNext" class="spinner-border spinner-border-sm" role="status"
                                         aria-hidden="true"></span>
-                                    {{ isLoadingNext ? 'Loading...' : 'Next' }}
+                                    {{ isLoadingNext ? '' : 'Next' }}
                                 </button>
                             </span>
                             <div class="form-group">

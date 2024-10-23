@@ -10,7 +10,7 @@ import Toastify from 'toastify-js';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './otpconfirmation.component.html',
-  styleUrls: ['./otpconfirmation.component.css'] // Renamed to 'styleUrls'
+  styleUrls: ['./otpconfirmation.component.css']
 })
 export class OtpconfirmationComponent {
   otp: string = '';
@@ -67,18 +67,4 @@ export class OtpconfirmationComponent {
     })
 
   }
-  // onSubmit(): void{
-  //   this.isLoading = true
-  //   if(this.createAuthForm.valid){
-  //     const auth = this.createAuthForm.value
-  //     // console.log(auth);
-  //     this.httpRequest.makePostRequest('/users_management/verify_auth', auth).subscribe((response)=>{
-  //       console.log(response);
-  //       this.isLoading = false
-  //     }, (error)=>{
-  //       console.log(error);
-  //       this.isLoading = false
-
-  //     })
-  // }
 }

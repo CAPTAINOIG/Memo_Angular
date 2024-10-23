@@ -19,7 +19,6 @@ export class TwofactorauthComponent {
   isSuccess: boolean = true;
   message: string = '';
 
-
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -31,32 +30,37 @@ export class TwofactorauthComponent {
     });
   }
   onSubmit(){
-    if(this.authForm.value){
+    if(!this.authForm.valid){
+      Toastify({
+        text: "Please fill all the fields",
+        duration: 3000,
+        gravity: "top", 
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
+    }
+    else{
       this.isLoading = true;
- 
       const data = this.authForm.value
-      // console.log(data);
-
       this.httpRequest.makePostRequest(`/auth/validate_two_fact_auth`, data).subscribe({
         next: (data:any) => {
           this.isLoading = false;
           Toastify({
             text: "Authentication successful!",
             duration: 3000,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
+            gravity: "top", 
+            position: "right",
             backgroundColor: "blue",
           }).showToast();
           this.router.navigate(['/portal/dashboard']);
         },
         error: (err:any) => {
           this.isLoading = false;
-          console.log(err);
           Toastify({
-            text: 'invalid',
+            text: `Authentication failed! ${err.error.message}`,
             duration: 3000,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
+            gravity: "top", 
+            position: "right", 
             backgroundColor: "red",
           }).showToast();
         }

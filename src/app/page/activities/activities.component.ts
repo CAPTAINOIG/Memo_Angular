@@ -26,7 +26,6 @@ memoAcitivities() {
   this.isLoading = true;
   this.httpRequest.makeGetRequest('/memo/memo_activities').subscribe((response)=>{
     this.activities = response.data;
-    console.log(this.activities);
     this.isLoading = false;
   }, (error)=>{
     console.log(error);
@@ -48,6 +47,4 @@ formatTime(dateT: any): string {
   const seconds = String(date.getSeconds()).padStart(2, '0');
   return `${hours}:${minutes}:${seconds}`;
 }
-
-
 }

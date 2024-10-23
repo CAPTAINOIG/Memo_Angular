@@ -10,75 +10,69 @@ import Toastify from 'toastify-js';
 @Component({
   selector: 'app-files',
   standalone: true,
-  imports: [NavigationComponent, SidebarComponent, ReactiveFormsModule, FormsModule , CommonModule],
+  imports: [NavigationComponent, SidebarComponent, ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './files.component.html',
   styleUrl: './files.component.css'
 })
 export class FilesComponent {
   isLoadingPrevious: boolean = false;
   isLoadingNext: boolean = false;
-  
-foldId=undefined
-page=1
-allFile: any  = [];
-allFolder: any = [];
-isLoading = true;
-recent: any;
-searchTerm: string = '';
+
+  foldId = undefined
+  page = 1
+  allFile: any = [];
+  allFolder: any = [];
+  isLoading = true;
+  recent: any;
+  searchTerm: string = '';
 
   constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService) { }
 
   ngOnInit(): void {
-    this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response)=>{
+    this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response) => {
       this.allFile = response.data;
-      console.log(this.allFile);
       this.isLoading = false
-    },(error)=>{
+    }, (error) => {
       console.log(error);
     })
 
-
-    this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response)=>{
+    this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {
       this.allFolder = response.data;
-      // console.log(this.allFolder);
-    
-    },(error)=>{
+    }, (error) => {
       console.log(error);
     })
-    
+
   }
 
-  previous (){
-    this.isLoadingPrevious= true;
-    this.page-=1
-    if(this.page>0){
-      this.httpRequest.makeGetRequest(`/dashboard/files/all?page=${this.page}&foldId=${this.foldId}`).subscribe((response)=>{
+  previous() {
+    this.isLoadingPrevious = true;
+    this.page -= 1
+    if (this.page > 0) {
+      this.httpRequest.makeGetRequest(`/dashboard/files/all?page=${this.page}&foldId=${this.foldId}`).subscribe((response) => {
         this.allFile = response.data;
-        // console.log(this.allFile);
-      this.isLoadingPrevious= false;
-      
-      },(error)=>{
+        this.isLoadingPrevious = false;
+
+      }, (error) => {
         console.log(error);
-      this.isLoadingPrevious= false;
+        this.isLoadingPrevious = false;
       })
     }
 
   }
-  next(){
+  next() {
     this.isLoadingNext = true;
-    this.page+=1
-    this.httpRequest.makeGetRequest(`/dashboard/files/all?page=${this.page}&foldId=${this.foldId}`).subscribe((response)=>{
+    this.page += 1
+    this.httpRequest.makeGetRequest(`/dashboard/files/all?page=${this.page}&foldId=${this.foldId}`).subscribe((response) => {
       this.allFile = response.data;
-      // console.log(this.allFile);
-      this.isLoadingNext= false;
-    },(error)=>{
+      this.isLoadingNext = false;
+    }, (error) => {
       console.log(error);
-      this.isLoadingNext= false;
+      this.isLoadingNext = false;
     })
   }
 
   editFiles(file: any) {
-    this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
+    this.httpRequest?.makeGetRequest("/memo/single?id=" + file).subscribe((response: any) => {
       this.handleModal.setEditMemo(response.data)
       console.log(response.data)
       this.handleModal.showMother("edit_files");
@@ -87,44 +81,42 @@ searchTerm: string = '';
       this.isLoading = false;
     })
   }
-  foldName(id:any|number){
+  foldName(id: any | number) {
     this.isLoading = true;
     this.foldId = id
     this.page = 1
-    this.httpRequest.makeGetRequest('/dashboard/files/all?page=1&foldId='+id).subscribe((response)=>{
+    this.httpRequest.makeGetRequest('/dashboard/files/all?page=1&foldId=' + id).subscribe((response) => {
       this.allFile = response.data;
-      console.log(this.allFile);
-      
       this.isLoading = false;
     })
   }
 
-  publish(memId:any){
+  publish(memId: any) {
     console.log(memId)
     this.handleModal.showMother("otp");
     this.handleModal.setPublishMemId(memId);
   }
 
   filteredFiles() {
-    return this.allFile.filter(item => 
+    return this.allFile.filter(item =>
       item.MemTitle.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
-  format=(dateT:any)=> {
-    const date= (new Date(dateT))
+  format = (dateT: any) => {
+    const date = (new Date(dateT))
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
-   }
-  
-   createFolders(){
-    this.handleModal.showMother  ("create_folder")
-   }
+  }
+
+  createFolders() {
+    this.handleModal.showMother("create_folder")
+  }
 
 
-     
+
   copyToClipboard(text: string): void {
     const textarea = document.createElement('textarea');
     textarea.style.position = 'fixed';
@@ -139,10 +131,10 @@ searchTerm: string = '';
       text: 'Link copied to clipboard!',
       duration: '3000',
       position: 'right',
-      gravity:'top',
+      gravity: 'top',
       backgroundColor: 'blue',
     }).showToast();
   }
 
-  }
-  
+}
+

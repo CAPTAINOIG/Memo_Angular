@@ -16,16 +16,13 @@ import "toastify-js/src/toastify.css";
 })
 export class EditmemoComponent implements OnInit, OnDestroy {
 
-
   editor: Editor;
 
   ngOnInit() {
-    // this.editor = new Editor();
     this.editor = new Editor();
     this.getMemo();
     this.editMemo = this.sidebarService.editMemo;
     
-    // Populate the form with editMemo data
     if (this.editMemo) {
       this.createEditForm.patchValue({
         title: this.editMemo.MemTitle,
@@ -40,7 +37,6 @@ export class EditmemoComponent implements OnInit, OnDestroy {
 
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-  // editor: Editor;
   createEditForm: FormGroup;
   isLoading = false;
   editMemo: any;
@@ -72,34 +68,8 @@ export class EditmemoComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ngOnInit(): void {
-  //   this.editor = new Editor();
-  //   this.getMemo();
-  // }
-
-  // ngOnDestroy(): void {
-  //   this.editor.destroy();
-  // }
-
-
-  // ngOnInit() {
-  //   this.editor = new Editor();
-  //   this.getMemo();
-  //   this.editMemo = this.sidebarService.getEditMemo();
-  //   console.log(this.editMemo);
-    
-  //   // Populate the form with editMemo data
-  //   if (this.editMemo) {
-  //     this.createEditForm.patchValue({
-  //       title: this.editMemo.MemTitle,
-  //       memo: this.editMemo.MemContents,
-  //     });
-  //   }
-  // }
-
   onSubmit() {
     this.isLoading=true;
-    // Create the memo object using form values
     const memo = {
       title: this.createEditForm.value.title,
       memo: this.createEditForm.value.memo,
@@ -107,9 +77,6 @@ export class EditmemoComponent implements OnInit, OnDestroy {
       memFold: this.editMemo.MemFoldId || null,
     };
 
-    console.log(memo); // Log the memo object to check its structure
-
-    // Make the PATCH request
     this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
       (response) => {
         console.log(response); 

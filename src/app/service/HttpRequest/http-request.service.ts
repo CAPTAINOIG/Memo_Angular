@@ -6,9 +6,6 @@ import { LocalstorageService } from '../LocalstorageService/localstorage.service
   providedIn: 'root'
 })
 export class HttpRequestService {
-  
-  // private baseUrl = 'https://d4c5-102-89-22-178.ngrok-free.app/api'; 
-  // private baseUrl = 'http://54.236.118.226/memo/api';
   private baseUrl = 'https://blockchain.creditclan.com/memo/api';
   private geoApiKey = '39f835849b07490f9ada6d2e31447933';
   
@@ -22,7 +19,7 @@ export class HttpRequestService {
   }
 
   public makePostRequest(url: string, body: any = {}, isMultipart: boolean = false) {
-    const headers = isMultipart ? undefined : this.returnHeader(); // Skip headers if multipart
+    const headers = isMultipart ? undefined : this.returnHeader(); 
     return this.http.post<any>(`${this.baseUrl}${url}`, body, { headers });
   }
 

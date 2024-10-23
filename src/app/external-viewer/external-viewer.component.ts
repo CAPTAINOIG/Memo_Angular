@@ -19,11 +19,6 @@ export class ExternalViewerComponent implements OnInit {
   data: any = undefined;
   isLoader = false;
 
-
-  // phoneNumber: string = '';
-  // smsOtp: string = '';
-  // smsOtpSent: boolean = false;
-
   identity: string = '';
   identityOtp: string = '';
   identityOtpSent: boolean = false;
@@ -78,9 +73,9 @@ export class ExternalViewerComponent implements OnInit {
         console.error('Error retrieving location:', error);
       },
       {
-        enableHighAccuracy: true, // Request more accurate location data
-        timeout: 10000, // Timeout after 10 seconds
-        maximumAge: 0 // Do not use cached location
+        enableHighAccuracy: true, 
+        timeout: 10000, 
+        maximumAge: 0 
       }
     );
   }
@@ -91,8 +86,8 @@ export class ExternalViewerComponent implements OnInit {
       Toastify({
         text: 'input cannot be empty',
         duration: 3000,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
+        gravity: "top", 
+        position: "right",
         backgroundColor: "red",
       }).showToast();
       return;
@@ -110,27 +105,23 @@ export class ExternalViewerComponent implements OnInit {
       Toastify({
         text: 'success',
         duration: 3000,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
+        gravity: "top",
+        position: "right", 
         backgroundColor: "blue",
       }).showToast();
       this.isLoader = false;
     }, (error)=>{
-      console.log(error);
       this.isLoader = false;
       this.message = error.error.message;
       Toastify({
         text: `${error.error.message};`,
         duration: 3000,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
+        gravity: "top",
+        position: "right", 
         backgroundColor: "red",
       }).showToast();
     
     })
   }
 
-
-  verifyEmailOtp(){
-  }
 }
