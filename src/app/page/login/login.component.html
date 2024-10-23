@@ -1,18 +1,10 @@
 <div class="form-membership" style="background: url(../../assets/media/image/image1.jpg)">
     <div class="form-wrapper">
 
-        <!-- logo -->
         <div id="logo">
             <img src="../../assets/media/image/logo-dark.png" alt="image">
         </div>
-        <!-- ./ logo -->
-
         <h5>Sign in</h5>
-
-        <!-- form -->
-        <!-- <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
-            {{ message }}
-          </div> -->
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <input 
@@ -48,7 +40,6 @@
                 {{ isLoading ? 'Logging in...' : 'Login' }}
               </button>
         </form>
-        <!-- ./ form -->
 
     </div>
 </div>

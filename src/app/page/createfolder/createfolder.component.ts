@@ -43,8 +43,8 @@ export class CreatefolderComponent {
         Toastify({
           text: "successful!",
           duration: 3000,
-          gravity: "top", // `top` or `bottom`
-          position: "right", // `left`, `center` or `right`
+          gravity: "top",
+          position: "right", 
           backgroundColor: "blue",
         }).showToast();
       },
@@ -54,8 +54,8 @@ export class CreatefolderComponent {
         Toastify({
           text: '',
           duration: 3000,
-          gravity: "top", // `top` or `bottom`
-          position: "right", // `left`, `center` or `right`
+          gravity: "top",
+          position: "right", 
           backgroundColor: "red",
         }).showToast();
       }
