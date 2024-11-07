@@ -41,8 +41,7 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
           this.handleModals.setQrCodeData(response.data[0])
         }
       }, (error)=>{
-        console.log(error);
-        
+        // console.log(error);
       })
 
     }

@@ -1,321 +1,607 @@
 <div>
-
-    <!-- <div *ngIf="handleModals.handleValue" class="sidebar-group-forms d-print-none"  > -->
-    <div *ngIf="handleModals.show=='new_user'" class="sidebar-group-forms d-print-none">
-        <div class="sidebar primary-sidebar show" id="storage">
-            <div class="sidebar-header">
-                <h4>New user</h4>
-                <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
-                    <i class="ti-angle-right"></i>
-                </a>
-            </div>
-            <app-newuser></app-newuser>
-        </div>
+  <!-- <div *ngIf="handleModals.handleValue" class="sidebar-group-forms d-print-none"  > -->
+  <div
+    *ngIf="handleModals.show == 'new_user'"
+    class="sidebar-group-forms d-print-none"
+  >
+    <div class="sidebar primary-sidebar show" id="storage">
+      <div class="sidebar-header">
+        <h4>New user</h4>
+        <a
+          href="javascript:;"
+          (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn"
+        >
+          <i class="ti-angle-right"></i>
+        </a>
+      </div>
+      <app-newuser></app-newuser>
     </div>
+  </div>
 
-    <div *ngIf="handleModals.show=='forms'" class="sidebar-group-forms d-print-none">
-        <div class="sidebar primary-sidebar show" id="storage">
-            <div class="sidebar-header">
-                <h4>View User Details</h4>
-                <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
-                    <i class="ti-angle-right"></i>
-                </a>
-            </div>
-            <app-userdetail></app-userdetail>
-        </div>
+  <div
+    *ngIf="handleModals.show == 'forms'"
+    class="sidebar-group-forms d-print-none"
+  >
+    <div class="sidebar primary-sidebar show" id="storage">
+      <div class="sidebar-header">
+        <h4>View User Details</h4>
+        <a
+          href="javascript:;"
+          (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn"
+        >
+          <i class="ti-angle-right"></i>
+        </a>
+      </div>
+      <app-userdetail></app-userdetail>
     </div>
+  </div>
 
-    <div *ngIf="handleModals.show=='esignature'" class="sidebar-group-forms d-print-none">
-        <div class="sidebar primary-sidebar show" id="storage">
-            <div class="sidebar-header">
-                <h4>Signature page</h4>
-                <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
-                    <i class="ti-angle-right"></i>
-                </a>
-            </div>
-            <app-esignature></app-esignature>
-        </div>
+  <div
+    *ngIf="handleModals.show == 'esignature'"
+    class="sidebar-group-forms d-print-none"
+  >
+    <div class="sidebar primary-sidebar show" id="storage">
+      <div class="sidebar-header">
+        <h4>Signature page</h4>
+        <a
+          href="javascript:;"
+          (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn"
+        >
+          <i class="ti-angle-right"></i>
+        </a>
+      </div>
+      <app-esignature></app-esignature>
     </div>
+  </div>
 
-    <div *ngIf="handleModals.show=='otp'" class="sidebar-group-forms d-print-none">
-        <div class="sidebar primary-sidebar show" id="storage">
-            <div class="sidebar-header">
-                <h4>Otp Confirmation</h4>
-                <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
-                    <i class="ti-angle-right"></i>
-                </a>
-            </div>
-            <app-otpconfirmation></app-otpconfirmation>
-        </div>
+  <div
+    *ngIf="handleModals.show == 'otp'"
+    class="sidebar-group-forms d-print-none"
+  >
+    <div class="sidebar primary-sidebar show" id="storage">
+      <div class="sidebar-header">
+        <h4>Otp Confirmation</h4>
+        <a
+          href="javascript:;"
+          (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn"
+        >
+          <i class="ti-angle-right"></i>
+        </a>
+      </div>
+      <app-otpconfirmation></app-otpconfirmation>
     </div>
+  </div>
 
-    <div *ngIf="handleModals.show=='authentication'" class="sidebar-group-forms d-print-none">
-        <div class="sidebar primary-sidebar show" id="storage">
-            <div class="sidebar-header">
-                <h4>View User Details</h4>
-                <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
-                    <i class="ti-angle-right"></i>
-                </a>
-            </div>
-            <app-authentication></app-authentication>
-        </div>
+  <div
+    *ngIf="handleModals.show == 'authentication'"
+    class="sidebar-group-forms d-print-none"
+  >
+    <div class="sidebar primary-sidebar show" id="storage">
+      <div class="sidebar-header">
+        <h4>View User Details</h4>
+        <a
+          href="javascript:;"
+          (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn"
+        >
+          <i class="ti-angle-right"></i>
+        </a>
+      </div>
+      <app-authentication></app-authentication>
     </div>
+  </div>
 
-    <div *ngIf="handleModals.show=='create_folder'" class="sidebar-group-forms d-print-none">
-        <div class="sidebar primary-sidebar show" id="storage">
-            <div class="sidebar-header">
-                <h4>Create Folder</h4>
-                <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
-                    <i class="ti-angle-right"></i>
-                </a>
-            </div>
-            <app-createfolder></app-createfolder>
-        </div>
+  <div
+    *ngIf="handleModals.show == 'create_folder'"
+    class="sidebar-group-forms d-print-none"
+  >
+    <div class="sidebar primary-sidebar show" id="storage">
+      <div class="sidebar-header">
+        <h4>Create Folder</h4>
+        <a
+          href="javascript:;"
+          (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn"
+        >
+          <i class="ti-angle-right"></i>
+        </a>
+      </div>
+      <app-createfolder></app-createfolder>
     </div>
+  </div>
 
-    <div *ngIf=" ['edit_files','create_memo'].includes(this.handleModals.show)"
-        class="sidebar-group-forms d-print-none">
-        <!-- Sidebar - Storage -->
-        <div class="sidebar primary-sidebar show" id="storage">
-            <div class="sidebar-header">
-                <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
-                    <h4>Edit Memo</h4>
+  <div
+    *ngIf="['edit_files', 'create_memo'].includes(this.handleModals.show)"
+    class="sidebar-group-forms d-print-none"
+  >
+    <!-- Sidebar - Storage -->
+    <div class="sidebar primary-sidebar show" id="storage">
+      <div class="sidebar-header">
+        <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
+          <h4>Edit Memo</h4>
+        </ng-container>
+        <ng-template #newMemo>
+          <h4>New Memo</h4>
+        </ng-template>
+        <a
+          href="javascript:;"
+          (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn"
+        >
+          <i class="ti-angle-right"></i>
+        </a>
+      </div>
+      <div class="sidebar-content">
+        <ul class="nav nav-tabs mb-3" role="tablist">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              id="home-tab"
+              data-toggle="tab"
+              href="#home"
+              (click)="handle('hello')"
+              role="tab"
+              aria-controls="home"
+              aria-selected="true"
+              >Content</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="metadata-tab"
+              data-toggle="tab"
+              href="#metadata"
+              (click)="handle('hello')"
+              role="tab"
+              aria-controls="metadata"
+              aria-selected="false"
+              >Meta Data</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="profile-tab"
+              data-toggle="tab"
+              href="#profile"
+              (click)="handle('hello')"
+              role="tab"
+              aria-controls="profile"
+              aria-selected="false"
+              >Attachments</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="contact-tab"
+              data-toggle="tab"
+              href="#contact"
+              (click)="handle('hello')"
+              role="tab"
+              aria-controls="contact"
+              aria-selected="false"
+              >Security</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="sharing-tab"
+              data-toggle="tab"
+              href="#sharing"
+              (click)="handle('hello')"
+              role="tab"
+              aria-controls="sharing"
+              aria-selected="false"
+              >Sharing</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="qrcode-tab"
+              data-toggle="tab"
+              href="#qrcode"
+              (click)="handle('hello')"
+              role="tab"
+              aria-controls="qrcode"
+              aria-selected="false"
+              >QR Code</a
+            >
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <form [formGroup]="memoForm" (ngSubmit)="draftMemo()">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Title</label>
+                <input
+                  type="text"
+                  formControlName="title"
+                  class="form-control"
+                  id="title"
+                  name="title"
+                  aria-describedby="emailHelp"
+                  placeholder=""
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Folder</label>
+                <select
+                  formControlName="security_type"
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                >
+                  <option value="">Select a folder</option>
+                  <!-- Dynamically populate options based on the fetched folders -->
+                  <ng-container
+                    *ngIf="selectedAllFolder && selectedAllFolder.length > 0"
+                  >
+                    <option
+                      *ngFor="let item of selectedAllFolder"
+                      [value]="item.Id"
+                    >
+                      {{ item.MemFoldName }}
+                    </option>
+                  </ng-container>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Memo</label>
+
+                <div class="NgxEditor__Wrapper">
+                  <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                  <!-- <ngx-editor [editor]="editor" formControlName="memo" [disabled]=false -->
+                  <ngx-editor
+                    [editor]="editor"
+                    formControlName="memo"
+                    [placeholder]="'Type here...'"
+                  ></ngx-editor>
+                </div>
+              </div>
+              <div class="form-group form-check">
+                <input
+                  type="checkbox"
+                  name="include_signature"
+                  formControlName="include_signature"
+                  class="form-check-input"
+                  id="include_signature"
+                />
+                <label class="form-check-label" for="exampleCheck1"
+                  >Include Signature</label
+                >
+              </div>
+              <!-- <button type="submit" class="btn btn-primary">{{handleModals.show === 'edit_files' ? 'Save Edit' : 'Save Draft'}}</button> -->
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="isLoading"
+              >
+                <ng-container *ngIf="isLoading; else buttonText">
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Loading...
                 </ng-container>
-                <ng-template #newMemo>
-                    <h4>New Memo</h4>
+                <ng-template #buttonText>
+                  {{
+                    handleModals.show === "edit_files"
+                      ? "Save Edit"
+                      : "Save Draft"
+                  }}
                 </ng-template>
-                <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
-                    <i class="ti-angle-right"></i>
+              </button>
+            </form>
+          </div>
+
+          <div
+            class="tab-pane fade"
+            id="profile"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+          >
+            <p *ngIf="memo_attachments.length == 0">No attachments</p>
+            <button
+              (click)="chooseFile()"
+              class="btn btn-lg btn-block btn-outline-primary"
+            >
+              <i class="fa fa-cloud-upload mr-3"></i> Upload Attachment
+            </button>
+            <input
+              type="file"
+              id="input-file"
+              name="input-file"
+              #fileInput
+              (change)="fileChangeEvent($event)"
+              hidden
+            />
+            <div *ngIf="memo_attachments.length > 0">
+              <div class="list-group list-group-flush mb-3">
+                <a
+                  *ngFor="let attach of memo_attachments"
+                  href="javascript:;"
+                  class="list-group-item px-0 d-flex align-items-center"
+                >
+                  <div class="mr-3">
+                    <figure class="avatar">
+                      <span
+                        class="avatar-title bg-primary-bright text-primary rounded"
+                      >
+                        <i class="ti-image"></i>
+                      </span>
+                    </figure>
+                  </div>
+                  <div class="flex-grow-1">
+                    <p class="mb-0">{{ attach.name }}</p>
+                    <span class="small text-muted">{{ attach.type }}</span>
+                  </div>
+                  <div>
+                    <h5 class="text-primary">{{ attach.size }}</h5>
+                  </div>
+                  <div>
+                    <a
+                      href="javascript:;"
+                      class="btn btn-floating"
+                      (click)="deleteAttachment(1)"
+                      ><i class="ti-trash"></i
+                    ></a>
+                  </div>
                 </a>
+              </div>
             </div>
-            <div class="sidebar-content">
-                <ul class="nav nav-tabs mb-3" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" (click)="handle()"
-                            role="tab" aria-controls="home" aria-selected="true">Content</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" (click)="handle()"
-                            role="tab" aria-controls="profile" aria-selected="false">Attachments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" (click)="handle()"
-                            role="tab" aria-controls="contact" aria-selected="false">Security</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="sharing-tab" data-toggle="tab" href="#sharing" (click)="handle()"
-                            role="tab" aria-controls="sharing" aria-selected="false">Sharing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="qrcode-tab" data-toggle="tab" href="#qrcode" (click)="handle('hello')"
-                            role="tab" aria-controls="qrcode" aria-selected="false">QR Code</a>
-                    </li>
-                </ul>
+          </div>
 
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <form [formGroup]="memoForm" (ngSubmit)="draftMemo()">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Title</label>
-                                <input type="text" formControlName="title" class="form-control" id="title" name="title"
-                                    aria-describedby="emailHelp" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Folder</label>
-                                <select formControlName="security_type" class="form-control"
-                                    id="exampleFormControlSelect1">
-                                    <option value="">Select a folder</option>
-                                    <!-- Dynamically populate options based on the fetched folders -->
-                                    <ng-container *ngIf="selectedAllFolder && selectedAllFolder.length > 0">
-                                        <option *ngFor="let item of selectedAllFolder" [value]="item.Id">{{
-                                            item.MemFoldName }}</option>
-                                    </ng-container>
-                                </select>
-                            </div>
+          <div
+            class="tab-pane fade"
+            id="metadata"
+            role="tabpanel"
+            aria-labelledby="metadata-tab"
+          >
+            <form [formGroup]="memoForm" (ngSubmit)="draftMetaData()">
+              <div
+                class="card card-body mb-3 d-flex justify-content-between flex-row"
+              >
+                <div>
+                  <a> <i class="fa fa-lock mr-2"></i> Meta Data </a>
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    type="checkbox"
+                    name="metaData"
+                    formControlName="metaData"
+                    class="form-check-input"
+                    id="exampleCheck1"
+                  />
+                </div>
+              </div>
 
+              <div class="mt-3" *ngIf="memoForm.controls['metaData'].value">
+                <div>
+                  <div class="form-group mb-3">
+                    <label for="title">Title</label>
+                    <input
+                      type="text"
+                      formControlName="key"
+                      class="form-control"
+                      id="title"
+                      placeholder="Enter title"
+                    />
+                  </div>
 
-                            <!-- <div class="form-group">
-                                <label for="exampleFormControlSelect1">Folder</label>
-                                <select (change)="changeFolder($event)" name="change_folder" formControlName="change_folder" class="form-control" id="exampleFormControlSelect1">
-                                  <option value="">Select an option</option>
-                                  <option value="folder">Select from folders</option>
-                                  
-                                  <ng-container *ngIf="selectedAllFolder && selectedAllFolder.length > 0">
-                                    <option *ngFor="let item of selectedAllFolder" [value]="item.MemFoldName">{{ item.MemFoldName }}</option>
-                                  </ng-container>
-                                </select>
-                              </div>                               - -->
+                  <div class="form-group mb-3">
+                    <label for="value">Value</label>
+                    <input
+                      type="text"
+                      formControlName="value"
+                      class="form-control"
+                      id="value"
+                      placeholder="Enter value"
+                    />
+                  </div>
 
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Memo</label>
+                  <button
+                    type="submit"
+                    class="btn btn-primary d-flex justify-content-center align-items-center w-100 bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700"
+                  >
+                    {{ isLoading ? "Loading....." : "Submit" }}
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div *ngIf="metaDataResult && metaDataResult.length > 0">
+              <table class="table table-bordered mt-4">
+                <thead>
+                  <tr class="flex justify-content-between">
+                    <th class="text-center">Memo Title</th>
+                    <th class="text-center">Value</th>
+                    <th class="text-center">Delete</th>
+                  </tr>
+                </thead>
+                <tbody class="">
+                  <tr *ngFor="let data of metaDataResult; let i = index">
+                    <td>{{ data.key }}</td>
+                    <td>{{ data.value }}</td>
+                    <td class="text-center">
+                      <button (click)="deleteMetaData(i)" class="btn btn-link">
+                        <i class="fas fa-trash-alt text-danger">delete</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-                                <div class="NgxEditor__Wrapper">
-                                    <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-                                    <ngx-editor [editor]="editor" formControlName="memo" [disabled]=false
-                                        [placeholder]="'Type here...'"></ngx-editor>
-                                </div>
-                            </div>
-                            <div class="form-group form-check">
-                                <input type="checkbox" name="include_signature" formControlName="include_signature"
-                                    class="form-check-input" id="include_signature">
-                                <label class="form-check-label" for="exampleCheck1">Include Signature</label>
-                            </div>
-                            <!-- <button type="submit" class="btn btn-primary">{{handleModals.show === 'edit_files' ? 'Save Edit' : 'Save Draft'}}</button> -->
-                            <button type="submit" class="btn btn-primary" [disabled]="isLoading">
-                                <ng-container *ngIf="isLoading; else buttonText">
-                                    <span class="spinner-border spinner-border-sm" role="status"
-                                        aria-hidden="true"></span>
-                                    Loading...
-                                </ng-container>
-                                <ng-template #buttonText>
-                                    {{ handleModals.show === 'edit_files' ? 'Save Edit' : 'Save Draft' }}
-                                </ng-template>
-                            </button>
+          <div
+            class="tab-pane fade"
+            id="contact"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <form [formGroup]="memoForm" (ngSubmit)="onsubmit()">
+              <div class="form-group">
+                <select
+                  (change)="changeSecurityType()"
+                  name="security_type"
+                  formControlName="security_type"
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                >
+                  <option></option>
+                  <option value="template">Select from Templates</option>
+                  <option value="custom">Create Custom</option>
+                </select>
+              </div>
 
-                        </form>
+              <div
+                *ngIf="memoForm.controls['security_type'].value == 'template'"
+              ></div>
+              <div *ngIf="memoForm.controls['security_type'].value == 'custom'">
+                <div>
+                  <h6 class="d-md-flex justify-content-between mb-3">
+                    <span class="d-block">
+                      Create custom security features
+                    </span>
+                  </h6>
+                  <div
+                    class="card card-body mb-3 d-flex justify-content-between flex-row"
+                  >
+                    <div>
+                      <a href="#">
+                        <i class="fa fa-lock mr-2"></i> Email OTP
+                      </a>
                     </div>
+                    <div>
+                      <div class="form-group form-check">
+                        <input
+                          type="checkbox"
+                          name="secureByEmailOtp"
+                          formControlName="secureByEmailOtp"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="card card-body mb-3 d-flex justify-content-between flex-row"
+                  >
+                    <div>
+                      <a href="#"> <i class="fa fa-lock mr-2"></i> SMS OTP </a>
+                    </div>
+                    <div>
+                      <div class="form-group form-check">
+                        <input
+                          type="checkbox"
+                          name="secureBySmsOtp"
+                          formControlName="secureBySmsOtp"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="card card-body mb-3 d-flex justify-content-between flex-row"
+                  >
+                    <div>
+                      <a href="#">
+                        <i class="fa fa-lock mr-2"></i> IP Address
+                      </a>
+                    </div>
+                    <div>
+                      <div class="form-group form-check">
+                        <input
+                          type="checkbox"
+                          name="secureByIp"
+                          formControlName="secureByIp"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <p *ngIf="memo_attachments.length == 0">No attachments</p>
-                        <button (click)="chooseFile()" class="btn btn-lg btn-block btn-outline-primary"><i
-                                class="fa fa-cloud-upload mr-3"></i> Upload Attachment</button>
-                        <input type="file" id="input-file" name="input-file" #fileInput
-                            (change)="fileChangeEvent($event)" hidden>
-                        <div *ngIf="memo_attachments.length > 0">
-                            <div class="list-group list-group-flush mb-3">
-                                <a *ngFor="let attach of memo_attachments" href="javascript:;"
-                                    class="list-group-item px-0 d-flex align-items-center">
-                                    <div class="mr-3">
-                                        <figure class="avatar">
-                                            <span class="avatar-title bg-primary-bright text-primary rounded">
-                                                <i class="ti-image"></i>
-                                            </span>
-                                        </figure>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <p class="mb-0">{{attach.name}}</p>
-                                        <span class="small text-muted">{{attach.type}}</span>
-                                    </div>
-                                    <div>
-                                        <h5 class="text-primary">{{attach.size}}</h5>
-                                    </div>
-                                    <div>
-                                        <a href="javascript:;" class="btn btn-floating" (click)="deleteAttachment(1)"><i
-                                                class="ti-trash"></i></a>
-                                    </div>
-                                </a>
-
-                            </div>
+                  <div
+                    class="card"
+                    *ngIf="memoForm.controls['secureByIp'].value"
+                  >
+                    <div class="card-body">
+                      <div class="form-inline">
+                        <div class="form-group mb-2">
+                          <label for="ip_address" class="sr-only"
+                            >Enter IP Address</label
+                          >
+                          <input
+                            type="text"
+                            [ngModel]="ip_address"
+                            class="border border-dark rounded form-control-plaintext"
+                            id="ip_address"
+                            name="ip_address"
+                            value="ip_address"
+                            formControlName="ip_address"
+                          />
                         </div>
+
+                        <button
+                          (click)="addIP(memoForm.controls['ip_address'].value)"
+                          type="button"
+                          class="btn btn-primary mb-2"
+                        >
+                          Add IP Address
+                        </button>
+                      </div>
+                      <ul class="list-inline">
+                        <li
+                          class="list-inline-item"
+                          *ngFor="let ip of allowed_ips"
+                        >
+                          <span
+                            class="badge border bg-success-bright text-success"
+                            >{{ ip }}</span
+                          >
+                        </li>
+                      </ul>
                     </div>
+                  </div>
 
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                        <form [formGroup]="memoForm" (ngSubmit)="onsubmit()">
-                            <div class="form-group">
-                                <!-- <label for="exampleFormControlSelect1">Security Types</label> -->
-                                <select (change)="changeSecurityType()" name="security_type"
-                                    formControlName="security_type" class="form-control" id="exampleFormControlSelect1">
-                                    <option></option>
-                                    <option value="template">Select from Templates</option>
-                                    <option value="custom">Create Custom</option>
-                                </select>
-                            </div>
-
-                            <div *ngIf="memoForm.controls['security_type'].value == 'template'"></div>
-                            <div *ngIf="memoForm.controls['security_type'].value == 'custom'">
-                                <div>
-                                    <h6 class="d-md-flex justify-content-between mb-3">
-                                        <span class="d-block">
-                                            Create custom security features
-                                        </span>
-
-                                    </h6>
-                                    <div class="card card-body mb-3 d-flex justify-content-between flex-row">
-                                        <div>
-                                            <a href="#">
-                                                <i class="fa fa-lock mr-2"></i> Email OTP
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" name="secureByEmailOtp"
-                                                    formControlName="secureByEmailOtp" class="form-check-input"
-                                                    id="exampleCheck1">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-body mb-3 d-flex justify-content-between flex-row">
-                                        <div>
-                                            <a href="#">
-                                                <i class="fa fa-lock mr-2"></i> SMS OTP
-                                            </a>
-
-                                        </div>
-                                        <div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" name="secureBySmsOtp"
-                                                    formControlName="secureBySmsOtp" class="form-check-input"
-                                                    id="exampleCheck1">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-body mb-3 d-flex justify-content-between flex-row">
-                                        <div>
-                                            <a href="#">
-                                                <i class="fa fa-lock mr-2"></i> IP Address
-                                            </a>
-
-                                        </div>
-                                        <div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" name="secureByIp" formControlName="secureByIp"
-                                                    class="form-check-input" id="exampleCheck1">
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card" *ngIf="memoForm.controls['secureByIp'].value">
-                                        <div class="card-body">
-                                            <div class="form-inline">
-                                                <div class="form-group mb-2">
-                                                    <label for="ip_address" class="sr-only">Enter IP Address</label>
-                                                    <input type="text" [ngModel]="ip_address"
-                                                        class="border border-dark rounded form-control-plaintext"
-                                                        id="ip_address" name="ip_address" value="ip_address"
-                                                        formControlName="ip_address">
-                                                </div>
-
-                                                <button (click)="addIP(memoForm.controls['ip_address'].value)"
-                                                    type="button" class="btn btn-primary mb-2">Add IP Address</button>
-                                            </div>
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item" *ngFor="let ip of allowed_ips">
-                                                    <span
-                                                        class="badge border bg-success-bright text-success">{{ip}}</span>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="card card-body mb-3 d-flex justify-content-between flex-row">
-                                        <div>
-                                            <a href="#">
-                                                <i class="fa fa-lock mr-2"></i> Location Geofencing
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" name="secureByGeoLocation"
-                                                    formControlName="secureByGeoLocation" class="form-check-input"
-                                                    id="exampleCheck1" (change)="onCheckboxChange($event)">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- <div *ngIf="memoForm.controls['secureByGeoLocation'].value">
+                  <div
+                    class="card card-body mb-3 d-flex justify-content-between flex-row"
+                  >
+                    <div>
+                      <a href="#">
+                        <i class="fa fa-lock mr-2"></i> Location Geofencing
+                      </a>
+                    </div>
+                    <div>
+                      <div class="form-group form-check">
+                        <input
+                          type="checkbox"
+                          name="secureByGeoLocation"
+                          formControlName="secureByGeoLocation"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                          (change)="onCheckboxChange($event)"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div *ngIf="memoForm.controls['secureByGeoLocation'].value">
                                         <input class="card" type="text" formControlName="areaName"
                                             placeholder="Enter Area Name" class="form-control">
                                         <button class="btn btn-primary mb-2 my-3" type="button"
@@ -333,162 +619,256 @@
                                         <span class="badge border bg-success-bright text-success">{{ip}}</span>
                                     </li> -->
 
+                  <ng-container
+                    *ngIf="memoForm.controls['secureByGeoLocation'].value"
+                  >
+                    <!-- Step 1: Button to show the iframe and input -->
+                    <div *ngIf="!iframeVisible">
+                      <button class="btn btn-primary" (click)="showIframe()">
+                        Select Country via Map
+                      </button>
+                    </div>
 
-                                    <ng-container *ngIf="memoForm.controls['secureByGeoLocation'].value">
-                                        <!-- Step 1: Button to show the iframe and input -->
-                                        <div *ngIf="!iframeVisible">
-                                            <button class="btn btn-primary" (click)="showIframe()">
-                                            Select Country via Map
-                                            </button>
-                                        </div>
-
-                                        <!-- <input class="card" type="text" formControlName="areaName"
+                    <!-- <input class="card" type="text" formControlName="areaName"
                                             placeholder="Enter Area Name" class="form-control"> -->
-                                        <!-- Step 2: Display the iframe once the button is clicked -->
-                                        <div *ngIf="iframeVisible">
-                                            <iframe src="https://nigeria-five.vercel.app/" width="600" height="400"
-                                                frameborder="0" allowfullscreen>
-                                            </iframe>
-                                            <!-- https://nigeria-five.vercel.app/ -->
-                                            <!-- https://memo-geo-location.netlify.app/ -->
+                    <!-- Step 2: Display the iframe once the button is clicked -->
+                    <div *ngIf="iframeVisible">
+                      <iframe
+                        src="https://nigeria-five.vercel.app/"
+                        width="600"
+                        height="400"
+                        frameborder="0"
+                        allowfullscreen
+                      >
+                      </iframe>
+                      <!-- https://nigeria-five.vercel.app/ -->
+                      <!-- https://memo-geo-location.netlify.app/ -->
 
-                                            <!-- Button to fetch the selected country details -->
-                                            <button class="btn btn-primary mb-2 my-3" type="button"
-                                                (click)="fetchAreaDetails()">
-                                                Add Location Details
-                                            </button>
-                                        </div>
-
-                                        <!-- Step 3: Display the input field with the selected country and disable it -->
-                                        <div *ngIf="countrySelected">
-                                            <input class="card form-control" type="text" [value]="selectedCountry"
-                                                formControlName="areaName">
-
-                                            <!-- Button to proceed with adding location details -->
-                                            <button class="btn btn-primary mb-2 my-3" type="button" (click)="getIp()">
-                                                Add Location Details
-                                            </button>
-                                        </div>
-
-                                        <!-- Step 4: Display a message if no location is found -->
-                                        <div *ngIf="!locationDetails && memoForm.get('areaName')?.value">
-                                            No location found for this area.
-                                        </div>
-
-                                        <!-- Step 5: Display the selected locations as badges -->
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item" *ngFor="let ip of area_location">
-                                                <span class="badge border bg-success-bright text-success">{{ ip
-                                                    }}</span>
-                                            </li>
-                                        </ul>
-                                    </ng-container>
-
-
-
-
-
-
-                                </div>
-
-                                <div class="form-group form-check">
-                                    <input type="checkbox" name="create_as_template"
-                                        formControlName="create_as_template" class="form-check-input"
-                                        id="create_as_template">
-                                    <label class="form-check-label" for="create_as_template">Create as template</label>
-                                </div>
-
-                                <div class="card" *ngIf="memoForm.controls['create_as_template'].value">
-                                    <div class="card-body">
-                                        <div class="form-group" *ngFor="let item of template">
-
-                                            <p>Id: {{ item.Id }}</p>
-                                            <p>CreatedAt: {{ item.CreatedAt }}</p>
-                                            <p>MemSecByIp: {{ item.MemSecByIp }}</p>
-                                            <p>MemSecBySmsOTP: {{ item.MemSecBySmsOTP }}</p>
-                                            <p>MemSecByEmailOTP: {{ item.MemSecByEmailOTP }}</p>
-                                        </div>
-
-                                        <div>
-                                            <label for="">New</label>
-                                            <input type="text" formControlName="templateName" id="templateName"
-                                                class="form-control" placeholder="Enter Template Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="templateDescription">Template Description</label>
-                                            <textarea formControlName="templateDescription" id="templateDescription"
-                                                class="form-control"
-                                                placeholder="Enter Template Description"></textarea>
-                                        </div>
-                                        <button type="button" class="btn btn-primary">Save Template</button>
-                                    </div>
-                                </div>
-                                <button type="submit"
-                                    class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">{{isLoading
-                                    ? 'Loading.....' :
-                                    'Save'}}</button>
-                            </div>
-                        </form>
+                      <!-- Button to fetch the selected country details -->
+                      <button
+                        class="btn btn-primary mb-2 my-3"
+                        type="button"
+                        (click)="fetchAreaDetails()"
+                      >
+                        Add Location Details
+                      </button>
                     </div>
 
-                    <div class="tab-pane fade" id="sharing" role="tabpanel" aria-labelledby="sharing-tab">
-                        <form [formGroup]="memoForm" (ngSubmit)="createMemo(memoForm.value)">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Select Access Type</label>
-                                <select name="access" formControlName="access" class="form-control" id="access">
-                                    <option></option>
-                                    <option value="public">Public</option>
-                                    <option value="restricted">Restricted</option>
-                                </select>
-                            </div>
-                            <div *ngIf="memoForm.controls['access'].value == 'public'" style="margin: 16px 0px;">
-                                <button type="submit"
-                                    class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">{{isLoading
-                                    ? 'Loading.....' :
-                                    'Save'}}</button>
-                            </div>
-                            <div *ngIf="memoForm.controls['access'].value == 'restricted'" style="margin: 16px 0px;">
-                                <button (click)="selectFile()" class="btn btn-lg btn-block btn-outline-primary"><i
-                                        class="fa fa-cloud-upload mr-3"></i> Upload Allowed Users</button>
-                                <input type="file" id="input-file" name="input-file" #fileInput
-                                    (change)="handleChangeEvent($event)" hidden>
+                    <!-- Step 3: Display the input field with the selected country and disable it -->
+                    <div *ngIf="countrySelected">
+                      <input
+                        class="card form-control"
+                        type="text"
+                        [value]="selectedCountry"
+                        formControlName="areaName"
+                      />
 
-                                <div class="card border-0" style="margin: 16px 0px;">
-
-                                    <div class="form-group">
-                                        <label for="users_name">Name</label>
-                                        <input type="text" formControlName="name" class="form-control" id="users_name"
-                                            placeholder="Enter name">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="users_email">Email</label>
-                                        <input type="email" formControlName="email" class="form-control"
-                                            id="users_email" placeholder="Enter email">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" formControlName="phone" class="form-control" id="users_phone"
-                                            placeholder="Enter phone number">
-                                    </div>
-                                </div>
-                                <button type="submit"
-                                    class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">{{isLoading
-                                    ? 'Loading.....' :
-                                    'Save'}}</button>
-                            </div>
-                        </form>
+                      <!-- Button to proceed with adding location details -->
+                      <button
+                        class="btn btn-primary mb-2 my-3"
+                        type="button"
+                        (click)="getIp()"
+                      >
+                        Add Location Details
+                      </button>
                     </div>
 
-                    <div class="tab-pane fade" id="qrcode" role="tabpanel" aria-labelledby="qrcode">
-                        <app-createqrcode></app-createqrcode>
+                    <!-- Step 4: Display a message if no location is found -->
+                    <div
+                      *ngIf="
+                        !locationDetails && memoForm.get('areaName')?.value
+                      "
+                    >
+                      No location found for this area.
                     </div>
 
-
+                    <!-- Step 5: Display the selected locations as badges -->
+                    <ul class="list-inline">
+                      <li
+                        class="list-inline-item"
+                        *ngFor="let ip of area_location"
+                      >
+                        <span
+                          class="badge border bg-success-bright text-success"
+                          >{{ ip }}</span
+                        >
+                      </li>
+                    </ul>
+                  </ng-container>
                 </div>
-            </div>
+
+                <div class="form-group form-check">
+                  <input
+                    type="checkbox"
+                    name="create_as_template"
+                    formControlName="create_as_template"
+                    class="form-check-input"
+                    id="create_as_template"
+                  />
+                  <label class="form-check-label" for="create_as_template"
+                    >Create as template</label
+                  >
+                </div>
+
+                <div
+                  class="card"
+                  *ngIf="memoForm.controls['create_as_template'].value"
+                >
+                  <div class="card-body">
+                    <div class="form-group" *ngFor="let item of template">
+                      <p>Id: {{ item.Id }}</p>
+                      <p>CreatedAt: {{ item.CreatedAt }}</p>
+                      <p>MemSecByIp: {{ item.MemSecByIp }}</p>
+                      <p>MemSecBySmsOTP: {{ item.MemSecBySmsOTP }}</p>
+                      <p>MemSecByEmailOTP: {{ item.MemSecByEmailOTP }}</p>
+                    </div>
+
+                    <div>
+                      <label for="">New</label>
+                      <input
+                        type="text"
+                        formControlName="templateName"
+                        id="templateName"
+                        class="form-control"
+                        placeholder="Enter Template Name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="templateDescription"
+                        >Template Description</label
+                      >
+                      <textarea
+                        formControlName="templateDescription"
+                        id="templateDescription"
+                        class="form-control"
+                        placeholder="Enter Template Description"
+                      ></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary">
+                      Save Template
+                    </button>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3"
+                >
+                  {{ isLoading ? "Loading....." : "Save" }}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div
+            class="tab-pane fade"
+            id="sharing"
+            role="tabpanel"
+            aria-labelledby="sharing-tab"
+          >
+            <form
+              [formGroup]="memoForm"
+              (ngSubmit)="createMemo(memoForm.value)"
+            >
+              <div class="form-group">
+                <label for="exampleFormControlSelect1"
+                  >Select Access Type</label
+                >
+                <select
+                  name="access"
+                  formControlName="access"
+                  class="form-control"
+                  id="access"
+                >
+                  <option></option>
+                  <option value="public">Public</option>
+                  <option value="restricted">Restricted</option>
+                </select>
+              </div>
+              <div
+                *ngIf="memoForm.controls['access'].value == 'public'"
+                style="margin: 16px 0px"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3"
+                >
+                  {{ isLoading ? "Loading....." : "Save" }}
+                </button>
+              </div>
+              <div
+                *ngIf="memoForm.controls['access'].value == 'restricted'"
+                style="margin: 16px 0px"
+              >
+                <button
+                  (click)="selectFile()"
+                  class="btn btn-lg btn-block btn-outline-primary"
+                >
+                  <i class="fa fa-cloud-upload mr-3"></i> Upload Allowed Users
+                </button>
+                <input
+                  type="file"
+                  id="input-file"
+                  name="input-file"
+                  #fileInput
+                  (change)="handleChangeEvent($event)"
+                  hidden
+                />
+
+                <div class="card border-0" style="margin: 16px 0px">
+                  <div class="form-group">
+                    <label for="users_name">Name</label>
+                    <input
+                      type="text"
+                      formControlName="name"
+                      class="form-control"
+                      id="users_name"
+                      placeholder="Enter name"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="users_email">Email</label>
+                    <input
+                      type="email"
+                      formControlName="email"
+                      class="form-control"
+                      id="users_email"
+                      placeholder="Enter email"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input
+                      type="text"
+                      formControlName="phone"
+                      class="form-control"
+                      id="users_phone"
+                      placeholder="Enter phone number"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3"
+                >
+                  {{ isLoading ? "Loading....." : "Save" }}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div
+            class="tab-pane fade"
+            id="qrcode"
+            role="tabpanel"
+            aria-labelledby="qrcode"
+          >
+            <app-createqrcode></app-createqrcode>
+          </div>
         </div>
-        <!-- ./ Sidebar - Storage -->
+      </div>
     </div>
+    <!-- ./ Sidebar - Storage -->
+  </div>
 </div>

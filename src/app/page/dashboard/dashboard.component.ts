@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
         this.activities = response.data;
         this.isLoading = false;
       }, (error)=>{
-        console.log(error);
+        // console.log(error);
         this.isLoading = false;
         if(error.error.message){
           Toastify({
@@ -64,6 +64,7 @@ export class DashboardComponent implements OnInit {
 
     this.httpRequest?.makeGetRequest("/dashboard/folder/recent").subscribe((response: any) => {
       this.data = response.data;
+      // console.log(this.data);
       this.isLoading = false;
     }, (error: any) => {
       this.isLoading = false;
@@ -73,14 +74,13 @@ export class DashboardComponent implements OnInit {
       this.monthOnMonthGraph = response.data
       this.isLoading = false;
     }, (error: any) => {
-      console.log('Error fetching data', error);
+      // console.log('Error fetching data', error);
       this.isLoading = false;
     })
     this.httpRequest?.makeGetRequest("/dashboard/files/recent").subscribe((response: any) => {
       this.recentFiles = response.data
       this.isLoading = false;
     }, (error: any) => {
-      console.log('Error fetching data', error);
       this.isLoading = false;
     })
   }
