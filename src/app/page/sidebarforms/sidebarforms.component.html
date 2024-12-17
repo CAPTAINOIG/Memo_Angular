@@ -114,13 +114,13 @@
     </div>
   </div>
 
-  <!-- <div
+  <div
     *ngIf="handleModals.show == 'edit_files'"
     class="sidebar-group-forms d-print-none"
   >
     <div class="sidebar primary-sidebar show" id="storage">
       <div class="sidebar-header">
-        <h4>Create Folder</h4>
+        <h4>Edit Memo</h4>
         <a
           href="javascript:;"
           (click)="close()"
@@ -131,17 +131,17 @@
       </div>
       <app-editmemo></app-editmemo>
     </div>
-  </div> -->
-  
+  </div>
+
   <div
-  *ngIf="['edit_files', 'create_memo'].includes(this.handleModals.show)"
-  class="sidebar-group-forms d-print-none"
+    *ngIf="['edit_files', 'create_memo'].includes(this.handleModals.show)"
+    class="sidebar-group-forms d-print-none"
   >
-  <!-- Sidebar - Storage -->
-  <div class="sidebar primary-sidebar show" id="storage">
-    <div class="sidebar-header">
-      <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
-        <h4>Edit Memo</h4>
+    <!-- Sidebar - Storage -->
+    <div class="sidebar primary-sidebar show" id="storage">
+      <div class="sidebar-header">
+        <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
+          <h4>Edit Memo</h4>
         </ng-container>
         <ng-template #newMemo>
           <h4>New Memo</h4>
@@ -328,7 +328,6 @@
             </form>
           </div>
 
-          
           <div
             class="tab-pane fade"
             id="profile"
@@ -423,7 +422,9 @@
                     />
                   </div>
 
-                  <div *ngIf="form.get('key')?.touched && form.get('key')?.invalid">
+                  <div
+                    *ngIf="form.get('key')?.touched && form.get('key')?.invalid"
+                  >
                     <small class="text-danger">Key name is required.</small>
                   </div>
 
@@ -437,7 +438,11 @@
                       placeholder="Enter value"
                     />
                   </div>
-                  <div *ngIf="form.get('value')?.touched && form.get('value')?.invalid">
+                  <div
+                    *ngIf="
+                      form.get('value')?.touched && form.get('value')?.invalid
+                    "
+                  >
                     <small class="text-danger">Value name is required.</small>
                   </div>
 
@@ -630,49 +635,57 @@
                     </div>
                   </div>
                   <!-- <div *ngIf="memoForm.controls['secureByGeoLocation'].value">
-                                        <input class="card" type="text" formControlName="areaName"
-                                            placeholder="Enter Area Name" class="form-control">
-                                        <button class="btn btn-primary mb-2 my-3" type="button"
-                                            (click)="fetchAreaDetails()">
-                                            Add Location Details
-                                        </button>
-                                    </div>
-                                    <iframe src="https://memo-geo-location.netlify.app/google" width="600" height="400"
+                    <input
+                      class="card"
+                      type="text"
+                      formControlName="areaName"
+                      placeholder="Enter Area Name"
+                      class="form-control"
+                    />
+                    <button
+                      class="btn btn-primary mb-2 my-3"
+                      type="button"
+                      (click)="fetchAreaDetails()"
+                    >
+                      Add Location Details
+                    </button>
+                  </div> -->
+                  <!-- <iframe src="https://memo-geo-location.netlify.app/google" width="600" height="400"
                                         frameborder="0" allowfullscreen>
-                                    </iframe>
+                                    </iframe> -->
 
-                                    <div *ngIf="!locationDetails && memoForm.get('areaName')?.value">No location found
-                                        for this area.</div>
-                                    <li class="list-inline-item" *ngFor="let ip of area_location">
-                                        <span class="badge border bg-success-bright text-success">{{ip}}</span>
-                                    </li> -->
+                  <!-- <div
+                    *ngIf="!locationDetails && memoForm.get('areaName')?.value"
+                  >
+                    No location found for this area.
+                  </div>
+                  <li class="list-inline-item" *ngFor="let ip of area_location">
+                    <span class="badge border bg-success-bright text-success">{{
+                      ip
+                    }}</span>
+                  </li> -->
 
                   <ng-container
                     *ngIf="memoForm.controls['secureByGeoLocation'].value"
                   >
-                    <!-- Step 1: Button to show the iframe and input -->
-                    <div *ngIf="!iframeVisible">
+                    <!-- <div *ngIf="!iframeVisible">
                       <button class="btn btn-primary" (click)="showIframe()">
                         Select Country via Map
                       </button>
-                    </div>
+                    </div> -->
 
                     <!-- <input class="card" type="text" formControlName="areaName"
-                                            placeholder="Enter Area Name" class="form-control"> -->
-                    <!-- Step 2: Display the iframe once the button is clicked -->
+                      placeholder="Enter Area Name" class="form-control">  -->
                     <div *ngIf="iframeVisible">
-                      <iframe
+                      <!-- <iframe
                         src="https://nigeria-five.vercel.app/"
                         width="600"
                         height="400"
                         frameborder="0"
                         allowfullscreen
                       >
-                      </iframe>
-                      <!-- https://nigeria-five.vercel.app/ -->
-                      <!-- https://memo-geo-location.netlify.app/ -->
+                      </iframe> -->
 
-                      <!-- Button to fetch the selected country details -->
                       <button
                         class="btn btn-primary mb-2 my-3"
                         type="button"
@@ -683,7 +696,8 @@
                     </div>
 
                     <!-- Step 3: Display the input field with the selected country and disable it -->
-                    <div *ngIf="countrySelected">
+                    <!-- <div *ngIf="countrySelected"> -->
+                    <div>
                       <input
                         class="card form-control"
                         type="text"
@@ -691,17 +705,15 @@
                         formControlName="areaName"
                       />
 
-                      <!-- Button to proceed with adding location details -->
                       <button
                         class="btn btn-primary mb-2 my-3"
                         type="button"
                         (click)="getIp()"
                       >
-                        Add Location Details
+                        Get Location Details
                       </button>
                     </div>
 
-                    <!-- Step 4: Display a message if no location is found -->
                     <div
                       *ngIf="
                         !locationDetails && memoForm.get('areaName')?.value
@@ -710,7 +722,6 @@
                       No location found for this area.
                     </div>
 
-                    <!-- Step 5: Display the selected locations as badges -->
                     <ul class="list-inline">
                       <li
                         class="list-inline-item"
@@ -793,9 +804,7 @@
             role="tabpanel"
             aria-labelledby="sharing-tab"
           >
-            <div
-              [formGroup]="createMemoForm"
-            >
+            <div [formGroup]="createMemoForm">
               <div class="form-group">
                 <label for="exampleFormControlSelect1"
                   >Select Access Type</label
@@ -852,7 +861,12 @@
                       placeholder="Enter name"
                     />
                   </div>
-                  <div *ngIf="createMemoForm.get('name')?.touched && createMemoForm.get('name')?.invalid">
+                  <div
+                    *ngIf="
+                      createMemoForm.get('name')?.touched &&
+                      createMemoForm.get('name')?.invalid
+                    "
+                  >
                     <small class="text-danger">Key name is required.</small>
                   </div>
 
@@ -866,7 +880,12 @@
                       placeholder="Enter email"
                     />
                   </div>
-                  <div *ngIf="createMemoForm.get('email')?.touched && createMemoForm.get('email')?.invalid">
+                  <div
+                    *ngIf="
+                      createMemoForm.get('email')?.touched &&
+                      createMemoForm.get('email')?.invalid
+                    "
+                  >
                     <small class="text-danger">Email is required.</small>
                   </div>
 
@@ -880,9 +899,14 @@
                       placeholder="Enter phone number"
                     />
                   </div>
-                    <div *ngIf="createMemoForm.get('phone')?.touched && createMemoForm.get('phone')?.invalid">
-                      <small class="text-danger">Phone number is required.</small>
-                    </div>
+                  <div
+                    *ngIf="
+                      createMemoForm.get('phone')?.touched &&
+                      createMemoForm.get('phone')?.invalid
+                    "
+                  >
+                    <small class="text-danger">Phone number is required.</small>
+                  </div>
                 </div>
                 <button
                   type="submit"

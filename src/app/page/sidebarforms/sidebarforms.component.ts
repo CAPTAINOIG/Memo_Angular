@@ -161,22 +161,50 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.iframeVisible = true;
   }
 
-  extractPlainText(memoContent: any): string {
-    if (!memoContent || typeof memoContent !== 'object' || !memoContent.content) {
+  // extractPlainText(memoContent: any): string {
+  //   if (!memoContent || typeof memoContent !== 'object' || !memoContent.content) {
+  //     return '';
+  //   }
+
+  //   let plainText = '';
+  //   memoContent.content.forEach((node: any) => {
+  //     if (node.type === 'text') {
+  //       plainText += node.text || '';
+  //     } else if (node.content && Array.isArray(node.content)) {
+  //       plainText += this.extractPlainText(node);  // recursive call for nested content
+  //     }
+  //   });
+  //   return plainText.trim();
+  // }
+
+  // extractPlainText(memo: { type: string; content: any[] }): string {
+  //   if (!memo || !Array.isArray(memo.content)) {
+  //     console.error('Invalid memo content:', memo);
+  //     return '';
+  //   }
+  
+  //   return memo.content.map((block) => block.text || '').join(' ');
+  // }
+
+
+  extractPlainText(memo: { type: string; content: any[] }): string {
+    if (!memo || !Array.isArray(memo.content)) {
+      console.error('Invalid memo content:', memo);
       return '';
     }
-
-    let plainText = '';
-    memoContent.content.forEach((node: any) => {
-      if (node.type === 'text') {
-        plainText += node.text || '';
-      } else if (node.content && Array.isArray(node.content)) {
-        plainText += this.extractPlainText(node);  // recursive call for nested content
-      }
-    });
-    return plainText.trim();
+  
+    return memo.content.map((block) => {
+      if (typeof block === 'string') return block; 
+      if (block.text) return block.text; 
+      return '';
+    }).join(' ');
   }
-
+  
+  ngOnDestroy(): void {
+    this.editor.destroy();
+  }
+  
+  
 
   fetchAreaDetails() {
     this.areaName = this.memoForm.get('areaName')?.value;
@@ -184,21 +212,20 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     console.log('Area Name:', this.areaName);
     this.memoForm.get('areaName')?.reset();
   }
-
-  ngOnDestroy(): void {
-    this.editor.destroy();
-  }
-
+  
+  
   getIp() {
     this.httpRequest.makeGetRequest('/memo/memgeotemp').subscribe((response) => {
+      console.log(response)
       const lat = response.data.lat;
       const lng = response.data.lng;
       const location = `Lat: ${lat}, Lng: ${lng}`;
+      console.log(location)
       this.memoForm.controls['areaName'].setValue(location);
-      this.memoForm.reset();
+      // this.memoForm.reset();
       this.countrySelected = false;
       this.iframeVisible = false;
-      this.memoForm.controls['areaName'].disable();
+      // this.memoForm.controls['areaName'].disable();
     }, (error) => {
       console.log(error);
     })
@@ -242,89 +269,106 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   }
 
 
+
+
   draftMemo(): void {
-    if (this.memoForm.valid) {
-      this.isLoading = true;
-
-      const memoData = { ...this.memoForm.value, memFold: this.memFoldId };
-      console.log(memoData);
-      if (memoData.memo && memoData.memo.type === 'doc') {
-        memoData.memo = this.extractPlainText(memoData.memo);
-      }
-
-      if (this.handleModals.show === 'edit_files') {
-        const memo = {
-          title: this.handleModals?.editMemo?.MemTitle || memoData.title,
-          memo: memoData.memo,
-          memId: this.handleModals?.editMemo?.MemUniqueId || memoData.MemUniqueId,
-          memFold: this.handleModals?.editMemo?.MemFoldId || memoData.MemFoldId || null,
-        };
-
-        console.log(memo);
-        this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
-          (response) => {
-            console.log(response);
-            this.isLoading = false;
-            this.memoForm.reset();
-            Toastify({
-              text: "Memo updated successfully",
-              duration: 3000,
-              gravity: "top",
-              position: "right",
-              backgroundColor: "#0000FF",
-            }).showToast();
-          },
-          (error) => {
-            console.error('Error updating memo:', error);
-            this.isLoading = false;
-            Toastify({
-              text: `${error.error.message}`,
-              duration: 3000,
-              gravity: "top",
-              position: "right",
-              backgroundColor: "#FF0000",
-            }).showToast();
-          }
-        );
-      } else {
-        this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
-          (response: any) => {
-            console.log(response);
-            this.isLoading = false;
-            this.memId = response.id;
-            this.handleModals.setMemId(response.id);
-            Toastify({
-              text: "Memo created successfully",
-              duration: 3000,
-              gravity: "top",
-              position: "right",
-              backgroundColor: "#0000FF",
-            }).showToast();
-          },
-          (error) => {
-            console.error('Error saving draft:', error);
-            this.isLoading = false;
-            Toastify({
-              text: `${error.error.message}`,
-              duration: 3000,
-              gravity: "top",
-              position: "right",
-              backgroundColor: "#FF0000",
-            }).showToast();
-          }
-        );
-      }
-    } else {
-      this.isLoading = false;
+    if (!this.memoForm.valid) {
       Toastify({
         text: 'Form is not valid',
         duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "#FF0000",
+        gravity: 'top',
+        position: 'right',
+        backgroundColor: '#FF0000',
       }).showToast();
+      return;
+    }
+  
+    this.isLoading = true;
+  
+    const memoData = { ...this.memoForm.value, memFold: this.memFoldId };
+    console.log('Original memoData:', memoData);
+
+    // // const memoData = {
+  // //   MemUniqueId: this.memId,
+  // //   title: this.memoForm.value.title,
+  // //   memo: this.memoForm.value.memo,
+  // //   include_signature: !!this.memoForm.value.include_signature,
+  // //   MemFoldId: Number(this.memFoldId) 
+  // // }
+  
+    if (memoData.memo && memoData.memo.type === 'doc') {
+      memoData.memo = this.extractPlainText(memoData.memo);
+    }
+  
+    console.log('Processed memo as string:', memoData.memo);
+  
+    if (this.handleModals.show === 'edit_files') {
+      const memo = {
+        title: this.handleModals?.editMemo?.MemTitle || memoData.title,
+        memo: memoData.memo,
+        memId: this.handleModals?.editMemo?.MemUniqueId || memoData.MemUniqueId,
+        memFold: this.handleModals?.editMemo?.MemFoldId || memoData.memFold || null,
+      };
+  
+      console.log('Edit memo payload:', memo);
+  
+      this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
+        (response) => {
+          console.log('Update response:', response);
+          this.isLoading = false;
+          this.memoForm.reset();
+          Toastify({
+            text: 'Memo updated successfully',
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: '#0000FF',
+          }).showToast();
+        },
+        (error) => {
+          console.error('Error updating memo:', error);
+          this.isLoading = false;
+          Toastify({
+            text: `${error.error.message || 'An error occurred'}`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: '#FF0000',
+          }).showToast();
+        }
+      );
+    } else {
+      console.log('Create memo payload:', memoData);
+  
+      this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
+        (response: any) => {
+          console.log('Create response:', response);
+          this.isLoading = false;
+          this.memId = response.id;
+          this.handleModals.setMemId(response.id);
+          Toastify({
+            text: 'Memo created successfully',
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: '#0000FF',
+          }).showToast();
+        },
+        (error) => {
+          console.error('Error saving draft:', error);
+          this.isLoading = false;
+          Toastify({
+            text: `${error.error.message || 'An error occurred'}`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: '#FF0000',
+          }).showToast();
+        }
+      );
     }
   }
+  
 
   addIP(ip_address: string) {
     if (!ip_address || !this.isValidIP(ip_address)) {
