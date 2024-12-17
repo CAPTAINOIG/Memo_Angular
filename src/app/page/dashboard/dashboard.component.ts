@@ -97,8 +97,9 @@ export class DashboardComponent implements OnInit {
   }
   editFiles(file: any) {
     this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
-      this.handleModal.setEditMemo(response.data)
+      console.log(response.data)
       this.handleModal.showMother("edit_files");
+      this.handleModal.setEditMemo(response.data)
     }, (error: any) => {
       console.log('Error fetching data', error);
       this.isLoading = false;

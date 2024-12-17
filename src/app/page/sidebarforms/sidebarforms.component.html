@@ -114,15 +114,34 @@
     </div>
   </div>
 
-  <div
-    *ngIf="['edit_files', 'create_memo'].includes(this.handleModals.show)"
+  <!-- <div
+    *ngIf="handleModals.show == 'edit_files'"
     class="sidebar-group-forms d-print-none"
   >
-    <!-- Sidebar - Storage -->
     <div class="sidebar primary-sidebar show" id="storage">
       <div class="sidebar-header">
-        <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
-          <h4>Edit Memo</h4>
+        <h4>Create Folder</h4>
+        <a
+          href="javascript:;"
+          (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn"
+        >
+          <i class="ti-angle-right"></i>
+        </a>
+      </div>
+      <app-editmemo></app-editmemo>
+    </div>
+  </div> -->
+  
+  <div
+  *ngIf="['edit_files', 'create_memo'].includes(this.handleModals.show)"
+  class="sidebar-group-forms d-print-none"
+  >
+  <!-- Sidebar - Storage -->
+  <div class="sidebar primary-sidebar show" id="storage">
+    <div class="sidebar-header">
+      <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
+        <h4>Edit Memo</h4>
         </ng-container>
         <ng-template #newMemo>
           <h4>New Memo</h4>

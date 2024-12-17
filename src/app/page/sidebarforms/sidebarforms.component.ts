@@ -82,9 +82,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     private fb: FormBuilder
   ) {
     this.memoForm = new FormGroup({
-      title: new FormControl('',
+        title: new FormControl('',
         Validators.required),
-      memo: new FormControl('',
+        memo: new FormControl('',
         Validators.required),
         include_signature: new FormControl(false),
         security_type: new FormControl(''),
@@ -95,15 +95,18 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         areaName: new FormControl(''),
         ip_address: new FormControl(''),
         create_as_template: new FormControl(false),
-        // access: new FormControl(''),
-        // public: new FormControl(''),
-        // name: new FormControl(''),
-        // email: new FormControl(''),
-        // phone: new FormControl(''),
+        access: new FormControl(''),
+        public: new FormControl(''),
+        name: new FormControl(''),
+        email: new FormControl(''),
+        phone: new FormControl(''),
+        metaData: new FormControl(''),
+        key: new FormControl(''),
+        value: new FormControl(''),
       });
       
       this.form = this.fb.group({
-      metaData: new FormControl(false),
+      metaData: new FormControl(''),
       key: ['', Validators.required],
       value: ['', Validators.required],
     });
@@ -132,7 +135,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.memoForm.setValue({
         title: check ? this.handleModals?.editMemo?.MemTitle : '',
         memo: check ? this.handleModals?.editMemo?.MemContents : '',
-        metaData: false,
+        metaData: '',
         include_signature: false,
         security_type: false,
         secureByEmailOtp: false,
@@ -148,6 +151,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         phone: '',
         key: '',
         value: '',
+        public: '',
       })
       this.handleModals.toggleCheck("hello")
     }
