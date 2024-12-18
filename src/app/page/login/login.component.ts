@@ -54,6 +54,8 @@ export class LoginComponent {
           }
         },
         error: (err:any) => {
+          console.log(err);
+          this.isLoading = false;
           if(err?.status === 0){
             Toastify({
               text: 'Something went wrong, please try again later',
@@ -64,7 +66,16 @@ export class LoginComponent {
             }).showToast();
             return;
           }
-          this.isLoading = false;
+          if(err?.status === 404){
+            Toastify({
+              text: 'Something went wrong, please try again later',
+              duration: 3000,
+              gravity: "top", 
+              position: "right", 
+              backgroundColor: "red",
+            }).showToast();
+            return;
+          }
           const errMsg = err?.error?.message ?? err.message;
           Toastify({
             text: errMsg,
