@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
 
     this.httpRequest?.makeGetRequest("/dashboard/folder/recent").subscribe((response: any) => {
       this.data = response.data;
-      // console.log(this.data);
+      console.log(this.data);
       this.isLoading = false;
     }, (error: any) => {
       this.isLoading = false;

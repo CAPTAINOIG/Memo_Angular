@@ -268,9 +268,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.memoForm.reset()
   }
 
-
-
-
   draftMemo(): void {
     if (!this.memoForm.valid) {
       Toastify({
@@ -285,16 +282,16 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   
     this.isLoading = true;
   
-    const memoData = { ...this.memoForm.value, memFold: this.memFoldId };
-    console.log('Original memoData:', memoData);
+    // const memoData = { ...this.memoForm.value, memFold: this.memFoldId };
+    // console.log('Original memoData:', memoData);
 
-    // // const memoData = {
-  // //   MemUniqueId: this.memId,
-  // //   title: this.memoForm.value.title,
-  // //   memo: this.memoForm.value.memo,
-  // //   include_signature: !!this.memoForm.value.include_signature,
-  // //   MemFoldId: Number(this.memFoldId) 
-  // // }
+    const memoData = {
+    title: this.memoForm.value.title,
+    memo: this.memoForm.value.memo,
+    MemUniqueId: this.memId,
+    include_signature: !!this.memoForm.value.include_signature,
+    memFold: Number(this.memFoldId) 
+  }
   
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);

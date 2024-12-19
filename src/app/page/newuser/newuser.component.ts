@@ -39,6 +39,7 @@ export class NewuserComponent {
 
     this.httpRequest.makeGetRequest("/users_management/user_roles/all").subscribe((response: any) => {
       this.userRoles = response.data;
+      console.log(this.userRoles);
     });
   }
 
@@ -48,6 +49,7 @@ export class NewuserComponent {
       const data = this.createUserForm.value;
       this.httpRequest.makePostRequest('/users_management/create_new_user', data).subscribe(
         (response) => {
+          console.log(response)
           this.isLoading = false;
           if (response.status) {
             Toastify({

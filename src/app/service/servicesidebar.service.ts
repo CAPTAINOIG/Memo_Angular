@@ -35,7 +35,7 @@ export class ServicesidebarService {
     
     this.show = data;
   }
-  public toggleCheck(data): void {
+  public toggleCheck(data:any): void {
     this.check = data;
   }
 
@@ -74,7 +74,7 @@ export class ServicesidebarService {
     return this.UserDetail
   }
 
-  setPublishMemId=(data)=>this.publishMemId=data
+  setPublishMemId=(data:any)=>this.publishMemId=data
   setEditMemo(data:any){
     console.log(data)
     this.editMemo = data

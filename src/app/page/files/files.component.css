@@ -3,6 +3,11 @@
   overflow-y: auto; 
 }
 
+#file-filter{
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Custom Scrollbar for WebKit browsers */
 #folder::-webkit-scrollbar {
   width: 2px; /* Further reduced width of the scrollbar */

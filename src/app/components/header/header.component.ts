@@ -25,7 +25,7 @@ export class HeaderComponent {
     // console.log(this.userDetail);
     const userName = this.httpRequet.makeGetRequest('/auth/user').subscribe((response)=>{
       this.user = response.data;
-      // console.log(this?.user?.last_name);
+      // console.log(this?.user);
       
     }, (error)=>{
       console.log(error);

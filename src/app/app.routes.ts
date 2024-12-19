@@ -15,6 +15,7 @@ import { PagenotfoundComponent } from './page/pagenotfound/pagenotfound.componen
 import { ForgotpasswordComponent } from './page/forgotpassword/forgotpassword.component';
 import { PasswordauthComponent } from './page/passwordauth/passwordauth.component';
 import { PasswordresetComponent } from './page/passwordreset/passwordreset.component';
+import { LandingpageComponent } from './page/landingpage/landingpage.component';
 
 
 
@@ -22,7 +23,8 @@ import { PasswordresetComponent } from './page/passwordreset/passwordreset.compo
 
 
 export const routes: Routes = [
-    {'path':'', component:LoginComponent},
+    {path: '', component:LandingpageComponent},
+    {'path':'login', component:LoginComponent},
     {path: 'auth', component: TwofactorauthComponent},
     {'path':'forgotpassword', component: ForgotpasswordComponent},
     {path: 'passwordAuth', component: PasswordauthComponent},
