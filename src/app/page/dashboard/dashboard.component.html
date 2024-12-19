@@ -136,8 +136,8 @@
                                 <i class="ti-more-alt"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <span class="dropdown-item cursor-pointer" (click)="editFiles(recent?.MemUniqueId)" data-sidebar-target="#view-file">Edit</span>
-                                <span class="dropdown-item cursor-pointer" (click)="publish(recent.Id)">{{recent.isPublished ? "UnPublish" : "Publish" }}</span>
+                                <span class="dropdown-item cursor-pointer" (click)="editFiles(recent?.MemUniqueId)" data-sidebar-target="#view-file">{{isEditLoader ? "Loading..." : "Edit"}}</span>
+                                <span class="dropdown-item cursor-pointer" (click)="approve(recent.Id)">{{recent.isPublished ? "Unapprove" : "Approve" }}</span>
                             </div>
                         </div>
                     </td>

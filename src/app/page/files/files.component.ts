@@ -23,23 +23,40 @@ export class FilesComponent {
   allFile: any = [];
   allFolder: any = [];
   isLoading = true;
+  isEditLoader = false;
   recent: any;
   searchTerm: string = '';
+  filterStatus: string = '';
 
   constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService) { }
 
   ngOnInit(): void {
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response) => {
       this.allFile = response.data;
+      console.log(this.allFile);
       this.isLoading = false
     }, (error) => {
       console.log(error);
+      Toastify({
+        text: "Error fetching data",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
     })
 
     this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {
       this.allFolder = response.data;
     }, (error) => {
       console.log(error);
+      Toastify({
+        text: "Error fetching data",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
     })
 
   }
@@ -59,6 +76,7 @@ export class FilesComponent {
     }
 
   }
+
   next() {
     this.isLoadingNext = true;
     this.page += 1
@@ -72,15 +90,25 @@ export class FilesComponent {
   }
 
   editFiles(file: any) {
+    this.isEditLoader = true;
     this.httpRequest?.makeGetRequest("/memo/single?id=" + file).subscribe((response: any) => {
       this.handleModal.setEditMemo(response.data)
-      console.log(response.data)
+      // console.log(response.data)
       this.handleModal.showMother("edit_files");
+      this.isEditLoader = false;
     }, (error: any) => {
-      console.log('Error fetching data', error);
+      // console.log('Error fetching data', error);
       this.isLoading = false;
+      Toastify({
+        text: "Error fetching data",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
     })
   }
+
   foldName(id: any | number) {
     this.isLoading = true;
     this.foldId = id
@@ -91,16 +119,37 @@ export class FilesComponent {
     })
   }
 
-  publish(memId: any) {
-    console.log(memId)
+  approve(memId: any) {
+    // console.log(memId)
     this.handleModal.showMother("otp");
     this.handleModal.setPublishMemId(memId);
   }
 
+  // filteredFiles() {
+  //   return this.allFile.filter(item =>item?.isPublished && item?.isPublished.toLowerCase().includes(this.searchTerm.toLowerCase()));
+  // }
+
+  // filteredFiles() {
+  //   return this.allFile.filter(item => item?.MemTitle && item?.MemTitle.toLowerCase().includes(this.searchTerm.toLowerCase()));
+  // }
+
+  approveMemo() {
+    
+  }
+  rejectMemo() {
+
+  }
+
+    setFilterStatus(status: string): void {
+    this.filterStatus = status;
+  }
+
   filteredFiles() {
-    return this.allFile.filter(item =>
-      item.MemTitle.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    return this.allFile.filter(item => {
+      const matchesSearch = item?.MemTitle?.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesStatus = this.filterStatus === '' || (this.filterStatus === 'approved' && item.IsPublished === 1) || (this.filterStatus === 'pending' && item.IsPublished === 0);
+      return matchesSearch && matchesStatus;
+    });
   }
 
   format = (dateT: any) => {

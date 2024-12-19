@@ -37,19 +37,22 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isLoading = true;
       const json = this.loginForm.value;
+      console.log(json)
       this.HttpRequest.makePostRequest(`/auth/login`, json).subscribe({
         next: (data:any) => {
+          console.log(data)
           this.userDetail.setUserDetail(data)
           this.isLoading = false;
           if (data.status) {
             Toastify({
-              text: "Authentication successful!",
+              text: `${data.message}`,
               duration: 3000,
               gravity: "top",
               position: "right",
               backgroundColor: "green",
             }).showToast();
-          this.local.write("data",  (data.token))
+          this.local.write("data", (data.token))
+          this.local.write("isAdmin", (data.isAdmin))
           this.router.navigate(['/auth']);
           }
         },

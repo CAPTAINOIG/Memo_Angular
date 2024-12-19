@@ -39,14 +39,16 @@ export class NewuserComponent {
 
     this.httpRequest.makeGetRequest("/users_management/user_roles/all").subscribe((response: any) => {
       this.userRoles = response.data;
-      console.log(this.userRoles);
+      // console.log(this.userRoles);
     });
   }
 
   onSubmit(): void {
     if (this.createUserForm.valid) {  
+      console.log(this.createUserForm.value);
       this.isLoading = true;
       const data = this.createUserForm.value;
+      // console.log(data)
       this.httpRequest.makePostRequest('/users_management/create_new_user', data).subscribe(
         (response) => {
           console.log(response)
@@ -60,7 +62,7 @@ export class NewuserComponent {
               backgroundColor: "blue",
             }).showToast();
             this.local.write("auth-token", { token: response.token });
-            this.router.navigate(['/portal/user']);
+            // this.router.navigate(['/portal/user']);
           }
         },
         (error: any) => {

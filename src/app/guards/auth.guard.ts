@@ -8,10 +8,22 @@ export const authGuard: CanActivateFn = (route, state) => {
   const localStorageService  = inject(LocalstorageService)
   // let user = JSON.parse(localStorage.getItem('auth-token')!)
   let user = localStorageService.read('data')
+  // console.log(user)
 
-  console.log(user)
   if(!user){
     routes.navigate(['login'])
+  }
+  return true;
+};
+export const isAdminGaurd: CanActivateFn = (route, state) => {
+  let routes = inject (Router)
+  const localStorageService  = inject(LocalstorageService)
+  // let user = JSON.parse(localStorage.getItem('auth-token')!)
+  let user = localStorageService.read('isAdmin')
+  // console.log(user)
+
+  if(!user){
+    routes.navigate(['/portal/dashboard'])
   }
   return true;
 };

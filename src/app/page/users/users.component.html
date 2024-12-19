@@ -62,12 +62,12 @@
                   <table id="user-list" class="table table-borderless table-hover">
                     <thead>
                       <tr>
-                        <th>
+                        <!-- <th>
                           <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="user-list-select-all">
                             <label class="custom-control-label" for="user-list-select-all"></label>
                           </div>
-                        </th>
+                        </th> -->
                         <th>Name</th>
                         <th>Email</th>
                         <!-- <th>Storage</th> -->
@@ -78,12 +78,12 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let user of makeFilter()">
-                        <td>
+                        <!-- <td>
                           <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="user-{{user?.id}}">
                             <label class="custom-control-label" for="user-{{user?.id}}"></label>
                           </div>
-                        </td>
+                        </td> -->
                         <td>
                           <a href="#">
                             <figure class="avatar avatar-sm mr-2">

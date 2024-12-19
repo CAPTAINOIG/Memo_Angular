@@ -216,11 +216,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   
   getIp() {
     this.httpRequest.makeGetRequest('/memo/memgeotemp').subscribe((response) => {
-      console.log(response)
+      // console.log(response)
       const lat = response.data.lat;
       const lng = response.data.lng;
       const location = `Lat: ${lat}, Lng: ${lng}`;
-      console.log(location)
+      // console.log(location)
       this.memoForm.controls['areaName'].setValue(location);
       // this.memoForm.reset();
       this.countrySelected = false;

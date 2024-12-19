@@ -37,7 +37,7 @@
 
                                 <li role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="j1_1_anchor"
                                     aria-expanded="false" id="j1_1" class="jstree-node  jstree-closed">
-                                   
+
                                     <a (click)="foldName(item.Id)" class="jstree-anchor cursor-pointer ms-5"
                                         tabindex="-1" id="j1_1_anchor">
                                         <i class="jstree-icon jstree-themeicon ti-folder text-warning jstree-themeicon-custom"
@@ -58,15 +58,17 @@
                         <h4>Documents</h4>
                     </div>
 
-                        <div id="file-filter" class="list-inline mb-4" *ngIf="!isLoading">
-                            <div>
-                                <span class="list-inline-item mt-3">
-                                    <button [disabled]="isLoadingNext" class="btn btn-primary" (click)="previous()">
-                                        <span *ngIf="isLoadingPrevious" class="spinner-border spinner-border-sm"
+
+
+                    <div class="mb-4" *ngIf="!isLoading">
+                        <div>
+                            <span class="list-inline-item mb-0">
+                                <button [disabled]="isLoadingNext" class="btn btn-primary" (click)="previous()">
+                                    <span *ngIf="isLoadingPrevious" class="spinner-border spinner-border-sm"
                                         role="status" aria-hidden="true"></span>
                                     {{ isLoadingPrevious ? '' : 'Previous' }}
                                 </button>
-                                </span>
+                            </span>
 
                             <span class="list-inline-item mb-0">
                                 <button [disabled]="isLoadingPrevious" class="btn btn-primary" (click)="next()">
@@ -74,15 +76,32 @@
                                         aria-hidden="true"></span>
                                     {{ isLoadingNext ? '' : 'Next' }}
                                 </button>
-                                </span>
-                            </div>
+                            </span>
+                        </div>
 
-                            <div class="form-group">
-                                <label>Search by Title</label>
+                        <ul id="file-filter" class="list-inline mt-3">
+                            <div class="form-group mb-3">
                                 <input type="text" class="form-control" [(ngModel)]="searchTerm"
                                     placeholder="Enter title to search">
                             </div>
+
+                            <li class="list-inline-item">
+                                <button class="btn btn-primary" (click)="setFilterStatus('pending')">Pending
+                                    </button>
+                            </li>
+                            <li class="list-inline-item">
+                                <button class="btn btn-primary" (click)="setFilterStatus('approved')">Approved</button>
+                            </li>
+                            <li class="list-inline-item">
+                                <button class="btn btn-secondary" (click)="setFilterStatus('')">All Memo</button>
+                            </li>
+                        </ul>
+
+
+
+                       
                     </div>
+
 
 
                     <!-- <div id="file-actions" class="d-none">
@@ -143,10 +162,11 @@
                                     </td>
                                     <td>{{format(item.CreatedAt)}}</td>
                                     <td>{{item.MemFoldName}}</td>
-                                    
+
                                     <td class="text-primary cursor-pointer">
                                         {{item.MemFullLink}}
-                                            <button *ngIf="item.MemFullLink" title="copy to clipboard" (click)="copyToClipboard(item.MemFullLink)" class="btn btn-icon">
+                                        <button *ngIf="item.MemFullLink" title="copy to clipboard"
+                                            (click)="copyToClipboard(item.MemFullLink)" class="btn btn-icon">
                                             <i class="ti-clipboard"></i>
                                         </button>
                                     </td>
@@ -155,7 +175,6 @@
                                         <img [src]="item.MemQuickResponse" alt="User Image"
                                             style="width: 60px; height: 60px; object-fit: contain;">
                                     </td>
-
                                     <td>
                                     </td>
                                     <td class="text-right">
@@ -165,9 +184,10 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <span class="dropdown-item cursor-pointer"
-                                                    (click)="editFiles(item?.MemUniqueId)">Edit</span>
-                                                <span class="dropdown-item cursor-pointer" (click)="publish(item.Id)">
-                                                    {{item.isPublished?"UnPublish":"Publish"}}</span>
+                                                    (click)="editFiles(item?.MemUniqueId)">{{isEditLoader ? "Loading..."
+                                                    : "Edit"}}</span>
+                                                <span class="dropdown-item cursor-pointer" (click)="approve(item.Id)">
+                                                    {{item.IsPublished ? "Unapprove" : "Approve" }}</span>
 
                                                 <!-- <div class="dropdown-menu dropdown-menu-right">
                                         <button 

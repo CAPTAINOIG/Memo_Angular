@@ -7,7 +7,7 @@ import { ActivitiesComponent } from './page/activities/activities.component';
 import { UsersComponent } from './page/users/users.component';
 import { SettingsComponent } from './page/settings/settings.component';
 import { TwofactorauthComponent } from './page/twofactorauth/twofactorauth.component';
-import { authGuard } from './guards/auth.guard';
+import { authGuard,isAdminGaurd } from './guards/auth.guard';
 import { NewuserComponent } from './page/newuser/newuser.component';
 import { SecurityCheckComponent } from './page/security-check/security-check.component';
 import { ExternalViewerComponent } from './external-viewer/external-viewer.component';
@@ -16,6 +16,7 @@ import { ForgotpasswordComponent } from './page/forgotpassword/forgotpassword.co
 import { PasswordauthComponent } from './page/passwordauth/passwordauth.component';
 import { PasswordresetComponent } from './page/passwordreset/passwordreset.component';
 import { LandingpageComponent } from './page/landingpage/landingpage.component';
+import { AdminLayoutComponent} from './layout/isAdminLayout/dashboard.component'
 
 
 
@@ -31,11 +32,13 @@ export const routes: Routes = [
     {'path': 'resetPassword', component: PasswordresetComponent},
     {'path':'portal', component:DashboardLayout, canActivate:[authGuard], children:[
         {'path':'dashboard', component:DashboardComponent},
-        {'path':'files', component:FilesComponent},
-        {'path':'activities', component:ActivitiesComponent},
-        {'path':'users', component:UsersComponent},
-        {'path':'settings', component:SettingsComponent},
-        {'path': 'newuser', component: NewuserComponent},
+        {path:"",component:AdminLayoutComponent,canActivate:[isAdminGaurd],children:[
+            {'path':'files', component:FilesComponent},
+            {'path':'activities', component:ActivitiesComponent},
+            {'path':'users', component:UsersComponent},
+            {'path':'settings', component:SettingsComponent},
+            {'path': 'newuser', component: NewuserComponent},
+        ]}
     ]},
     {'path': 'securitycheck', component: SecurityCheckComponent},
     {'path': 'viewer/:id', component: ExternalViewerComponent},

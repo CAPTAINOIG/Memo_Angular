@@ -48,17 +48,18 @@ ngOnInit(): void {
 // FETCH USER ROLES
 this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((response: any)=>{
   this.userRoles = response.data
-  console.log(this.userRoles);
+  // console.log(this.userRoles);
   this.local.write('userRoles', (this.userRoles))
   if (this.userRoles && this.userRoles.length > 0){
-  const role_id = this.userRoles[0].id
+  const role_id = this.userRoles[0].Id
   this.local.write('role_id', (role_id))
 
 
   this.httpRequest?.makeGetRequest(`/users_management/user_role/right?roleId=${role_id}`).subscribe((response:any)=>{
     this.userRoleRights = response.data
-    console.log(this.userRoleRights);
+    // console.log(this.userRoleRights);
   }, (error)=>{
+    console.log(error);
   })
   }
 }, (error:any)=>{
@@ -105,6 +106,7 @@ suspendUserMethod(itemId: string, action: string): void {
 createUser() {
   this.handleModal.showMother("new_user")
 }
+
 authentication(user:string){
   this.httpRequest.makePostRequest('/users_management/create_authenticator_secret', {identity:user}).subscribe((response)=>{
     this.handleModal.showMother("authentication")

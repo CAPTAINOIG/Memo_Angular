@@ -7,6 +7,7 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { Router, RouterLink } from '@angular/router';
 import Toastify from 'toastify-js';
+import { LocalstorageService } from '../../service/LocalstorageService/localstorage.service';
 
 
 
@@ -23,6 +24,7 @@ export class DashboardComponent implements OnInit {
   monthOnMonthGraph: any = [];
   recentFiles: any = []
   isLoading = true;
+  isEditLoader = false;
   sidebarVisible: boolean = false;
   recent: any;
   file: any;
@@ -41,6 +43,9 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // let user = LocalstorageService.read('data')
+    // let user = localStorage.getItem('data')
+    // console.log(user)
       this.isLoading = true;
       this.httpRequest.makeGetRequest('/memo/memo_activities').subscribe((response)=>{
         this.activities = response.data;
@@ -96,13 +101,15 @@ export class DashboardComponent implements OnInit {
     })
   }
   editFiles(file: any) {
+    this.isEditLoader = true;
     this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
       console.log(response.data)
       this.handleModal.showMother("edit_files");
       this.handleModal.setEditMemo(response.data)
+      this.isEditLoader = false;
     }, (error: any) => {
       console.log('Error fetching data', error);
-      this.isLoading = false;
+      this.isEditLoader = false;
     })
   }
 
@@ -122,8 +129,8 @@ export class DashboardComponent implements OnInit {
      return `${hours}:${minutes}:${seconds}`;
    }
    
-   publish(memId: any){
-    console.log(memId)
+   approve(memId: any){
+    // console.log(memId)
     this.handleModal.showMother("otp");
     this.handleModal.setPublishMemId(memId);
   }

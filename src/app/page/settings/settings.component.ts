@@ -6,6 +6,7 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { tick } from '@angular/core/testing';
+import Toastify from 'toastify-js';
 
 @Component({
   selector: 'app-settings',
@@ -122,36 +123,106 @@ export class SettingsComponent {
     }
   }
 
-  addESignature() {
-    if (!this.data) return;
-    this.isLoading = true;
-    try {
-      if (this.data.length > 0) {
-        this.isLoading = true;
-        this.http.makePatchRequest(`/memo/mem_e_signature/update/`, { ...this.esignature, identity: this.data[0].id }).subscribe((response) => {
-          this.data[0] = response.data
-          console.log(response);
+  // addESignature() {
+  //   console.log(this.esignature)
+  //   console.log(this.data[0].Id)
+  //   if (!this.data) {
+  //     Toastify({
+  //       text: `${this.data} is not available`,
+  //       duration: 3000,
+  //       gravity: "top",
+  //       position: "right",
+  //       backgroundColor: "red",
+  //     }).showToast();
+  //     return;
+  //   }
+  //   this.isLoading = true;
+  //   try {
+  //     if (!this.data) {
+  //       Toastify({
+  //         text: `${this.data} is not available`,
+  //         duration: 3000,
+  //         gravity: "top",
+  //         position: "right",
+  //         backgroundColor: "red",
+  //       }).showToast();
+  //       return;
+  //     }
+  //     if (this.data.length > 0) {
+  //       this.isLoading = true;
+  //       this.http.makePatchRequest(`/memo/mem_e_signature/update/`, { ...this.esignature, identity: this.data[0].Id }).subscribe((response) => {
+  //         this.data[0] = response.data
+  //         console.log(response.error);
           
-          console.log(this.data[0]);
-          this.isLoading = false
-        });
-      }
-      else {
-        this.http.makePostRequest('/memo/mem_e_signature/create', this.esignature).subscribe((response) => {
-          console.log(response);
-          this.data[0] = response.data;
-          console.log(this.data[0]);
-          this.isLoading = false
-        }, (error) => {
-          console.log(error);
-          this.isLoading = false;
-        });
-      }
-    } catch (error) {
-    } finally {
-      this.isLoading = false
+  //         console.log(this.data[0]);
+  //         this.isLoading = false
+  //       });
+  //     }
+  //     else {
+  //       this.http.makePostRequest('/memo/mem_e_signature/create', this.esignature).subscribe((response) => {
+  //         console.log(response);
+  //         this.data[0] = response.data;
+  //         console.log(this.data[0]);
+  //         this.isLoading = false
+  //       }, (error) => {
+  //         console.log(error.error);
+  //         this.isLoading = false;
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   } finally {
+  //     this.isLoading = false
+  //   }
+  // }
+
+
+  addESignature() {
+    console.log(this.esignature)
+    console.log(this.data[0].Id)
+    if (!this.esignature.title || !this.esignature.image || !this.data[0].Id) {
+      Toastify({
+        text: "Please fill in all required fields!",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
+      return;
     }
+  
+    this.isLoading = true;
+    const request$ = this.data && this.data.length > 0
+      ? this.http.makePatchRequest(`/memo/mem_e_signature/update/`, { ...this.esignature, identity: this.data[0].Id })
+      : this.http.makePostRequest('/memo/mem_e_signature/create', this.esignature);
+  
+    request$.subscribe(
+      (response) => {
+        Toastify({
+          text: this.data.length > 0 ? "E-Signature Updated Successfully!" : "E-Signature Added Successfully!",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "green",
+        }).showToast();
+  
+        this.data[0] = response.data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error(error);
+        Toastify({
+          text: "An error occurred. Please try again.",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "red",
+        }).showToast();
+        this.isLoading = false;
+      }
+    );
   }
+  
 }
 
 
