@@ -72,7 +72,7 @@
     </div>
   </div>
 
-  <div *ngIf="handleModals.show == 'edit_files'" class="sidebar-group-forms d-print-none">
+  <!-- <div *ngIf="handleModals.show == 'edit_files'" class="sidebar-group-forms d-print-none">
     <div class="sidebar primary-sidebar show" id="storage">
       <div class="sidebar-header">
         <h4>Edit Memo</h4>
@@ -82,10 +82,9 @@
       </div>
       <app-editmemo></app-editmemo>
     </div>
-  </div>
+  </div> -->
 
   <div *ngIf="['edit_files', 'create_memo'].includes(this.handleModals.show)" class="sidebar-group-forms d-print-none">
-    <!-- Sidebar - Storage -->
     <div class="sidebar primary-sidebar show" id="storage">
       <div class="sidebar-header">
         <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
@@ -138,7 +137,6 @@
                 <label for="exampleFormControlSelect1">Folder</label>
                 <select formControlName="security_type" class="form-control" id="exampleFormControlSelect1">
                   <option value="">Select a folder</option>
-                  <!-- Dynamically populate options based on the fetched folders -->
                   <ng-container *ngIf="selectedAllFolder && selectedAllFolder.length > 0">
                     <option *ngFor="let item of selectedAllFolder" [value]="item.Id">
                       {{ item.MemFoldName }}
@@ -146,13 +144,10 @@
                   </ng-container>
                 </select>
               </div>
-
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Memo</label>
-
                 <div class="NgxEditor__Wrapper">
                   <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-                  <!-- <ngx-editor [editor]="editor" formControlName="memo" [disabled]=false -->
                   <ngx-editor [editor]="editor" formControlName="memo" [placeholder]="'Type here...'"></ngx-editor>
                 </div>
               </div>
@@ -161,18 +156,13 @@
                   class="form-check-input" id="include_signature" />
                 <label class="form-check-label" for="exampleCheck1">Include Signature</label>
               </div>
-              <!-- <button type="submit" class="btn btn-primary">{{handleModals.show === 'edit_files' ? 'Save Edit' : 'Save Draft'}}</button> -->
               <button type="submit" class="btn btn-primary" [disabled]="isLoading">
                 <ng-container *ngIf="isLoading; else buttonText">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Loading...
                 </ng-container>
                 <ng-template #buttonText>
-                  {{
-                  handleModals.show === "edit_files"
-                  ? "Save Edit"
-                  : "Save Draft"
-                  }}
+                  {{ handleModals.show === "edit_files" ? "Save Edit": "Save Draft" }}
                 </ng-template>
               </button>
             </form>

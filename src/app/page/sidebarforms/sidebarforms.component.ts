@@ -10,7 +10,7 @@ import Toastify from 'toastify-js';
 import { UserdetailComponent } from '../../userdetail/userdetail.component';
 import { AuthenticationComponent } from "../authentication/authentication.component";
 import { EsignatureComponent } from '../esignature/esignature.component';
-import { EditmemoComponent } from '../editmemo/editmemo.component';
+// import { EditmemoComponent } from '../editmemo/editmemo.component';
 import { OtpconfirmationComponent } from '../otpconfirmation/otpconfirmation.component';
 import { CreatefolderComponent } from '../createfolder/createfolder.component';
 import { CreateqrcodeComponent } from '../../createqrcode/createqrcode.component';
@@ -27,7 +27,7 @@ import { CreateqrcodeComponent } from '../../createqrcode/createqrcode.component
     UserdetailComponent,
     AuthenticationComponent,
     EsignatureComponent,
-    EditmemoComponent,
+    // EditmemoComponent,
     OtpconfirmationComponent,
     CreatefolderComponent,
     CreateqrcodeComponent
@@ -297,21 +297,19 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       memoData.memo = this.extractPlainText(memoData.memo);
     }
   
-    console.log('Processed memo as string:', memoData.memo);
+    // console.log(memoData.memo);
   
     if (this.handleModals.show === 'edit_files') {
       const memo = {
-        title: this.handleModals?.editMemo?.MemTitle || memoData.title,
+        MemTitle: this.handleModals?.editMemo?.MemTitle || memoData.title,
         memo: memoData.memo,
         memId: this.handleModals?.editMemo?.MemUniqueId || memoData.MemUniqueId,
         memFold: this.handleModals?.editMemo?.MemFoldId || memoData.memFold || null,
       };
-  
-      console.log('Edit memo payload:', memo);
-  
+      console.log(memo);
       this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
         (response) => {
-          console.log('Update response:', response);
+          console.log(response);
           this.isLoading = false;
           this.memoForm.reset();
           Toastify({
@@ -335,8 +333,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         }
       );
     } else {
-      console.log('Create memo payload:', memoData);
-  
+      // console.log(memoData);
       this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
         (response: any) => {
           console.log('Create response:', response);
