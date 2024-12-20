@@ -6,8 +6,8 @@ import { LocalstorageService } from '../LocalstorageService/localstorage.service
   providedIn: 'root'
 })
 export class HttpRequestService {
-  private baseUrl = 'https://8ad2-104-28-251-101.ngrok-free.app/api';
-  // private baseUrl = 'https://lendnode.creditclan.com/memo/api';
+  // private baseUrl = 'https://8ad2-104-28-251-101.ngrok-free.app/api';
+  private baseUrl = 'https://lendnode.creditclan.com/memo/api';
   private geoApiKey = '39f835849b07490f9ada6d2e31447933';
   
   constructor(
