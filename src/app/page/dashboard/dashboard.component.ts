@@ -41,17 +41,14 @@ export class DashboardComponent implements OnInit {
     private handleModal: ServicesidebarService,
     private userData: ServicesidebarService,
     private router: Router
+    
   ) {
 
   }
 
   ngOnInit(): void {
     this.status = this.userData.status
-    const userData = JSON.parse(localStorage.getItem('isAdmin'));
-    
-    if (userData) {
-      this.isSuperAdmin = userData;
-    }
+   
       this.isLoading = true;
       this.httpRequest.makeGetRequest('/memo/memo_activities').subscribe((response)=>{
         this.activities = response.data;
@@ -68,7 +65,7 @@ export class DashboardComponent implements OnInit {
             backgroundColor: "red",
           }).showToast();
           localStorage.removeItem('token')
-          this.router.navigate(['/']);
+          this.router.navigate(['/login']);
         }
       })
 
@@ -110,6 +107,7 @@ export class DashboardComponent implements OnInit {
     this.handleModal.showMother("create_memo")
     this.handleModal.toggleCheck('hello')
   }
+  
   viewFiles(recent: any){
     this.httpRequest?.makeGetRequest('/memo/single?id='+recent.MemUniqueId).subscribe((response)=>{
       this.handleModal.showMother("forms")

@@ -38,10 +38,8 @@ export class FilesComponent {
 
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response) => {
       this.allFile = response.data;
-      console.log(this.allFile);
       this.isLoading = false
     }, (error) => {
-      console.log(error);
       Toastify({
         text: "Error fetching data",
         duration: 3000,
@@ -53,9 +51,7 @@ export class FilesComponent {
 
     this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {
       this.allFolder = response.data;
-      console.log(this.allFolder);
     }, (error) => {
-      console.log(error);
       Toastify({
         text: "Error fetching data",
         duration: 3000,

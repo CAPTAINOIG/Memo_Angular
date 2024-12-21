@@ -13,19 +13,13 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
   userDetail: any;
   user: any = {};
-  // @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();
-  // handleClick() {
-  //   const data = 'Hello from Child!';
-  //   this.dataEmitter.emit(data); // Emit the data to the parent
-  // }
+ 
   constructor(private sidebarService: ServicesidebarService, private httpRequet: HttpRequestService){ }
  
   ngOnInit(): void{ 
-    // this.userDetail = this.sidebarService.getUserDetail()
-    // console.log(this.userDetail);
     const userName = this.httpRequet.makeGetRequest('/auth/user').subscribe((response)=>{
       this.user = response.data;
-      // console.log(this?.user);
+      console.log(this?.user.email)
       
     }, (error)=>{
       console.log(error);

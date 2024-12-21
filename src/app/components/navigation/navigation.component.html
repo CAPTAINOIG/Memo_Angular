@@ -18,7 +18,7 @@
         <span class="nav-link-label">Files</span>
       </a>
     </li>
-    <ng-container *ngIf="isSuperAdmin">
+    <ng-container *ngIf="isAdmin">
       <li>
         <a [routerLink]="['/portal/activities']">
           <i class="nav-link-icon ti-pulse"></i>
@@ -43,7 +43,7 @@
 
       <li>
         <a (click)="signOut()" [routerLink]="['/login']">
-          <i class="nav-link-icon ti-settings"></i>
+          <i class="nav-link-icon ti-power-off"></i>
           <span class="nav-link-label">Log out</span>
         </a>
       </li>
