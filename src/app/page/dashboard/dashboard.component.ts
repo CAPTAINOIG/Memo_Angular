@@ -19,7 +19,7 @@ import { LocalstorageService } from '../../service/LocalstorageService/localstor
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  // sidebar: boolean = false; 
+  isSuperAdmin: boolean = false;
   data: any = [];
   monthOnMonthGraph: any = [];
   recentFiles: any = []
@@ -29,6 +29,9 @@ export class DashboardComponent implements OnInit {
   recent: any;
   file: any;
   activities: any;
+  isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
+  status = []
+  statusClasses = ['bg-secondary', 'bg-warning text-dark', 'bg-success', 'bg-danger'];
 
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible; 
@@ -43,15 +46,18 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // let user = LocalstorageService.read('data')
-    // let user = localStorage.getItem('data')
-    // console.log(user)
+    this.status = this.userData.status
+    const userData = JSON.parse(localStorage.getItem('isAdmin'));
+    
+    if (userData) {
+      this.isSuperAdmin = userData;
+    }
       this.isLoading = true;
       this.httpRequest.makeGetRequest('/memo/memo_activities').subscribe((response)=>{
         this.activities = response.data;
         this.isLoading = false;
       }, (error)=>{
-        // console.log(error);
+        console.log(error);
         this.isLoading = false;
         if(error.error.message){
           Toastify({
@@ -72,7 +78,15 @@ export class DashboardComponent implements OnInit {
       console.log(this.data);
       this.isLoading = false;
     }, (error: any) => {
+      console.log(error);
       this.isLoading = false;
+      Toastify({
+        text: "Error fetching data",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
     })
     // Graph
     this.httpRequest?.makeGetRequest("/dashboard/month_on_month_graph?year=2024").subscribe((response: any) => {
@@ -84,8 +98,10 @@ export class DashboardComponent implements OnInit {
     })
     this.httpRequest?.makeGetRequest("/dashboard/files/recent").subscribe((response: any) => {
       this.recentFiles = response.data
+      console.log(this.recentFiles);
       this.isLoading = false;
     }, (error: any) => {
+      console.log(error);
       this.isLoading = false;
     })
   }
@@ -109,6 +125,13 @@ export class DashboardComponent implements OnInit {
       this.isEditLoader = false;
     }, (error: any) => {
       console.log('Error fetching data', error);
+      Toastify({
+        text: "Error fetching data",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
       this.isEditLoader = false;
     })
   }
@@ -129,9 +152,8 @@ export class DashboardComponent implements OnInit {
      return `${hours}:${minutes}:${seconds}`;
    }
    
-   approve(memId: any){
-    // console.log(memId)
+   approve(memId: any,status:any){
     this.handleModal.showMother("otp");
-    this.handleModal.setPublishMemId(memId);
+    this.handleModal.setPublishMemId({memId,status})
   }
 }

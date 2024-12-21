@@ -1,11 +1,43 @@
-<div class="form-membership" style="background: url(../../assets/media/image/image1.jpg)">
-    <div class="form-wrapper">
+<div class="login-page">
+  <div class="left-panel">
+      <div>
+          <h1>Licensing and AeroMedical Portal</h1>
+          <p>Welcome to the licensing and aero-medical portal. This portal is used for authorization of various aircrew licenses. This website can be viewed on your mobile device.</p>
+          
+          <div class="features-grid">
+              <div class="row">
+                  <div class="col-3 feature-item">
+                    <i class="fa fa-comment"></i>
+                      <p>SMS notification of requests</p>
+                  </div>
+                  <div class="col-3 feature-item">
+                    <i class="fa fa-users"></i>
+                      <p>Population and age analysis of requests</p>
+                  </div>
+                  <div class="col-3 feature-item">
+                    <i class="fa fa-circle"></i>
+                      <p>Status report for Licensing and Medical</p>
+                  </div>
+                  <div class="col-3 feature-item">
+                    <i class="fa fa-envelope"></i>
+                      <p>Message inbox indicating fresh requests</p>
+                  </div>
+              </div>
+          </div>
+      </div>
 
-        <div id="logo">
-            <img src="../../assets/media/image/logo-dark.png" alt="image">
-        </div>
-        <h5>Sign in</h5>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <address>
+          Aviation House P.M.B. 21029 Ikeja Murtala Mohammed Airport Ikeja Lagos<br>
+          <a href="tel:+23414721521">+234-1-472-1521</a>, <a href="tel:+23412790421">+234-1-279-0421</a><br>
+          <a href="mailto:cpd@ncaa.gov.ng">cpd.gov.ng</a><br>
+          <a href="https://www.ncaa.gov.ng">www.ncaa.gov.ng</a>
+      </address>
+  </div>
+
+  <div class="right-panel">
+      <div class="login-form">
+          <h2>Login</h2>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <input 
                     type="text" 
@@ -40,6 +72,6 @@
                 {{ isLoading ? 'Logging in...' : 'Login' }}
               </button>
         </form>
-
-    </div>
+      </div>
+  </div>
 </div>

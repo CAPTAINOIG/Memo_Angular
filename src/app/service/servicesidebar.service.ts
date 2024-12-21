@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ServicesidebarService {
-  // Existing variable for the first implementation
   show: any = "undefined";
   check="nothing";
+  status = ['Save Draft','Pending', 'Approved', 'Rejected']
   public userData: any;
   public authData: any;
   public UserDetail: any;
@@ -17,12 +17,9 @@ export class ServicesidebarService {
   qrCodeData=undefined;
 
 
-  // Object to track the visibility of different components
   private componentStates: { [key: string]: boolean } = {};
 
   constructor() { }
-
-  // Existing method to show or hide the sidebar
 
 
   // we brought the data here because we want it to be cleared after every secs so we brought it to service

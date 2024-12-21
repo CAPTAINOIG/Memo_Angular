@@ -92,8 +92,7 @@
                                 <button class="btn btn-primary" (click)="setFilterStatus('approved')">Approved</button>
                             </li>
                             <li class="list-inline-item">
-                                <button class="btn btn-primary" (click)="setFilterStatus('pending')">Pending
-                                </button>
+                                <button class="btn btn-primary" (click)="setFilterStatus('pending')">Pending</button>
                             </li>
                         </ul>
                     </div>
@@ -134,8 +133,10 @@
                                     <th>Name</th>
                                     <th>Date</th>
                                     <th>Folder Name</th>
+                                    <th>Status</th>
                                     <th>Link</th>
                                     <th>QrCode</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -156,6 +157,11 @@
                                     </td>
                                     <td>{{format(item.CreatedAt)}}</td>
                                     <td>{{item.MemFoldName}}</td>
+                                    <td>
+                                        <span class="badge badge-pill {{statusClasses[item?.IsPublished]}}">
+                                            {{status[item?.IsPublished]??'Pending'}}
+                                        </span>
+                                    </td>
 
                                     <td class="text-primary cursor-pointer">
                                         {{item.MemFullLink}}
@@ -172,25 +178,31 @@
                                     <td>
                                     </td>
                                     <td class="text-right">
-                                        <div class="dropdown">
+                                        <div class="dropdown" *ngIf="item?.IsPublished==0 || item?.IsPublished==1">
                                             <a href="#" class="btn btn-floating" data-toggle="dropdown">
                                                 <i class="ti-more-alt"></i>
                                             </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <span class="dropdown-item cursor-pointer"
-                                                    (click)="editFiles(item?.MemUniqueId)">{{isEditLoader ? "Loading..."
-                                                    : "Edit"}}</span>
-                                                <span class="dropdown-item cursor-pointer" (click)="approve(item.Id)">
-                                                    {{item.IsPublished ? "Unapprove" : "Approve" }}</span>
+                                            <ng-container *ngIf="isAdmin">
 
-                                                <!-- <div class="dropdown-menu dropdown-menu-right">
-                                        <button 
-                                        (click)="suspendUserMethod(user.id, suspendUser ? 'unsuspend' : 'suspend')" 
-                                        class="dropdown-item"
-                                      >
-                                        {{ user.is_locked_out ? 'Unsuspend' : 'Suspend' }}
-                                      </button> -->
-                                            </div>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark"
+                                                        (click)="approve(item.Id, 'approve')">Approve</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-danger  hover-bg-danger-light hover-text-dark mt-2"
+                                                        (click)="approve(item.Id, 'reject')">Reject</span>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="!isAdmin && item.IsPublished==0">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span class="dropdown-item cursor-pointer"
+                                                        (click)="editFiles(item?.MemUniqueId)"
+                                                        data-sidebar-target="#view-file">{{isEditLoader ? "Loading..." :
+                                                        "Edit"}}</span>
+                                                </div>
+                                            </ng-container>
+
                                         </div>
                                     </td>
                                 </tr>

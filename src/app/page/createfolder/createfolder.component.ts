@@ -32,7 +32,7 @@ export class CreatefolderComponent {
       return;
     }
     this.isLoading = true;
-    this.httpRequest.makePostRequest('/memo/folder/create', { name: this.name }).subscribe(
+    this.httpRequest.makePostRequest('/memo/folder/create', { name: this.name, isEnabled: true }).subscribe(
       (response) => {
         this.folder = response.data
         console.log(this.folder);

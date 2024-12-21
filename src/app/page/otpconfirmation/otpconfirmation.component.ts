@@ -56,7 +56,7 @@ export class OtpconfirmationComponent {
 
 
   publishAndUnpublish() {
-    this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModal.publishMemId }).subscribe((response) => {
+    this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModal.publishMemId.memId,'publish': this.handleModal.publishMemId.status }).subscribe((response) => {
       this.isLoading = false;
       this.handleModal.showMother("undefined")
       

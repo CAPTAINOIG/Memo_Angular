@@ -12,13 +12,13 @@
         <span class="badge badge-danger badge-small">2</span>
       </a>
     </li>
+    <li>
+      <a [routerLink]="['/portal/files']">
+        <i class="nav-link-icon ti-file"></i>
+        <span class="nav-link-label">Files</span>
+      </a>
+    </li>
     <ng-container *ngIf="isSuperAdmin">
-      <li>
-        <a [routerLink]="['/portal/files']">
-          <i class="nav-link-icon ti-file"></i>
-          <span class="nav-link-label">Files</span>
-        </a>
-      </li>
       <li>
         <a [routerLink]="['/portal/activities']">
           <i class="nav-link-icon ti-pulse"></i>
@@ -40,5 +40,12 @@
         </a>
       </li>
     </ng-container>
+
+      <li>
+        <a (click)="signOut()" [routerLink]="['/login']">
+          <i class="nav-link-icon ti-settings"></i>
+          <span class="nav-link-label">Log out</span>
+        </a>
+      </li>
   </ul>
 </div>

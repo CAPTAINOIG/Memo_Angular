@@ -17,7 +17,6 @@ import Toastify from 'toastify-js';
 export class FilesComponent {
   isLoadingPrevious: boolean = false;
   isLoadingNext: boolean = false;
-
   foldId = undefined
   page = 1
   allFile: any = [];
@@ -27,10 +26,16 @@ export class FilesComponent {
   recent: any;
   searchTerm: string = '';
   filterStatus: string = '';
+  status =[]
+  statusClasses = ['bg-secondary', 'bg-warning text-dark', 'bg-success', 'bg-danger'];
+  
+  isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
 
   constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService) { }
 
   ngOnInit(): void {
+    this.status = this.handleModal.status
+
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response) => {
       this.allFile = response.data;
       console.log(this.allFile);
@@ -48,6 +53,7 @@ export class FilesComponent {
 
     this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {
       this.allFolder = response.data;
+      console.log(this.allFolder);
     }, (error) => {
       console.log(error);
       Toastify({
@@ -119,26 +125,15 @@ export class FilesComponent {
     })
   }
 
-  approve(memId: any) {
-    // console.log(memId)
+  approve(memId: any, status:any) {
     this.handleModal.showMother("otp");
-    this.handleModal.setPublishMemId(memId);
+    this.handleModal.setPublishMemId({memId, status})
   }
+  
 
   // filteredFiles() {
-  //   return this.allFile.filter(item =>item?.isPublished && item?.isPublished.toLowerCase().includes(this.searchTerm.toLowerCase()));
+  //   return this.allFile.filter(item =>item?.IsPublished && item?.IsPublished.toLowerCase().includes(this.searchTerm.toLowerCase()));
   // }
-
-  // filteredFiles() {
-  //   return this.allFile.filter(item => item?.MemTitle && item?.MemTitle.toLowerCase().includes(this.searchTerm.toLowerCase()));
-  // }
-
-  approveMemo() {
-    
-  }
-  rejectMemo() {
-
-  }
 
     setFilterStatus(status: string): void {
     this.filterStatus = status;
@@ -147,7 +142,7 @@ export class FilesComponent {
   filteredFiles() {
     return this.allFile.filter(item => {
       const matchesSearch = item?.MemTitle?.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesStatus = this.filterStatus === '' || (this.filterStatus === 'approved' && item.IsPublished === 1) || (this.filterStatus === 'pending' && item.IsPublished === 0);
+      const matchesStatus = this.filterStatus === '' || (this.filterStatus === 'approved' && item.IsPublished === 2) || (this.filterStatus === 'pending' && item.IsPublished === 1);
       return matchesSearch && matchesStatus;
     });
   }
@@ -155,7 +150,7 @@ export class FilesComponent {
   format = (dateT: any) => {
     const date = (new Date(dateT))
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }

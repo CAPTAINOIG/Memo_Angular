@@ -13,6 +13,14 @@
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
+
+
+  .badge {
+    font-size: 0.9rem; /* Adjust font size */
+    padding: 0.5em 0.8em; /* Add padding */
+    border-radius: 0.5rem; /* Make the badges more rounded */
+    margin-right: 0.5em; /* Add spacing between badges */
+  }
   
   @keyframes spin {
     0% {

@@ -82,30 +82,30 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     private fb: FormBuilder
   ) {
     this.memoForm = new FormGroup({
-        title: new FormControl('',
+      title: new FormControl('',
         Validators.required),
-        memo: new FormControl('',
+      memo: new FormControl('',
         Validators.required),
-        include_signature: new FormControl(false),
-        security_type: new FormControl(''),
-        secureByEmailOtp: new FormControl(false),
-        secureBySmsOtp: new FormControl(false),
-        secureByIp: new FormControl(false),
-        secureByGeoLocation: new FormControl(false),
-        areaName: new FormControl(''),
-        ip_address: new FormControl(''),
-        create_as_template: new FormControl(false),
-        access: new FormControl(''),
-        public: new FormControl(''),
-        name: new FormControl(''),
-        email: new FormControl(''),
-        phone: new FormControl(''),
-        metaData: new FormControl(''),
-        key: new FormControl(''),
-        value: new FormControl(''),
-      });
-      
-      this.form = this.fb.group({
+      include_signature: new FormControl(false),
+      security_type: new FormControl(''),
+      secureByEmailOtp: new FormControl(false),
+      secureBySmsOtp: new FormControl(false),
+      secureByIp: new FormControl(false),
+      secureByGeoLocation: new FormControl(false),
+      areaName: new FormControl(''),
+      ip_address: new FormControl(''),
+      create_as_template: new FormControl(false),
+      access: new FormControl(''),
+      public: new FormControl(''),
+      name: new FormControl(''),
+      email: new FormControl(''),
+      phone: new FormControl(''),
+      metaData: new FormControl(''),
+      key: new FormControl(''),
+      value: new FormControl(''),
+    });
+
+    this.form = this.fb.group({
       metaData: new FormControl(''),
       key: ['', Validators.required],
       value: ['', Validators.required],
@@ -161,50 +161,24 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.iframeVisible = true;
   }
 
-  // extractPlainText(memoContent: any): string {
-  //   if (!memoContent || typeof memoContent !== 'object' || !memoContent.content) {
-  //     return '';
-  //   }
-
-  //   let plainText = '';
-  //   memoContent.content.forEach((node: any) => {
-  //     if (node.type === 'text') {
-  //       plainText += node.text || '';
-  //     } else if (node.content && Array.isArray(node.content)) {
-  //       plainText += this.extractPlainText(node);  // recursive call for nested content
-  //     }
-  //   });
-  //   return plainText.trim();
-  // }
-
-  // extractPlainText(memo: { type: string; content: any[] }): string {
-  //   if (!memo || !Array.isArray(memo.content)) {
-  //     console.error('Invalid memo content:', memo);
-  //     return '';
-  //   }
-  
-  //   return memo.content.map((block) => block.text || '').join(' ');
-  // }
-
-
   extractPlainText(memo: { type: string; content: any[] }): string {
     if (!memo || !Array.isArray(memo.content)) {
       console.error('Invalid memo content:', memo);
       return '';
     }
-  
+
     return memo.content.map((block) => {
-      if (typeof block === 'string') return block; 
-      if (block.text) return block.text; 
+      if (typeof block === 'string') return block;
+      if (block.text) return block.text;
       return '';
     }).join(' ');
   }
-  
+
   ngOnDestroy(): void {
     this.editor.destroy();
   }
-  
-  
+
+
 
   fetchAreaDetails() {
     this.areaName = this.memoForm.get('areaName')?.value;
@@ -212,8 +186,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     console.log('Area Name:', this.areaName);
     this.memoForm.get('areaName')?.reset();
   }
-  
-  
+
+
   getIp() {
     this.httpRequest.makeGetRequest('/memo/memgeotemp').subscribe((response) => {
       // console.log(response)
@@ -256,7 +230,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     return areaNamePattern.test(areaName);
   }
 
-  // Regex to allow area names with optional commas and states (e.g., "Abule Egba, Lagos")
   isValidAreaNameWithState(areaName: string): boolean {
     const areaNameWithStatePattern = /^[a-zA-Z\s]+(?:,\s*[a-zA-Z\s]+)?$/;
     return areaNameWithStatePattern.test(areaName);
@@ -268,7 +241,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.memoForm.reset()
   }
 
-  draftMemo(): void {
+  draftMemo(event: any): void {
     if (!this.memoForm.valid) {
       Toastify({
         text: 'Form is not valid',
@@ -279,90 +252,101 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }).showToast();
       return;
     }
-  
+
     this.isLoading = true;
-  
-    // const memoData = { ...this.memoForm.value, memFold: this.memFoldId };
-    // console.log('Original memoData:', memoData);
 
     const memoData = {
-    title: this.memoForm.value.title,
-    memo: this.memoForm.value.memo,
-    MemUniqueId: this.memId,
-    include_signature: !!this.memoForm.value.include_signature,
-    memFold: Number(this.memFoldId) 
-  }
-  
+      title: this.memoForm.value.title,
+      // MemTitle: this.memoForm.value.title,
+      memo: this.memoForm.value.memo,
+      MemUniqueId: this.memId,
+      include_signature: !!this.memoForm.value.include_signature,
+      memFold: Number(this.memFoldId),
+      isPublished: event.submitter.value==='save' ? 0 : 1
+    }
+
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);
     }
+
+   
+      if (this.handleModals.show === 'edit_files'&& event.submitter.value==='save') {
+        const memo = {
+          title: this.memoForm.value.title || this.handleModals?.editMemo?.MemTitle,
+          memo: this.memoForm.value.memo,
+          memId: this.handleModals?.editMemo?.MemUniqueId,
+          memFold: this.handleModals?.editMemo?.MemFoldId,
+
+        };
+        // console.log(memo);
+        this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
+          (response) => {
+            console.log(response);
+            this.isLoading = false;
+            this.memoForm.reset();
+            Toastify({
+              text: 'Memo updated successfully',
+              duration: 3000,
+              gravity: 'top',
+              position: 'right',
+              backgroundColor: '#0000FF',
+            }).showToast();
+          },
+          (error) => {
+            console.error('Error updating memo:', error);
+            this.isLoading = false;
+            Toastify({
+              text: `${error.error.message || 'An error occurred'}`,
+              duration: 3000,
+              gravity: 'top',
+              position: 'right',
+              backgroundColor: '#FF0000',
+            }).showToast();
+          }
+        );
+      }else if(this.handleModals.show === 'edit_files' && event.submitter.value==='approve') {
+        this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModals?.editMemo?.Id,'publish': 'pending' }).subscribe((response) => {
+        this.isLoading = false;
+        
+      }, (error) => {
+        console.log(error);
+        this.isLoading = false
   
-    // console.log(memoData.memo);
-  
-    if (this.handleModals.show === 'edit_files') {
-      const memo = {
-        MemTitle: this.handleModals?.editMemo?.MemTitle || memoData.title,
-        memo: memoData.memo,
-        memId: this.handleModals?.editMemo?.MemUniqueId || memoData.MemUniqueId,
-        memFold: this.handleModals?.editMemo?.MemFoldId || memoData.memFold || null,
-      };
-      console.log(memo);
-      this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
-        (response) => {
-          console.log(response);
-          this.isLoading = false;
-          this.memoForm.reset();
-          Toastify({
-            text: 'Memo updated successfully',
-            duration: 3000,
-            gravity: 'top',
-            position: 'right',
-            backgroundColor: '#0000FF',
-          }).showToast();
-        },
-        (error) => {
-          console.error('Error updating memo:', error);
-          this.isLoading = false;
-          Toastify({
-            text: `${error.error.message || 'An error occurred'}`,
-            duration: 3000,
-            gravity: 'top',
-            position: 'right',
-            backgroundColor: '#FF0000',
-          }).showToast();
-        }
-      );
-    } else {
-      // console.log(memoData);
-      this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
-        (response: any) => {
-          console.log('Create response:', response);
-          this.isLoading = false;
-          this.memId = response.id;
-          this.handleModals.setMemId(response.id);
-          Toastify({
-            text: 'Memo created successfully',
-            duration: 3000,
-            gravity: 'top',
-            position: 'right',
-            backgroundColor: '#0000FF',
-          }).showToast();
-        },
-        (error) => {
-          console.error('Error saving draft:', error);
-          this.isLoading = false;
-          Toastify({
-            text: `${error.error.message || 'An error occurred'}`,
-            duration: 3000,
-            gravity: 'top',
-            position: 'right',
-            backgroundColor: '#FF0000',
-          }).showToast();
-        }
-      );
-    }
+      })
+      }    
+      else if(this.handleModals.show === 'create_memo') {
+        // console.log(memoData);
+        this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
+          (response: any) => {
+            console.log('Create response:', response);
+            this.isLoading = false;
+            this.memId = response.id;
+            this.handleModals.setMemId(response.id);
+            Toastify({
+              text: 'Memo created successfully',
+              duration: 3000,
+              gravity: 'top',
+              position: 'right',
+              backgroundColor: '#0000FF',
+            }).showToast();
+          },
+          (error) => {
+            console.error('Error saving draft:', error);
+            this.isLoading = false;
+            Toastify({
+              text: `${error.error.message || 'An error occurred'}`,
+              duration: 3000,
+              gravity: 'top',
+              position: 'right',
+              backgroundColor: '#FF0000',
+            }).showToast();
+          }
+        );
+      }
+
+
   }
-  
+
 
   addIP(ip_address: string) {
     if (!ip_address || !this.isValidIP(ip_address)) {
@@ -409,7 +393,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       return;
     }
     this.isLoading = true;
-    const formValues = { ...this.memoForm.value, data:this.test, ipData: this.allowed_ips, geolocationData: Object.values(this.locationDetails), memId: this.memId, new: this.area_location, metaData: this.metaDataArray };
+    const formValues = { ...this.memoForm.value, data: this.test, ipData: this.allowed_ips, geolocationData: Object.values(this.locationDetails), memId: this.memId, new: this.area_location, metaData: this.metaDataArray };
     console.log(formValues);
     this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response) => {
       console.log(response);
@@ -711,6 +695,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       console.warn('No file selected.');
     }
   }
-  
-  }
+
+}
 
