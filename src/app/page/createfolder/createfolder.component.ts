@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css"; 
+import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({
   selector: 'app-createfolder',
@@ -16,7 +17,7 @@ export class CreatefolderComponent {
   isLoading = false;
   name: string = '';
   folder: any;
-  constructor(private httpRequest: HttpRequestService) { }
+  constructor(private httpRequest: HttpRequestService, private sidebarService: ServicesidebarService) { }
 
 
   onSubmit() {
@@ -35,6 +36,7 @@ export class CreatefolderComponent {
     this.httpRequest.makePostRequest('/memo/folder/create', { name: this.name, isEnabled: true }).subscribe(
       (response) => {
         this.folder = response.data
+        this.sidebarService.show=undefined
         console.log(this.folder);
         this.isLoading = false;
         Toastify({
