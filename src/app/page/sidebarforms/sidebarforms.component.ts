@@ -54,6 +54,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   form: FormGroup;
   createMemoForm: FormGroup;
   isLoading = false;
+  isLoadingApprove = false;
   qrCodeCheckInterval: any;
   updateMemoMemUniqueId: any;
   showSubmitButton: boolean = false;
@@ -252,9 +253,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }).showToast();
       return;
     }
-
-    this.isLoading = true;
-
+    
     const memoData = {
       title: this.memoForm.value.title,
       // MemTitle: this.memoForm.value.title,
@@ -264,21 +263,22 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       memFold: Number(this.memFoldId),
       isPublished: event.submitter.value==='save' ? 0 : 1
     }
-
+    
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);
     }
 
    
-      if (this.handleModals.show === 'edit_files'&& event.submitter.value==='save') {
+    if (this.handleModals.show === 'edit_files' && event.submitter.value ==='save') {
         const memo = {
           title: this.memoForm.value.title || this.handleModals?.editMemo?.MemTitle,
           memo: this.memoForm.value.memo,
           memId: this.handleModals?.editMemo?.MemUniqueId,
           memFold: this.handleModals?.editMemo?.MemFoldId,
-
+          
         };
         // console.log(memo);
+        this.isLoading = true;
         this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
           (response) => {
             console.log(response);
@@ -305,17 +305,25 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           }
         );
       }else if(this.handleModals.show === 'edit_files' && event.submitter.value==='approve') {
+        this.isLoadingApprove = true;
         this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModals?.editMemo?.Id,'publish': 'pending' }).subscribe((response) => {
-        this.isLoading = false;
-        
+        this.isLoadingApprove = false;
+        console.log(response);
+        Toastify({
+          text: 'Memo submitted successfully',
+          duration: 3000,
+          gravity: 'top',
+          position: 'right',
+          backgroundColor: '#0000FF',
+        }).showToast();
       }, (error) => {
         console.log(error);
-        this.isLoading = false
-  
+        this.isLoadingApprove = false;
       })
       }    
       else if(this.handleModals.show === 'create_memo') {
         // console.log(memoData);
+        this.isLoading = true;
         this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
           (response: any) => {
             console.log('Create response:', response);

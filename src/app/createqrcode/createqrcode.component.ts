@@ -37,8 +37,9 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
   fetchQrCode(){
     if(this.handleModals.createMemoTab && ['edit_files','create_memo'].includes(this.handleModals.show)){
       this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response)=>{
-        if(response.data[0]){
-          this.handleModals.setQrCodeData(response.data[0])
+        // console.log(response.data.MemQRCode);
+        if(response.data){
+          this.handleModals.setQrCodeData(response.data)
         }
       }, (error)=>{
         // console.log(error);
