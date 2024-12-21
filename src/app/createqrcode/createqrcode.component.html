@@ -5,10 +5,7 @@
             <div class="form-group">
                 <label for="qrInput">Enter URL or Text:</label>
                 <input type="text" [(ngModel)]="handleModals.qrCodeData.MemUniqueId" class="form-control" id="qrInput" disabled>
-                <img [src]="handleModals?.qrCodeData?.MemQrCode" alt="Generated QR Code">
-                <!-- <img [src]="handleModals?.qrCodeData?.MemQrCode" alt="Generated QR Code">
-                    <p style="border: 1px solid red;">{{ handleModals?.qrCodeData?.MemQrCode }}</p> -->
-
+                <img src="{{handleModals.qrCodeData.MemQRCode}}" alt="Generated QR Code">
             </div>
             <button (click)="createQrCode()" type="submit"
                 class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">

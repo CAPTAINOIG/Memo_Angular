@@ -32,12 +32,12 @@ export class CreateqrcodeComponent implements OnInit,  OnDestroy{
   }
   ngOnInit(): void {
     this.startQrCodeCheck()
+    
   }
   
   fetchQrCode(){
     if(this.handleModals.createMemoTab && ['edit_files','create_memo'].includes(this.handleModals.show)){
       this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response)=>{
-        // console.log(response.data.MemQRCode);
         if(response.data){
           this.handleModals.setQrCodeData(response.data)
         }
