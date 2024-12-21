@@ -263,6 +263,17 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       memFold: Number(this.memFoldId),
       isPublished: event.submitter.value==='save' ? 0 : 1
     }
+
+    // if (!memoData.memFold) {
+    //   Toastify({
+    //     text: 'Please select a folder',
+    //     duration: 3000,
+    //     gravity: 'top',
+    //     position: 'right',
+    //     backgroundColor: '#FF0000',
+    //   }).showToast();
+    //   return;
+    // }
     
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);
@@ -321,8 +332,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         this.isLoadingApprove = false;
       })
       }    
-      else if(this.handleModals.show === 'create_memo') {
-        // console.log(memoData);
+      else if(this.handleModals.show === 'create_memo' ) {
+        console.log(memoData);
         this.isLoading = true;
         this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
           (response: any) => {
@@ -351,7 +362,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           }
         );
       }
-
 
   }
 

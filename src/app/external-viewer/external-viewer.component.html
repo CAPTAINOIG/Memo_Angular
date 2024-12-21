@@ -18,6 +18,9 @@
    <div *ngIf="status === 'error'" style="color: red; font-size: 18px; margin-top: 20px;">
      <p>{{ message }}</p>
    </div>
+   <div *ngIf="status === 'message'" style=" font-size: 18px; margin-top: 20px;">
+     <p>{{ message }}</p>
+   </div>
  
    <div *ngIf="status === 'isLoading'" class="spinner-container" style="margin-top: 20px;">
       <div class="spinner"></div>

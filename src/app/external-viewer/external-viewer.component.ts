@@ -52,12 +52,17 @@ export class ExternalViewerComponent implements OnInit {
         this.http.makeGetRequest(`/memo/get_mem_by_memuniqueid/?id=${this.itemId}&lat=${latitude}&long=${longitude}`)
           .subscribe(
             (response) => {
-              console.log(response.data);
-              this.data = response.data;
-              if(response.requireAccess){
-                this.status = "requireAccess";
-              }else{
-                this.status = "data";
+
+              if (response.data) {
+                this.status = 'data';
+                this.data = response.data;
+              }
+              else if (response.requireAccess) {
+                this.status = 'requireAccess';
+              }
+              else {
+                this.status = 'message';
+                this.message = response.message
               }
             },
             (error) => {
@@ -73,20 +78,20 @@ export class ExternalViewerComponent implements OnInit {
         console.error('Error retrieving location:', error);
       },
       {
-        enableHighAccuracy: true, 
-        timeout: 10000, 
-        maximumAge: 0 
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
       }
     );
   }
 
-  sendIdentityOtp(){
-    if(!this.identity){
+  sendIdentityOtp() {
+    if (!this.identity) {
       console.log('empty');
       Toastify({
         text: 'input cannot be empty',
         duration: 3000,
-        gravity: "top", 
+        gravity: "top",
         position: "right",
         backgroundColor: "red",
       }).showToast();
@@ -99,28 +104,28 @@ export class ExternalViewerComponent implements OnInit {
     }
     console.log(verifyIdentity);
 
-    this.http.makePostRequest('/memo/verify_viewer_identity/', verifyIdentity).subscribe((response)=>{
+    this.http.makePostRequest('/memo/verify_viewer_identity/', verifyIdentity).subscribe((response) => {
       console.log(response);
-      this.status="Next_token"
+      this.status = "Next_token"
       Toastify({
         text: 'success',
         duration: 3000,
         gravity: "top",
-        position: "right", 
+        position: "right",
         backgroundColor: "blue",
       }).showToast();
       this.isLoader = false;
-    }, (error)=>{
+    }, (error) => {
       this.isLoader = false;
       this.message = error.error.message;
       Toastify({
         text: `${error.error.message};`,
         duration: 3000,
         gravity: "top",
-        position: "right", 
+        position: "right",
         backgroundColor: "red",
       }).showToast();
-    
+
     })
   }
 
