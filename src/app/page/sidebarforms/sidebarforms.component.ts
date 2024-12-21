@@ -263,8 +263,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       memFold: Number(this.memFoldId),
       isPublished: event.submitter.value==='save' ? 0 : 1
     }
+    // console.log(memoData)
 
-    // if (!memoData.memFold) {
+    // if (this.memFoldId || memoData.memFold) {
     //   Toastify({
     //     text: 'Please select a folder',
     //     duration: 3000,
@@ -292,7 +293,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         this.isLoading = true;
         this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
           (response) => {
-            console.log(response);
+            // console.log(response);
             this.isLoading = false;
             this.memoForm.reset();
             Toastify({
@@ -328,16 +329,23 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           backgroundColor: '#0000FF',
         }).showToast();
       }, (error) => {
-        console.log(error);
+        // console.log(error);
         this.isLoadingApprove = false;
+        Toastify({
+          text: `${error.error.message || 'An error occurred'}`,
+          duration: 3000,
+          gravity: 'top',
+          position: 'right',
+          backgroundColor: '#FF0000',
+        }).showToast();
       })
       }    
       else if(this.handleModals.show === 'create_memo' ) {
-        console.log(memoData);
+        // console.log(memoData);
         this.isLoading = true;
         this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
           (response: any) => {
-            console.log('Create response:', response);
+            // console.log(response);
             this.isLoading = false;
             this.memId = response.id;
             this.handleModals.setMemId(response.id);
