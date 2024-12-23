@@ -38,6 +38,7 @@ export class FilesComponent {
 
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response) => {
       this.allFile = response.data;
+      console.log(this.allFile)
       this.isLoading = false
     }, (error) => {
       Toastify({

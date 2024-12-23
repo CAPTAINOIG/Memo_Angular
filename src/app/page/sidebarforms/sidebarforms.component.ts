@@ -67,6 +67,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   metaDataArray: any[] = [];
   memFoldId: any;
   metaDataResult: any;
+  isMetaLoader = false;
 
 
   memo_attachments = [
@@ -279,8 +280,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);
     }
-
-   
+  
     if (this.handleModals.show === 'edit_files' && event.submitter.value ==='save') {
         const memo = {
           title: this.memoForm.value.title || this.handleModals?.editMemo?.MemTitle,
@@ -328,6 +328,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           position: 'right',
           backgroundColor: '#0000FF',
         }).showToast();
+        this.memoForm.reset();
       }, (error) => {
         // console.log(error);
         this.isLoadingApprove = false;
@@ -356,6 +357,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
               position: 'right',
               backgroundColor: '#0000FF',
             }).showToast();
+            this.memoForm.reset();
           },
           (error) => {
             console.error('Error saving draft:', error);
@@ -497,6 +499,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       },
       (error) => {
         console.log(error);
+        this.isLoading = false;
         Toastify({
           text: 'Error saving memo',
           duration: 3000,
@@ -542,9 +545,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         value: values.value,
       }
     }
+    this.isMetaLoader = true;
     this.httpRequest.makePostRequest('/memo/metadata', meta).subscribe(
       (response) => {
-        console.log(response);
         Toastify({
           text: "Meta Data added successfully",
           duration: 3000,
@@ -557,8 +560,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         this.memoForm.controls['value'].reset();
         this.isLoading = false;
         this.fetchMetaData();
+        this.isMetaLoader = false;
       },
       (error) => {
+        this.isMetaLoader = false;
         Toastify({
           text: 'Error fetching metadata',
           duration: 3000,

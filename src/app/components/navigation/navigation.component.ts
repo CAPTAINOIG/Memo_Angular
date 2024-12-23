@@ -19,7 +19,6 @@ export class NavigationComponent implements OnInit {
   
   ngOnInit() {
     this.isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
-    console.log(this.isAdmin)
     // const userData = localStorage.getItem('isAdmin');
     // if (userData) {
     //   const user = JSON.parse(userData);

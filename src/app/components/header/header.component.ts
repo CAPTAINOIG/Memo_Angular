@@ -19,8 +19,6 @@ export class HeaderComponent {
   ngOnInit(): void{ 
     const userName = this.httpRequet.makeGetRequest('/auth/user').subscribe((response)=>{
       this.user = response.data;
-      console.log(this?.user.email)
-      
     }, (error)=>{
       console.log(error);
     })
