@@ -1,0 +1,183 @@
+/* .hero-bg {
+  background-image: url("https://html.xpressbuddy.com/coindox/assets/img/bg/blockchain_hero_bg.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: auto;
+  min-height: 100vh;
+  overflow: hidden;
+} */
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 20px;
+  }
+  
+  .hero-text h1 {
+    font-size: 3rem;
+    color: #ddd;
+  }
+  
+  .hero-text p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #ddd;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 50px;
+  }
+  
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+  }
+  
+  .icon {
+    color: #00bcd4;
+    font-size: 1.5rem;
+  }
+  
+  .feature span {
+    color: #00bcd4;
+    font-size: 1.5rem;
+  }
+  
+  #landing-page {
+    margin-top: 100px;
+  }
+  
+  .navigating {
+    color: white;
+    font-size: 60px;
+    font-weight: light;
+  }
+  
+  #safesecure {
+    margin-top: 100px;
+    gap: 10px;
+    font-size: 20px;
+    margin-left: 100px;
+  }
+  
+  #safesecure2 {
+    gap: 50px;
+    margin-top: 200px;
+    font-size: 20px;
+  }
+  
+  #white-paper {
+    gap: 20px;
+  }
+  
+  .custom-button {
+    padding: 1.1em 2em;
+    background: none;
+    border: 2px solid #fff;
+    font-size: 15px;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    border-radius: 12px;
+    font-weight: bold;
+  }
+  
+  .get-started {
+    background-color: rgb(4,6,14);
+    color: white !important;
+  }
+  
+  .white-paper {
+    background-color: #333;
+    color: white !important;
+  }
+  
+  .custom-button:before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 120%;
+    background-color: green;
+    top: 50%;
+    transform: skewX(30deg) translate(-150%, -50%);
+    transition: all 0.5s;
+  }
+  
+  .custom-button:hover {
+    color: #fff;
+    box-shadow: 0 2px 0 2px #0d3b66;
+    box-shadow: 0 2px 0 2px green;
+  }
+  
+  .custom-button:hover::before {
+    transform: skewX(30deg) translate(150%, -50%);
+    transition-delay: 0.1s;
+  }
+  
+  .custom-button:active {
+    transform: scale(0.9);
+  }
+  
+  @media (max-width: 991px) {
+    .hero-text h1 {
+      font-size: 2.5rem;
+    }
+  
+    .hero-text p {
+      font-size: 1rem;
+    }
+  
+    .navigating {
+      font-size: 50px;
+    }
+  
+    #safesecure,
+    #safesecure2 {
+      margin-left: 0;
+      margin-top: 50px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .hero {
+      padding: 50px 20px;
+    }
+  
+    .hero-text h1 {
+      font-size: 2rem;
+    }
+  
+    .hero-text p {
+      font-size: 0.9rem;
+    }
+  
+    .navigating {
+      font-size: 40px;
+    }
+  
+    .features {
+      flex-direction: column;
+      gap: 30px;
+    }
+  
+    #landing-page {
+      margin-top: 50px;
+    }
+  
+    #safesecure,
+    #safesecure2 {
+      margin-top: 30px;
+    }
+  }

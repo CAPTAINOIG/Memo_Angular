@@ -318,7 +318,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         );
       }else if(this.handleModals.show === 'edit_files' && event.submitter.value==='approve') {
         this.isLoadingApprove = true;
-        this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModals?.editMemo?.Id,'publish': 'pending' }).subscribe((response) => {
+        this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModals?.editMemo?.Id, 'publish' : 'pending' }).subscribe((response) => {
         this.isLoadingApprove = false;
         console.log(response);
         Toastify({

@@ -1,0 +1,101 @@
+.users-section {
+    /* background-color: #0a0a0a; */
+    padding: 80px 0;
+    color: white;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    color: #6c757d;
+    margin-bottom: 3rem;
+}
+
+.user-card {
+    background-color: #111;
+    border-radius: 15px;
+    padding: 2rem;
+    position: relative;
+}
+
+.card-corner {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    transform: rotate(45deg);
+}
+
+.hexagon-icon {
+    background-color: #1a1a1a;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.hexagon-icon i {
+    color: #007bff;
+    font-size: 1.5rem;
+}
+
+.user-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.feature-item {
+    display: flex;
+    gap: 1rem;
+}
+
+.bullet {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.bullet span {
+    width: 8px;
+    height: 8px;
+    background-color: #007bff;
+    border-radius: 50%;
+}
+
+.feature-content h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-content p {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+#cdesign {
+    margin-left: -100px;
+}
+.circuit-image {
+    max-width: 100%;
+    height: auto;
+}

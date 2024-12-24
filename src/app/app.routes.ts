@@ -16,12 +16,12 @@ import { PagenotfoundComponent } from './page/pagenotfound/pagenotfound.componen
 import { ForgotpasswordComponent } from './page/forgotpassword/forgotpassword.component';
 import { PasswordauthComponent } from './page/passwordauth/passwordauth.component';
 import { PasswordresetComponent } from './page/passwordreset/passwordreset.component';
-import { LandingpageComponent } from './page/landingpage/landingpage.component';
 import { AdminLayoutComponent} from './layout/isAdminLayout/dashboard.component'
+import { FolderComponent } from './folder/folder.component';
 
 
 export const routes: Routes = [
-    {path: '', component:LandingpageComponent},
+    {'path': '', component: FolderComponent},
     {'path':'login', component:LoginComponent},
     {path: 'auth', component: TwofactorauthComponent},
     {'path':'forgotpassword', component: ForgotpasswordComponent},

@@ -1,0 +1,60 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg px-4">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <img src="assets/media/image/logo.png" width="30" height="30" alt="coindox">
+        <span class="brand-text">Memo</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    Home
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Submenu 1</a></li>
+                    <li><a class="dropdown-item" href="#">Submenu 2</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Feature</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Team</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Roadmap</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    Blog
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Submenu 1</a></li>
+                    <li><a class="dropdown-item" href="#">Submenu 2</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+        </ul>
+        <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    EN
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">EN</a></li>
+                    <li><a class="dropdown-item" href="#">FR</a></li>
+                </ul>
+            </div>
+            <button class="button" [routerLink]="['login']">
+                <span>LOGIN</span>
+            </button>
+            
+            
+        </div>
+    </div>
+</nav>
