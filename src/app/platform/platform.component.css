@@ -1,0 +1,128 @@
+.platform {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+.feature-container {
+    position: relative;
+    padding: 2rem;
+}
+
+.features-list {
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+}
+
+.feature-item {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #00b8d4, #0052cc);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.gradient-circle {
+    position: relative;
+    margin-left: -150px;
+    margin-top: -50px;
+}
+
+.lock-icon {
+    position: absolute;
+    top: 80%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    color: white;
+    font-size: 3rem;
+    /* border-radius: 50%;
+    border: 2px solid transparent;
+    border-right-color: #00b8d4;
+    animation: rotate 10s linear infinite; */
+}
+
+.feature-icon i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.feature-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.feature-content p {
+    color: #a0a0a0;
+    margin: 10;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.circular-design {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 300px;
+}
+
+.circle-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-right-color: #00b8d4;
+    animation: rotate 10s linear infinite;
+}
+
+.circle:nth-child(2) {
+    border-right-color: #0052cc;
+    animation-duration: 8s;
+    scale: 0.8;
+}
+
+.circle:nth-child(3) {
+    border-right-color: #00b8d4;
+    animation-duration: 6s;
+    scale: 0.6;
+}
+
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.intro-text {
+    max-width: 600px;
+    margin-bottom: 3rem;
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}

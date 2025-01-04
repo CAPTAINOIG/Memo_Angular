@@ -1,0 +1,126 @@
+.footer {
+    background-color: #0a0a0f;
+    color: #ffffff;
+    padding: 4rem;
+    font-family: 'Arial', sans-serif;
+}
+
+.footer-card {
+    background: linear-gradient(45deg, #3e21b0, #6dede0);
+    padding: 1rem;
+    width: 80%;
+    height: 100%;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.join-us {
+    margin-top: 20%;
+    font-weight: 900;
+    font-size: 1.1rem;
+}
+
+.community {
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+
+.footer-card h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.join-btn {
+    background-color: #0a0a0f;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 2rem;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+}
+
+.join-btn:hover {
+    transform: translateY(-2px);
+    background-color: #1a1a1f;
+}
+
+.footer-links h4 {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 1rem;
+}
+
+.footer-links a {
+    color: #a0a0a0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #2a2a2f;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    color: #ffffff;
+    font-size: 1.0rem;
+}
+
+.subscribe-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 10rem;
+}
+
+.regular-updates {
+   font-size: 2.5rem;
+}
+
+.subscribe-input {
+    flex: 1;
+    background-color: #1a1a1f;
+    border: 1px solid #2a2a2f;
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 25px;
+    width: 70%;
+}
+
+.subscribe-btn {
+    background: linear-gradient(45deg, #2193b0, #6406e8);
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.subscribe-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(33, 147, 176, 0.3);
+    background: linear-gradient(45deg, #3e21b0, #6dede0);
+}
