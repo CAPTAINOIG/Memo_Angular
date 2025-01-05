@@ -1,5 +1,5 @@
 .users-section {
-    padding: 80px 0;
+    padding: 80px 100px;
     color: white;
 }
 
@@ -92,7 +92,8 @@
 }
 
 #cdesign {
-    margin-left: -100px;
+    margin-left: -60px;
+    z-index: -1;
 }
 .circuit-image {
     max-width: 100%;
