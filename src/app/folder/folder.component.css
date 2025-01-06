@@ -1,9 +1,10 @@
 .landing-page {
   background-image: url("https://html.xpressbuddy.com/coindox/assets/img/bg/blockchain_hero_bg.png");
   background-size: cover;
-  background-position: center;
+  /* background-position: ; */
   position: relative;
   height: auto;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   overflow: hidden;
+  background-color: #0a0a0f;
 }

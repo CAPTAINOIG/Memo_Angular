@@ -42,11 +42,11 @@
     background: linear-gradient(135deg, #ffffff 0%, #ffffff 50%, transparent 50%);
 }
 
-.bottom-right {
+/* .bottom-right {
     bottom: 0;
     right: 0;
     background: linear-gradient(-45deg, #ffffff 0%, #ffffff 50%, transparent 50%);
-}
+} */
 
 .accent-color {
     position: absolute;
