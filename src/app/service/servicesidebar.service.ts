@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,19 @@ export class ServicesidebarService {
 
   constructor() { }
 
+  private refreshFolderSubject = new BehaviorSubject<boolean>(true);
+  refreshFolder$ = this.refreshFolderSubject.asObservable();
+
+  triggerFolderRefresh() {
+    this.refreshFolderSubject.next(true);
+  };
+
+  private refreshFileSubject = new BehaviorSubject<boolean>(true);
+  refreshFile$ = this.refreshFileSubject.asObservable();
+
+  triggerFileRefresh() {
+    this.refreshFileSubject.next(true);
+  };
 
   // we brought the data here because we want it to be cleared after every secs so we brought it to service
   setQrCodeData(data:any){

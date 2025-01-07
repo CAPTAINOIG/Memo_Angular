@@ -6,6 +6,7 @@ import { HttpRequestService } from '../../service/HttpRequest/http-request.servi
 import { CommonModule } from '@angular/common';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 import Toastify from 'toastify-js';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-files',
@@ -15,6 +16,9 @@ import Toastify from 'toastify-js';
   styleUrl: './files.component.css'
 })
 export class FilesComponent {
+private folderSubject = new BehaviorSubject<any[]>([]);
+allFolder$ = this.folderSubject.asObservable();
+
   isLoadingPrevious: boolean = false;
   isLoadingNext: boolean = false;
   foldId = undefined
@@ -31,7 +35,8 @@ export class FilesComponent {
   
   isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
 
-  constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService) { }
+
+  constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService, private folderService: ServicesidebarService, private fileService: ServicesidebarService) { }
 
   ngOnInit(): void {
     this.status = this.handleModal.status
@@ -49,19 +54,32 @@ export class FilesComponent {
       }).showToast();
     })
 
-    this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {
-      this.allFolder = response.data;
-    }, (error) => {
-      Toastify({
-        text: "Error fetching data",
-        duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "red",
-      }).showToast();
-    })
+    this.folderService.refreshFolder$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.loadFolders();
+      }
+    });
 
-  }
+    this.fileService.refreshFile$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.filteredFiles();
+      }
+    });
+  };
+  
+  loadFolders() {
+  this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {
+    this.folderSubject.next(response.data);
+  }, (error) => {
+    Toastify({
+      text: "Error fetching data",
+      duration: 3000,
+      gravity: "top",
+      position: "right",
+      backgroundColor: "red",
+    }).showToast();
+  })
+}
 
   previous() {
     this.isLoadingPrevious = true;

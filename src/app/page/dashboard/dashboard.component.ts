@@ -40,14 +40,20 @@ export class DashboardComponent implements OnInit {
     private httpRequest: HttpRequestService,
     private handleModal: ServicesidebarService,
     private userData: ServicesidebarService,
-    private router: Router
-    
+    private router: Router,
+    private fileService: ServicesidebarService,
   ) {
 
   }
 
   ngOnInit(): void {
     this.status = this.userData.status
+
+    this.fileService.refreshFile$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.fetchRecentFiles();
+      }
+    });
    
       this.isLoading = true;
       this.httpRequest.makeGetRequest('/memo/memo_activities').subscribe((response)=>{
@@ -93,16 +99,20 @@ export class DashboardComponent implements OnInit {
       // console.log('Error fetching data', error);
       this.isLoading = false;
     })
+  };
+
+  fetchRecentFiles() {
+    this.isLoading = true;
     this.httpRequest?.makeGetRequest("/dashboard/files/recent").subscribe((response: any) => {
       this.recentFiles = response.data
-      console.log(this.recentFiles);
+      // console.log(this.recentFiles);
       this.isLoading = false;
     }, (error: any) => {
       console.log(error);
       this.isLoading = false;
     })
   }
-
+  
   openModal(){
     this.handleModal.showMother("create_memo")
     this.handleModal.toggleCheck('hello')

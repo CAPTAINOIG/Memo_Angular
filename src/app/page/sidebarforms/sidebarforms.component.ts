@@ -81,7 +81,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   constructor(
     public handleModals: ServicesidebarService,
     private httpRequest: HttpRequestService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private folderService: ServicesidebarService,
+    private fileService: ServicesidebarService,
   ) {
     this.memoForm = new FormGroup({
       title: new FormControl('',
@@ -130,7 +132,14 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.editor = new Editor();
     this.fetchFolders();
     this.getIp();
-  }
+
+    this.folderService.refreshFolder$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.fetchFolders();
+      }
+    });
+  };
+  
   ngDoCheck(): void {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
       const check = this.handleModals.show == "edit_files"
@@ -303,6 +312,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
               position: 'right',
               backgroundColor: '#0000FF',
             }).showToast();
+            this.fileService.triggerFileRefresh();
           },
           (error) => {
             console.error('Error updating memo:', error);
@@ -328,6 +338,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           position: 'right',
           backgroundColor: '#0000FF',
         }).showToast();
+        this.fileService.triggerFileRefresh();
         this.memoForm.reset();
       }, (error) => {
         // console.log(error);
@@ -357,6 +368,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
               position: 'right',
               backgroundColor: '#0000FF',
             }).showToast();
+            this.fileService.triggerFileRefresh();
             this.memoForm.reset();
           },
           (error) => {

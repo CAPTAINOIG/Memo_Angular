@@ -37,10 +37,10 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isLoading = true;
       const json = this.loginForm.value;
-      console.log(json)
+      // console.log(json)
       this.HttpRequest.makePostRequest(`/auth/login`, json).subscribe({
         next: (data:any) => {
-          console.log(data)
+          // console.log(data)
           this.userDetail.setUserDetail(data)
           this.isLoading = false;
           if (data.status) {

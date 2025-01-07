@@ -17,7 +17,11 @@ export class CreatefolderComponent {
   isLoading = false;
   name: string = '';
   folder: any;
-  constructor(private httpRequest: HttpRequestService, private sidebarService: ServicesidebarService) { }
+  constructor(private httpRequest: HttpRequestService, private sidebarService: ServicesidebarService, private folderService: ServicesidebarService) { }
+
+  // ngOnInit(): void {
+  //   this.folderService.setCreateMemoTabs(true)
+  // }
 
 
   onSubmit() {
@@ -46,6 +50,7 @@ export class CreatefolderComponent {
           position: "right", 
           backgroundColor: "blue",
         }).showToast();
+        this.folderService.triggerFolderRefresh();
       },
       (error) => {
         console.error('Error updating memo:', error);

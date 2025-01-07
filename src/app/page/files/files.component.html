@@ -29,7 +29,7 @@
                                 Create Folder
                             </button>
                         </span>
-                        <div *ngFor="let item of allFolder" id="files" class="jstree jstree-1 jstree-default"
+                        <div *ngFor="let item of allFolder$ | async" id="files" class="jstree jstree-1 jstree-default"
                             role="tree" aria-multiselectable="true" tabindex="0" aria-activedescendant="j1_1"
                             aria-busy="false">
 
@@ -121,90 +121,93 @@
                     </div>
 
                     <div class="table-responsive" *ngIf="!isLoading">
-    <table id="table-files" class="table table-borderless table-hover">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Folder Name</th>
-                <th>Status</th>
-                <th>Link</th>
-                <th>QrCode</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- No files found row -->
-            <tr *ngIf="filteredFiles().length === 0">
-                <td colspan="8" class="text-center">
-                    <h3 class="text-danger">No files found</h3>
-                </td>
-            </tr>
+                        <table id="table-files" class="table table-borderless table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Folder Name</th>
+                                    <th>Status</th>
+                                    <th>Link</th>
+                                    <th>QrCode</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- No files found row -->
+                                <tr *ngIf="filteredFiles().length === 0">
+                                    <td colspan="8" class="text-center">
+                                        <h3 class="text-danger">No files found</h3>
+                                    </td>
+                                </tr>
 
-            <!-- Table rows -->
-            <tr *ngFor="let item of filteredFiles()">
-                <td></td>
-                <td>
-                    <span class="d-flex align-items-center">
-                        <figure class="avatar avatar-sm mr-3">
-                            <span class="avatar-title rounded-pill">
-                                <i class="ti-file"></i>
-                            </span>
-                        </figure>
-                        <span class="d-flex flex-column">
-                            <span>{{item.MemTitle}}</span>
-                        </span>
-                    </span>
-                </td>
-                <td>{{format(item.CreatedAt)}}</td>
-                <td>{{item.MemFoldName}}</td>
-                <td>
-                    <span class="badge badge-pill {{statusClasses[item?.IsPublished]}}">
-                        {{status[item?.IsPublished] ?? 'Pending'}}
-                    </span>
-                </td>
-                <td class="text-primary cursor-pointer">
-                    <button *ngIf="item.MemFullLink" title="Copy to clipboard" (click)="copyToClipboard(item.MemFullLink)" class="btn btn-icon">
-                        <i class="ti-clipboard"></i>
-                    </button>
-                </td>
-                <td>
-                    <img src="{{item.MemQuickResponse}}" alt="QR Code" style="width: 60px; height: 60px; object-fit: contain;">
-                </td>
-                <td class="text-right">
-                    <div class="dropdown" *ngIf="item?.IsPublished === 0 || item?.IsPublished === 1">
-                        <a href="#" class="btn btn-floating" data-toggle="dropdown">
-                            <i class="ti-more-alt"></i>
-                        </a>
-                        <!-- Admin Actions -->
-                        <ng-container *ngIf="isAdmin">
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <span
-                                    class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark"
-                                    (click)="approve(item.Id, 'approve')">Approve</span>
-                                <span
-                                    class="dropdown-item cursor-pointer bg-danger hover-bg-danger-light hover-text-dark mt-2"
-                                    (click)="approve(item.Id, 'reject')">Reject</span>
-                            </div>
-                        </ng-container>
+                                <!-- Table rows -->
+                                <tr *ngFor="let item of filteredFiles()">
+                                    <td></td>
+                                    <td>
+                                        <span class="d-flex align-items-center">
+                                            <figure class="avatar avatar-sm mr-3">
+                                                <span class="avatar-title rounded-pill">
+                                                    <i class="ti-file"></i>
+                                                </span>
+                                            </figure>
+                                            <span class="d-flex flex-column">
+                                                <span>{{item.MemTitle}}</span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td>{{format(item.CreatedAt)}}</td>
+                                    <td>{{item.MemFoldName}}</td>
+                                    <td>
+                                        <span class="badge badge-pill {{statusClasses[item?.IsPublished]}}">
+                                            {{status[item?.IsPublished] ?? 'Pending'}}
+                                        </span>
+                                    </td>
+                                    <td class="text-primary cursor-pointer">
+                                        <button *ngIf="item.MemFullLink" title="Copy to clipboard"
+                                            (click)="copyToClipboard(item.MemFullLink)" class="btn btn-icon">
+                                            <i class="ti-clipboard"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <img src="{{item.MemQuickResponse}}" alt="QR Code"
+                                            style="width: 60px; height: 60px; object-fit: contain;">
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="dropdown"
+                                            *ngIf="item?.IsPublished === 0 || item?.IsPublished === 1">
+                                            <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                                <i class="ti-more-alt"></i>
+                                            </a>
+                                            <!-- Admin Actions -->
+                                            <ng-container *ngIf="isAdmin">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark"
+                                                        (click)="approve(item.Id, 'approve')">Approve</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-danger hover-bg-danger-light hover-text-dark mt-2"
+                                                        (click)="approve(item.Id, 'reject')">Reject</span>
+                                                </div>
+                                            </ng-container>
 
-                        <!-- Non-Admin Actions -->
-                        <ng-container *ngIf="!isAdmin && item.IsPublished === 0">
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <span class="dropdown-item cursor-pointer"
-                                    (click)="editFiles(item?.MemUniqueId)"
-                                    data-sidebar-target="#view-file">
-                                    {{isEditLoader ? "Loading..." : "Edit"}}
-                                </span>
-                            </div>
-                        </ng-container>
+                                            <!-- Non-Admin Actions -->
+                                            <ng-container *ngIf="!isAdmin && item.IsPublished === 0">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span class="dropdown-item cursor-pointer"
+                                                        (click)="editFiles(item?.MemUniqueId)"
+                                                        data-sidebar-target="#view-file">
+                                                        {{isEditLoader ? "Loading..." : "Edit"}}
+                                                    </span>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 
                 </div>
             </div>

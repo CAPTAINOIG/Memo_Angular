@@ -8,6 +8,14 @@
     padding: 2rem;
 }
 
+.intro-text {
+    max-width: 600px;
+    margin-bottom: 3rem;
+    color: white;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
 .features-list {
     max-width: 600px;
     position: relative;
@@ -117,12 +125,4 @@
     to {
         transform: rotate(360deg);
     }
-}
-
-.intro-text {
-    max-width: 600px;
-    margin-bottom: 3rem;
-    color: #a0a0a0;
-    font-size: 1.1rem;
-    line-height: 1.6;
 }
