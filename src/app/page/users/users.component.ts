@@ -32,23 +32,14 @@ export class UsersComponent implements OnInit {
   
 
 
-constructor (private httpRequest: HttpRequestService, private authData:ServicesidebarService, router:Router, private local: LocalstorageService, public handleModal: ServicesidebarService) 
+constructor (private httpRequest: HttpRequestService, private authData:ServicesidebarService, router:Router, private local: LocalstorageService, public handleModal: ServicesidebarService, private userServive: ServicesidebarService) 
 { }
 
 
 ngOnInit(): void {
-  // FETCH USERS
-  this.httpRequest?.makeGetRequest("/users_management/users/all").subscribe((response:any)=>{
-    this.users=response.data
-    this.isLoading = false;
-  },(error:any) => {
-    console.log('Error fetching data', error);
-    this.isLoading = false;
-})
 // FETCH USER ROLES
 this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((response: any)=>{
   this.userRoles = response.data
-  // console.log(this.userRoles);
   this.local.write('userRoles', (this.userRoles))
   if (this.userRoles && this.userRoles.length > 0){
   const role_id = this.userRoles[0].Id
@@ -57,14 +48,29 @@ this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((
 
   this.httpRequest?.makeGetRequest(`/users_management/user_role/right?roleId=${role_id}`).subscribe((response:any)=>{
     this.userRoleRights = response.data
-    // console.log(this.userRoleRights);
   }, (error)=>{
     console.log(error);
   })
   }
 }, (error:any)=>{
-})
+});
 
+this.userServive.refreshUser$.subscribe((shouldRefresh:boolean)=>{
+  if(shouldRefresh){
+    this.fetchUsers();
+  }
+});
+
+};
+
+fetchUsers(){
+  this.httpRequest?.makeGetRequest("/users_management/users/all").subscribe((response:any)=>{
+    this.users=response.data
+    this.isLoading = false;
+  },(error:any) => {
+    console.log('Error fetching data', error);
+    this.isLoading = false;
+})
 }
 
 makeFilter=()=>{
@@ -81,23 +87,26 @@ filter=()=>{
 
 // SUSPEND USER
 suspendUserMethod(itemId: string, action: string): void {
-  // console.log(`${itemId}, ${action}`);
   this.httpRequest.makePatchRequest("/users_management/suspend_user_and_unsuspend_user", { identity: itemId }).subscribe(
     (response) => {
-      console.log(response.message);
-      // Toastify({
-      //   text: response.message,
-      //   duration: 3000,
-      //   gravity: "top", 
-      //   position: "right",
-      //   backgroundColor: "blue",
-      // }).showToast();
-      // Update the local suspendUser state based on the action
+      Toastify({
+        text: response.message,
+        duration: 3000,
+        gravity: "top", 
+        position: "right",
+        backgroundColor: "blue",
+      }).showToast();
       this.suspendUser = (action === 'suspend') ? true : false;
-      console.log(this.suspendUser);
+      this.userServive.triggerUserRefresh();
     },
     (error) => {
-      console.log(error);
+      Toastify({
+          text: `${error.message}`,
+          duration: 3000,
+          gravity: "top", 
+          position: "right",
+          backgroundColor: "blue",
+        }).showToast();
     }
   );
 }

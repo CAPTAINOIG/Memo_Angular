@@ -41,6 +41,20 @@ allFolder$ = this.folderSubject.asObservable();
   ngOnInit(): void {
     this.status = this.handleModal.status
 
+    this.folderService.refreshFolder$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.loadFolders();
+      }
+    });
+
+    this.fileService.refreshFile$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.loadFiles();
+      }
+    });
+  };
+
+  loadFiles(){
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response) => {
       this.allFile = response.data;
       this.isLoading = false
@@ -53,19 +67,7 @@ allFolder$ = this.folderSubject.asObservable();
         backgroundColor: "red",
       }).showToast();
     })
-
-    this.folderService.refreshFolder$.subscribe(shouldRefresh => {
-      if (shouldRefresh) {
-        this.loadFolders();
-      }
-    });
-
-    this.fileService.refreshFile$.subscribe(shouldRefresh => {
-      if (shouldRefresh) {
-        this.filteredFiles();
-      }
-    });
-  };
+  }
   
   loadFolders() {
   this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe((response) => {

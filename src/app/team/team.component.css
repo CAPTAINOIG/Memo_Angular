@@ -81,7 +81,7 @@
     margin: 0 auto 20px;
     display: block;
     object-fit: cover;
-    filter: grayscale(100%);
+    /* filter: grayscale(100%); */
 }
 
 .profile-name {

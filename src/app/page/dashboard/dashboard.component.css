@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full screen height */
+    height: 100vh;
   }
   
   .spinner {
@@ -16,10 +16,14 @@
 
 
   .badge {
-    font-size: 0.9rem; /* Adjust font size */
-    padding: 0.5em 0.8em; /* Add padding */
-    border-radius: 0.5rem; /* Make the badges more rounded */
-    margin-right: 0.5em; /* Add spacing between badges */
+    font-size: 0.9rem;
+    padding: 0.5em 0.8em;
+    border-radius: 0.5rem; 
+    margin-right: 0.5em; 
+  }
+
+  .view-all-link:hover{
+    color: blue;
   }
   
   @keyframes spin {

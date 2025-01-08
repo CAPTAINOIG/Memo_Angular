@@ -1,7 +1,13 @@
+.platform-container {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
 .platform {
     font-size: 2.5rem;
     font-weight: bold;
     color: #ffffff;
+    padding-left: 2rem;
 }
 .feature-container {
     position: relative;

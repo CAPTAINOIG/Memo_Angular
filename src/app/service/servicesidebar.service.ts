@@ -36,6 +36,13 @@ export class ServicesidebarService {
     this.refreshFileSubject.next(true);
   };
 
+  private refreshUserSubject = new BehaviorSubject<boolean>(true);
+  refreshUser$ = this.refreshUserSubject.asObservable();
+
+  triggerUserRefresh(){
+    this.refreshUserSubject.next(true);
+  }
+
   // we brought the data here because we want it to be cleared after every secs so we brought it to service
   setQrCodeData(data:any){
     this.qrCodeData=data

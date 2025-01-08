@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
         this.activities = response.data;
         this.isLoading = false;
       }, (error)=>{
-        console.log(error);
+        // console.log(error);
         this.isLoading = false;
         if(error.error.message){
           Toastify({
@@ -78,10 +78,9 @@ export class DashboardComponent implements OnInit {
 
     this.httpRequest?.makeGetRequest("/dashboard/folder/recent").subscribe((response: any) => {
       this.data = response.data;
-      console.log(this.data);
       this.isLoading = false;
     }, (error: any) => {
-      console.log(error);
+      // console.log(error);
       this.isLoading = false;
       Toastify({
         text: "Error fetching data",
@@ -108,7 +107,7 @@ export class DashboardComponent implements OnInit {
       // console.log(this.recentFiles);
       this.isLoading = false;
     }, (error: any) => {
-      console.log(error);
+      // console.log(error);
       this.isLoading = false;
     })
   }
@@ -127,12 +126,11 @@ export class DashboardComponent implements OnInit {
   editFiles(file: any) {
     this.isEditLoader = true;
     this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
-      console.log(response.data)
+      // console.log(response.data)
       this.handleModal.showMother("edit_files");
       this.handleModal.setEditMemo(response.data)
       this.isEditLoader = false;
     }, (error: any) => {
-      console.log('Error fetching data', error);
       Toastify({
         text: "Error fetching data",
         duration: 3000,

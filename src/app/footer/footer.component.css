@@ -124,3 +124,7 @@
     box-shadow: 0 4px 15px rgba(33, 147, 176, 0.3);
     background: linear-gradient(45deg, #3e21b0, #6dede0);
 }
+
+.social-links a:hover {
+    color: green;
+}

@@ -1,19 +1,33 @@
 .token-container {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+  padding: 2rem;
+  max-width: 1200px;
+  margin-top: -100px;
+}
+
+.token-icon {
+  margin-bottom: -150px;
+}
+
+#token-distribution {
+  background: #111111;
+  /* margin-bottom: 100px; */
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  /* border-radius: ; */
+  box-shadow: 0 0 20px rgba(240, 239, 239, 0.2);
 }
 
 .token-title {
-    font-size: 3.5rem;
-    font-weight: lighter;
-    margin-bottom: 1rem;
-    color: white;
-    margin-top: 100px;
+  font-size: 3.0rem;
+  font-weight: lighter;
+  /* margin-bottom: 1rem; */
+  color: white;
+  margin-top: 150px;
 }
 
 .token-description {
-    color: white;
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
+  color: white;
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
 }
