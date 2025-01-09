@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
@@ -19,12 +19,21 @@ export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
 
+  macAddress: string | null = null;
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.macAddress = params['mac'];
+    });
+  }
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private local:LocalstorageService,
    private HttpRequest:HttpRequestService,
    private userDetail: ServicesidebarService,
+   private route: ActivatedRoute,
   ) {
     this.loginForm = this.fb.group({
       identity: ['', Validators.required],

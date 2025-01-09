@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,5 +9,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  constructor (private router: Router) {}
 
+  navigateToLogin() {
+    const macAddress = 'XX:XX:XX:XX:XX:XX'; 
+    this.router.navigate(['/login'], { queryParams: { mac: macAddress } });
+  };
 }

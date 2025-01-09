@@ -11,11 +11,12 @@ import { TeamComponent } from "../team/team.component";
 import { DistributionComponent } from "../distribution/distribution.component";
 import { FooterComponent } from "../footer/footer.component";
 import { PartnerComponent } from "../partner/partner.component";
+import { QuestionComponent } from "../question/question.component";
 
 @Component({
   selector: 'app-folder',
   standalone: true,
-  imports: [NavbarComponent, NavigatingComponent, LandingpageusersComponent, AddressblockchainComponent, CompetitorComponent, PlatformComponent, TokenComponent, BonusComponent, TeamComponent, DistributionComponent, FooterComponent, PartnerComponent],
+  imports: [NavbarComponent, NavigatingComponent, LandingpageusersComponent, AddressblockchainComponent, CompetitorComponent, PlatformComponent, TokenComponent, BonusComponent, TeamComponent, DistributionComponent, FooterComponent, PartnerComponent, QuestionComponent],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.css'
 })
