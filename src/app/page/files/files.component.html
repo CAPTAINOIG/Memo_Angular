@@ -157,7 +157,7 @@
                                             </span>
                                         </span>
                                     </td>
-                                    <td>{{format(item.CreatedAt)}}</td>
+                                    <td>{{item.CreatedAt | date:'dd/MM/yyyy'}}</td>
                                     <td>{{item.MemFoldName}}</td>
                                     <td>
                                         <span class="badge badge-pill {{statusClasses[item?.IsPublished]}}">

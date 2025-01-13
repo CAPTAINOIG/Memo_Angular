@@ -12,8 +12,8 @@ export class NavigatingComponent {
 
   constructor(private router: Router) {}
 
-  navigateToLogin() {
-  const macAddress = 'XX:XX:XX:XX:XX:XX'; 
-  this.router.navigate(['/login'], { queryParams: { mac: macAddress } });
-}
+//   navigateToLogin() {
+//   const macAddress = 'XX:XX:XX:XX:XX:XX'; 
+//   this.router.navigate(['/login'], { queryParams: { mac: macAddress } });
+// }
 }
