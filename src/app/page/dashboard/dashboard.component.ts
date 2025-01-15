@@ -127,10 +127,11 @@ export class DashboardComponent implements OnInit {
     this.isEditLoader = true;
     this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
       // console.log(response.data)
-      this.handleModal.showMother("edit_files");
-      this.handleModal.setEditMemo(response.data)
       this.isEditLoader = false;
+      this.handleModal.setEditMemo(response.data)
+      this.handleModal.showMother("edit_files");
     }, (error: any) => {
+      this.isEditLoader = false;
       Toastify({
         text: "Error fetching data",
         duration: 3000,
@@ -138,25 +139,24 @@ export class DashboardComponent implements OnInit {
         position: "right",
         backgroundColor: "red",
       }).showToast();
-      this.isEditLoader = false;
     })
   }
 
-  format=(dateT:any)=> {
-    const date= (new Date(dateT))
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); 
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-   }
+  // format=(dateT:any)=> {
+  //   const date= (new Date(dateT))
+  //   const year = date.getFullYear();
+  //   const month = String(date.getMonth() + 1).padStart(2, '0'); 
+  //   const day = String(date.getDate()).padStart(2, '0');
+  //   return `${year}-${month}-${day}`;
+  //  }
    
-   formatTime(dateT: any): string {
-     const date = new Date(dateT);
-     const hours = String(date.getHours()).padStart(2, '0');
-     const minutes = String(date.getMinutes()).padStart(2, '0');
-     const seconds = String(date.getSeconds()).padStart(2, '0');
-     return `${hours}:${minutes}:${seconds}`;
-   }
+  //  formatTime(dateT: any): string {
+  //    const date = new Date(dateT);
+  //    const hours = String(date.getHours()).padStart(2, '0');
+  //    const minutes = String(date.getMinutes()).padStart(2, '0');
+  //    const seconds = String(date.getSeconds()).padStart(2, '0');
+  //    return `${hours}:${minutes}:${seconds}`;
+  //  }
    
    approve(memId: any,status:any){
     this.handleModal.showMother("otp");

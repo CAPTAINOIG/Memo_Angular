@@ -90,6 +90,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         Validators.required),
       memo: new FormControl('',
         Validators.required),
+        memFoldId: new FormControl('',
+        Validators.required),
       include_signature: new FormControl(false),
       security_type: new FormControl(''),
       secureByEmailOtp: new FormControl(false),
@@ -146,6 +148,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.memoForm.setValue({
         title: check ? this.handleModals?.editMemo?.MemTitle : '',
         memo: check ? this.handleModals?.editMemo?.MemContents : '',
+        memFoldId: check ? this.handleModals?.editMemo?.MemFoldId : '',
         metaData: '',
         include_signature: false,
         security_type: false,
@@ -270,22 +273,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       memo: this.memoForm.value.memo,
       MemUniqueId: this.memId,
       include_signature: !!this.memoForm.value.include_signature,
-      memFold: Number(this.memFoldId),
+      memFold: Number(this.memoForm.value.memFoldId),
+      // memFold: Number(this.memFoldId),
       isPublished: event.submitter.value==='save' ? 0 : 1
     }
-    // console.log(memoData)
 
-    // if (this.memFoldId || memoData.memFold) {
-    //   Toastify({
-    //     text: 'Please select a folder',
-    //     duration: 3000,
-    //     gravity: 'top',
-    //     position: 'right',
-    //     backgroundColor: '#FF0000',
-    //   }).showToast();
-    //   return;
-    // }
-    
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);
     }
@@ -298,11 +290,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           memFold: this.handleModals?.editMemo?.MemFoldId,
           
         };
-        // console.log(memo);
+        console.log(memo);
         this.isLoading = true;
         this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
           (response) => {
-            // console.log(response);
+            console.log(response);
             this.isLoading = false;
             this.memoForm.reset();
             Toastify({
@@ -707,10 +699,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       (response) => {
         // console.log(response.data[0].Id);
         this.selectedAllFolder = response.data;
-        this.memFoldId = response.data[0].Id;
+        // console.log(this.selectedAllFolder)
+        // this.memFoldId = response.data[0].Id;
+        // console.log(this.memFoldId)
       },
       (error) => {
-        console.error('Error fetching folders:', error);
+        // console.error('Error fetching folders:', error);
       }
     );
   }

@@ -43,6 +43,13 @@ export class ServicesidebarService {
     this.refreshUserSubject.next(true);
   }
 
+  private suspendUserSubject = new BehaviorSubject<boolean>(true);
+  suspendUser$ = this.suspendUserSubject.asObservable();
+
+  triggerSuspendUserRefresh(){
+    this.suspendUserSubject.next(true);
+  }
+  
   // we brought the data here because we want it to be cleared after every secs so we brought it to service
   setQrCodeData(data:any){
     this.qrCodeData=data
@@ -94,7 +101,6 @@ export class ServicesidebarService {
 
   setPublishMemId=(data:any)=>this.publishMemId=data
   setEditMemo(data:any){
-    console.log(data)
     this.editMemo = data
   }
 

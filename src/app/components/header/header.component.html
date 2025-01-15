@@ -51,114 +51,18 @@
                                   Welcome, {{user?.email}}
                                 </h6>
                             </div>
-                            <!-- <div class="dropdown-scroll">
-                                <ul class="list-group list-group-flush">
-                                    <li>
-                                        <a href="#" class="list-group-item d-flex hide-show-toggler">
-                                            <div>
-                                                <figure class="avatar mr-3">
-                                                    <span class="avatar-title bg-secondary-bright text-secondary rounded-circle">
-                                                        <i class="ti-server"></i>
-                                                    </span>
-                                                </figure>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <p class="mb-0">
-                                                    Your storage space is running low!
-                                                    <i title="Mark as unread" data-toggle="tooltip" class="hide-show-toggler-item fa fa-check font-size-11 position-absolute right-0 top-0 mr-3 mt-3"></i>
-                                                </p>
-                                                <span class="text-muted small">4 sec ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="list-group-item d-flex hide-show-toggler">
-                                            <div>
-                                                <figure class="avatar mr-3">
-                                                    <img src="../../assets/media/image/user/man_avatar4.jpg" class="rounded-circle" alt="avatar">
-                                                </figure>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0">
-                                                    <span class="text-primary">Jonny Richie</span> uploaded new
-                                                    files
-                                                    <i title="Mark as read" data-toggle="tooltip" class="hide-show-toggler-item fa fa-circle-o font-size-11 position-absolute right-0 top-0 mr-3 mt-3"></i>
-                                                </p>
-                                                <span class="text-muted small">20 min ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="text-divider text-center small pb-2 px-3">
-                                        <span>Old notifications</span>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="list-group-item d-flex hide-show-toggler">
-                                            <div>
-                                                <figure class="avatar mr-3">
-                                                    <span class="avatar-title bg-info-bright text-info rounded-circle">
-                                                        <i class="fa fa-cloud-upload"></i>
-                                                    </span>
-                                                </figure>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <p class="mb-0">
-                                                    Upgrade plan
-                                                    <i title="Mark as unread" data-toggle="tooltip" class="hide-show-toggler-item fa fa-check font-size-11 position-absolute right-0 top-0 mr-3 mt-3"></i>
-                                                </p>
-                                                <span class="text-muted small">45 sec ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="list-group-item d-flex hide-show-toggler">
-                                            <div>
-                                                <figure class="avatar mr-3">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">
-                                                        <i class="ti-share"></i>
-                                                    </span>
-                                                </figure>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <p class="mb-0">
-                                                    A file has been shared
-                                                    <i title="Mark as unread" data-toggle="tooltip" class="hide-show-toggler-item fa fa-check font-size-11 position-absolute right-0 top-0 mr-3 mt-3"></i>
-                                                </p>
-                                                <span class="text-muted small">58 sec ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> -->
-                            <!-- <div class="px-3 py-2 text-right border-top">
-                                <ul class="list-inline small">
-                                    <li class="list-inline-item mb-0">
-                                        <a href="#">Mark All Read</a>
-                                    </li>
-                                </ul>
-                            </div> -->
                         </div>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <!-- <button class="nav-link"  title="Settings" data-sidebar-target="#settings"> -->
-                            <!-- <i class="ti-settings cursor-pointer" (click)="handleClick()"></i> -->
-                        <!-- </button> -->
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <!-- <a href="#" class="nav-link profile-nav-link dropdown-toggle" title="User menu" data-toggle="dropdown">
-                            <span class="mr-2 d-sm-inline d-none">{{user?.last_name}}</span>
-                        
-                        </a> -->
-
-                        <span class="mr-2 d-sm-inline d-none">{{user?.last_name}}</span>
+                        <span class="mr-2 d-sm-inline d-none font-weight-bold">{{user?.last_name || user?.full_name}}</span>
                         
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
                             <div class="text-center py-4" data-background-image="../../assets/media/image/image1.jpg">
                                 <figure class="avatar avatar-lg mb-3 border-0">
                                     <img src="../../assets/media/image/user/man_avatar3.jpg" class="rounded-circle" alt="image">
                                 </figure>
-                                <h5 class="mb-0">{{user?.last_name}}</h5>
+                                <h5 class="mb-0 font-weight-bold">{{user?.last_name || user?.full_name}}</h5>
                             </div>
                             <div class="list-group list-group-flush">
                                 <a href="#" class="list-group-item" data-sidebar-target="#settings">Settings</a>

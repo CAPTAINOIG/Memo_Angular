@@ -135,7 +135,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Folder</label>
-                <select formControlName="security_type" class="form-control" id="exampleFormControlSelect1">
+                <select formControlName="memFoldId" class="form-control" id="memFoldId">
                   <option value="">Select a folder</option>
                   <ng-container *ngIf="selectedAllFolder && selectedAllFolder.length > 0">
                     <option *ngFor="let item of selectedAllFolder" [value]="item.Id">

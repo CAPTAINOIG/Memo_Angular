@@ -122,11 +122,11 @@
                                                     <i class="ti-folder"></i>
                                                 </span>
                                             </figure>
-                                            {{recent.MemTitle}}
+                                            {{recent?.MemTitle}}
                                         </a>
                                     </td>
 
-                                    <td>{{format(recent?.CreatedAt)}}</td>
+                                    <td>{{recent?.CreatedAt | date:'dd/MM/YYYY'}}</td>
 
                                     <td>
                                         {{recent?.MemFoldName}}
@@ -193,8 +193,8 @@
                                             <span class="d-block">
                                                 <a class="link-1">
                                                     <p>{{item?.ViewEmail}} from {{item?.ViewLoc}} viewed this memo on
-                                                        {{format(item?.CreatedAt)}} at approximately
-                                                        {{formatTime(item?.CreatedAt)}}.</p>
+                                                        {{item?.CreatedAt | date:'YYYY/MM/dd'}} at approximately
+                                                        {{item?.CreatedAt | date:'hh:mm a'}}.</p>
                                                 </a>
                                             </span>
 

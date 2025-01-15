@@ -17,10 +17,9 @@ export class HeaderComponent {
   constructor(private sidebarService: ServicesidebarService, private httpRequet: HttpRequestService){ }
  
   ngOnInit(): void{ 
-    const userName = this.httpRequet.makeGetRequest('/auth/user').subscribe((response)=>{
+     this.httpRequet.makeGetRequest('/auth/user').subscribe((response)=>{
       this.user = response.data;
     }, (error)=>{
-      console.log(error);
     })
 }
 

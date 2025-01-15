@@ -10,6 +10,7 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { NewuserComponent } from '../newuser/newuser.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import Toastify from 'toastify-js'; 
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -20,6 +21,8 @@ import Toastify from 'toastify-js';
   styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit {
+  // private folderSubject = new BehaviorSubject<any[]>([]);
+  // allFolder$ = this.folderSubject.asObservable();
   
   suspendUser: boolean; 
   user: any []= []
@@ -32,11 +35,23 @@ export class UsersComponent implements OnInit {
   
 
 
-constructor (private httpRequest: HttpRequestService, private authData:ServicesidebarService, router:Router, private local: LocalstorageService, public handleModal: ServicesidebarService, private userServive: ServicesidebarService) 
+constructor (private httpRequest: HttpRequestService, private authData:ServicesidebarService, router:Router, private local: LocalstorageService, public handleModal: ServicesidebarService, private userServive: ServicesidebarService, private suspendUnsuspendUser: ServicesidebarService) 
 { }
 
 
 ngOnInit(): void {
+  
+this.userServive.refreshUser$.subscribe(shouldRefresh => {
+  if(shouldRefresh){
+    this.fetchUsers();
+  }
+});
+
+this.suspendUnsuspendUser.suspendUser$.subscribe(shouldRefresh => {
+  if(shouldRefresh){
+    this.selectedValue();
+  }
+});
 // FETCH USER ROLES
 this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((response: any)=>{
   this.userRoles = response.data
@@ -49,26 +64,20 @@ this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((
   this.httpRequest?.makeGetRequest(`/users_management/user_role/right?roleId=${role_id}`).subscribe((response:any)=>{
     this.userRoleRights = response.data
   }, (error)=>{
-    console.log(error);
+    // console.log(error);
   })
   }
 }, (error:any)=>{
 });
 
-this.userServive.refreshUser$.subscribe((shouldRefresh:boolean)=>{
-  if(shouldRefresh){
-    this.fetchUsers();
-  }
-});
-
 };
+
 
 fetchUsers(){
   this.httpRequest?.makeGetRequest("/users_management/users/all").subscribe((response:any)=>{
     this.users=response.data
     this.isLoading = false;
   },(error:any) => {
-    console.log('Error fetching data', error);
     this.isLoading = false;
 })
 }
@@ -82,13 +91,14 @@ makeFilter=()=>{
 
 
 filter=()=>{
-  console.log(this.selectedValue)
+  // console.log(this.selectedValue)
 }
 
 // SUSPEND USER
 suspendUserMethod(itemId: string, action: string): void {
   this.httpRequest.makePatchRequest("/users_management/suspend_user_and_unsuspend_user", { identity: itemId }).subscribe(
     (response) => {
+      this.suspendUnsuspendUser.triggerSuspendUserRefresh();
       Toastify({
         text: response.message,
         duration: 3000,
@@ -97,7 +107,6 @@ suspendUserMethod(itemId: string, action: string): void {
         backgroundColor: "blue",
       }).showToast();
       this.suspendUser = (action === 'suspend') ? true : false;
-      this.userServive.triggerUserRefresh();
     },
     (error) => {
       Toastify({

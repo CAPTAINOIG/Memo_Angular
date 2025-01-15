@@ -27,6 +27,7 @@ export class NewuserComponent {
     private local: LocalstorageService,
     private httpRequest: HttpRequestService,
     private handleModal: ServicesidebarService,
+    private userService: ServicesidebarService,
   ) { }
 
   ngOnInit(): void {
@@ -42,16 +43,14 @@ export class NewuserComponent {
       // console.log(this.userRoles);
     });
   }
-
+  
   onSubmit(): void {
     if (this.createUserForm.valid) {  
-      console.log(this.createUserForm.value);
       this.isLoading = true;
       const data = this.createUserForm.value;
-      // console.log(data)
       this.httpRequest.makePostRequest('/users_management/create_new_user', data).subscribe(
         (response) => {
-          console.log(response)
+          this.userService.triggerUserRefresh();
           this.isLoading = false;
           if (response.status) {
             Toastify({
