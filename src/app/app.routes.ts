@@ -39,7 +39,7 @@ export const routes: Routes = [
     ]},
     {'path': 'securitycheck', component: SecurityCheckComponent},
     {'path': 'viewer/:id', component: ExternalViewerComponent},
-    {'path': '**', component: PagenotfoundComponent},
-
+    { path: 'errorpage', component: PagenotfoundComponent },
+    { path: '**', redirectTo: '/errorpage' } 
 ];
 

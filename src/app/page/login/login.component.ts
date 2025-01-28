@@ -27,13 +27,13 @@ export class LoginComponent {
       // console.log(this.macAddress)
       if (!this.mac_address) {
         Toastify({
-          text: 'MAC address is missing. Redirecting...',
+          text: 'You are not allowed to view this page',
           duration: 3000,
           gravity: "top",
           position: "right",
           backgroundColor: "red",
         }).showToast();
-        this.router.navigate(['/']);
+        this.router.navigate(['/errorpage']);
       }
     });
   }
