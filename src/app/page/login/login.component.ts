@@ -33,7 +33,10 @@ export class LoginComponent {
           position: "right",
           backgroundColor: "red",
         }).showToast();
-        this.router.navigate(['/errorpage']);
+        // this.router.navigate(['/errorpage']);
+        setTimeout(() => {
+          this.router.navigate(['/errorpage']);
+        }, 2000);
       }
     });
   }
