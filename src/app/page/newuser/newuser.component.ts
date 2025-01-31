@@ -20,6 +20,7 @@ export class NewuserComponent {
   isLoading = false;
   userRoles: any = [];
   selectedValue: number | undefined; 
+  // userId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +29,8 @@ export class NewuserComponent {
     private httpRequest: HttpRequestService,
     private handleModal: ServicesidebarService,
     private userService: ServicesidebarService,
+    public handleAuthentication: ServicesidebarService,
+    private authData: ServicesidebarService,
   ) { }
 
   ngOnInit(): void {
@@ -40,19 +43,32 @@ export class NewuserComponent {
 
     this.httpRequest.makeGetRequest("/users_management/user_roles/all").subscribe((response: any) => {
       this.userRoles = response.data;
-      // console.log(this.userRoles);
     });
+    (error:any) => {
+      this.isLoading = false;
+      const errMsg = error?.error?.message ?? error.message;
+      Toastify({
+        text: `Error: ${errMsg}`,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
+    }
   }
-  
+
+
   onSubmit(): void {
     if (this.createUserForm.valid) {  
       this.isLoading = true;
       const data = this.createUserForm.value;
       this.httpRequest.makePostRequest('/users_management/create_new_user', data).subscribe(
         (response) => {
+          const userId = response?.user?.id
           this.userService.triggerUserRefresh();
           this.isLoading = false;
-          if (response.status) {
+          if (response.status && userId) {
+            this.authentication(userId)
             Toastify({
               text: "User created successfully!",
               duration: 3000,
@@ -67,8 +83,6 @@ export class NewuserComponent {
         (error: any) => {
           this.isLoading = false;
           const errMsg = error?.error?.message ?? error.message;
-          console.log(error);
-
           Toastify({
             text: `Error: ${errMsg}`,
             duration: 3000,
@@ -88,6 +102,15 @@ export class NewuserComponent {
       }).showToast();
     }
   }
+
+  authentication(user:string){
+    this.httpRequest.makePostRequest('/users_management/create_authenticator_secret', {identity:user}).subscribe((response)=>{
+      this.handleModal.showMother("authentication")
+      this.authData.setAuthData(response)
+    }, (error)=>{
+      console.log(error);
+    })
   
+  }
 
 }

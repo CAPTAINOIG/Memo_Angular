@@ -89,11 +89,6 @@ makeFilter=()=>{
     return this.users
 }
 
-
-filter=()=>{
-  // console.log(this.selectedValue)
-}
-
 // SUSPEND USER
 suspendUserMethod(itemId: string, action: string): void {
   this.httpRequest.makePatchRequest("/users_management/suspend_user_and_unsuspend_user", { identity: itemId }).subscribe(
@@ -128,7 +123,6 @@ createUser() {
 authentication(user:string){
   this.httpRequest.makePostRequest('/users_management/create_authenticator_secret', {identity:user}).subscribe((response)=>{
     this.handleModal.showMother("authentication")
-    console.log(response);
     this.authData.setAuthData(response)
   }, (error)=>{
     console.log(error);

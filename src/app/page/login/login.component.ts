@@ -95,7 +95,6 @@ export class LoginComponent {
           // }
         },
         error: (err: any) => {
-          console.log(err);
           this.isLoading = false;
           if (err?.status === 0) {
             Toastify({

@@ -1,5 +1,5 @@
-<div class="form-membership" style="background: url(../../assets/media/image/image1.jpg)">
-    <div class="form-wrapper">
+<div class="form-membership" style="background: url(../../assets/media/image/pexels-pixabay-164425.jpg)">
+    <div class="form-wrapper animate__animated animate__fadeIn">
 
         <!-- logo -->
         <div id="logo">
@@ -20,8 +20,8 @@
                     [ngClass]="{'is-invalid': authForm.get('otp').invalid && authForm.get('otp').touched}" 
                     required>
                 <div *ngIf="authForm.get('otp').invalid && authForm.get('otp').touched" class="invalid-feedback">
-                    <small *ngIf="authForm.get('otp').errors.required">Password is required.</small>
-                    <small *ngIf="authForm.get('otp').errors.minlength">Password must be at least 6 characters long.</small>
+                    <small *ngIf="authForm.get('otp').errors.required">OTP is required.</small>
+                    <small *ngIf="authForm.get('otp').errors.minlength">OTP must be at least 6 characters long.</small>
                 </div>
             </div>
             <button type="submit" [disabled]="isLoading" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700">

@@ -1,10 +1,13 @@
 <div class="navigation">
   <div class="logo">
     <a href="index.html">
-      <img src="../../assets/media/image/logo.png" alt="logo" />
+      <img src="../../assets/media/image/logo.png" alt="logo" style="
+      width: 100%;
+      margin: 16px 0px;" />
     </a>
   </div>
-  <ul>
+  <ul style="
+    margin-top: 40px;">
     <li>
       <a [routerLink]="['/portal/dashboard']">
         <i class="nav-link-icon ti-pie-chart"></i>
@@ -41,11 +44,11 @@
       </li>
     </ng-container>
 
-      <li>
-        <a (click)="signOut()" [routerLink]="['/login']">
-          <i class="nav-link-icon ti-power-off"></i>
-          <span class="nav-link-label">Log out</span>
-        </a>
-      </li>
+    <li>
+      <a (click)="signOut()" [routerLink]="['/login']">
+        <i class="nav-link-icon ti-power-off"></i>
+        <span class="nav-link-label">Log out</span>
+      </a>
+    </li>
   </ul>
 </div>

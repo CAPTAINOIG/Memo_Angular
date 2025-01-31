@@ -1,20 +1,64 @@
-<div>
+<!-- <div>
     <ng-container *ngIf="handleModals?.qrCodeData">
         <h3>Scan your physical QR Code</h3>
-        <div>
-            <div class="form-group">
-                <label for="qrInput">Enter URL or Text:</label>
-                <input type="text" [(ngModel)]="handleModals.qrCodeData.MemUniqueId" class="form-control" id="qrInput" disabled>
-                <img src="{{handleModals.qrCodeData.MemQRCode}}" alt="Generated QR Code">
-            </div>
-            <button (click)="createQrCode()" type="submit"
-                class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
-                {{ isLoading ? 'Submitting...' : 'Submit' }}
-            </button>
-        </div>
+        <img src="{{handleModals.qrCodeData.MemQRCode}}" alt="Generated QR Code">
     </ng-container>
 
-    <ng-container *ngIf="!handleModals?.qrCodeData">
+    <div>
+        <div *ngIf="!handleModals?.qrCodeData">
+            <div class="form-group" [formGroup]="form">
+                <div class="relative w-full">
+                    <input type="text" class="form-control flex-grow pr-16" name="qrcode" formControlName="qrcode">
+                    <button (click)="handleQrCodeLink()"
+                        class="px-4 btn btn-primary text-white mt-3 rounded-r-md hover:bg-blue-700">
+                        {{ isQrCodeLoader ? 'Submitting...' : 'Get QR Code' }}
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <button *ngIf="isQrCodeFetched" (click)="createQrCode()" type="submit"
+            class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
+            {{ isLoading ? 'Submitting...' : 'Submit' }}
+        </button>
+    </div>
+
+    <!<ng-container *ngIf="!handleModals?.qrCodeData">
         <div class="text-center">No Qrcode available </div>
+    </ng-container> -->
+<!-- </div>  -->
+
+
+
+<div>
+    <!-- Show QR Code if available -->
+    <ng-container *ngIf="handleModals?.qrCodeData">
+        <h3>Scan your physical QR Code</h3>
+        <img src="{{handleModals.qrCodeData.MemQRCode}}" alt="Generated QR Code">
     </ng-container>
+
+    <!-- Hide input section if QR Code is available -->
+    <div *ngIf="!handleModals?.qrCodeData">
+        <div class="form-group" [formGroup]="form">
+            <div class="relative w-full">
+                <input type="text" class="form-control flex-grow pr-16" name="qrcode" formControlName="qrcode">
+                <button (click)="handleQrCodeLink()"
+                    class="px-4 btn btn-primary text-white mt-3 rounded-r-md hover:bg-blue-700">
+                    {{ isQrCodeLoader ? 'Submitting...' : 'Get QR Code' }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button *ngIf="handleModals?.qrCodeData" (click)="createQrCode()" type="submit"
+        class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
+        {{ isLoading ? 'Submitting...' : 'Submit' }}
+    </button>
+
+    <!-- Show message if no QR code is available -->
+    <!-- <ng-container *ngIf="!handleModals?.qrCodeData">
+        <div class="text-center text-gray-500">No QR code available</div>
+    </ng-container> -->
 </div>
