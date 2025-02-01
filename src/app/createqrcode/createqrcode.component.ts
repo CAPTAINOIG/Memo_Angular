@@ -54,6 +54,7 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
 
   //   }
   // }
+  
   handleQrCodeLink() {
     const qrCodeValue = this.form.controls['qrcode'].value;
     if (!qrCodeValue) {
