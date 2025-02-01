@@ -37,9 +37,6 @@ $(function () {
             series: [{
                 name: 'Uploads',
                 data: [90, 70, 57, 56, 61, 100, 63, 60, 66]
-            }, {
-                name: 'Downloads',
-                data: [49, 60, 101, 98, 87, 58, 91, 114, 94]
             }],
             chart: {
                 type: 'bar',

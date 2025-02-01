@@ -8,13 +8,13 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { Router, RouterLink } from '@angular/router';
 import Toastify from 'toastify-js';
 import { LocalstorageService } from '../../service/LocalstorageService/localstorage.service';
-
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, NavigationComponent, SidebarComponent, RouterLink],
+  imports: [CommonModule, NavigationComponent, SidebarComponent, RouterLink,NgxChartsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -32,6 +32,8 @@ export class DashboardComponent implements OnInit {
   isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
   status = []
   statusClasses = ['bg-secondary', 'bg-warning text-dark', 'bg-success', 'bg-danger'];
+  barChartData=[
+  ]
 
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible; 
@@ -91,8 +93,8 @@ export class DashboardComponent implements OnInit {
       }).showToast();
     })
     // Graph
-    this.httpRequest?.makeGetRequest("/dashboard/month_on_month_graph?year=2024").subscribe((response: any) => {
-      this.monthOnMonthGraph = response.data
+    this.httpRequest?.makeGetRequest("/dashboard/month_on_month_graph?year=2025").subscribe((response: any) => {
+      this.barChartData = response.data.map((item: any) => ({name: item.month, value: item.count}))
       this.isLoading = false;
     }, (error: any) => {
       // console.log('Error fetching data', error);

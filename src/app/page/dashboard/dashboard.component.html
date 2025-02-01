@@ -15,7 +15,9 @@
                 <div class="row">
                     <div class="col-md-8">
                         <h4>Daily Usage</h4>
-                        <div id="daily-usage"></div>
+                        <ngx-charts-bar-vertical [view]="[700, 400]" [results]="barChartData" [yAxis]="true"
+                            [legend]="true" [showYAxisLabel]="true" yAxisLabel="Memo Created Count">
+                        </ngx-charts-bar-vertical>
                     </div>
                     <div class="col-md-4">
                         <div class="card">
@@ -145,15 +147,18 @@
                                             </a>
                                             <ng-container *ngIf="isAdmin">
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <span class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark"
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark"
                                                         (click)="approve(recent.Id,'approve')">Approve</span>
-                                                    <span class="dropdown-item cursor-pointer bg-danger  hover-bg-danger-light hover-text-dark mt-2" 
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-danger  hover-bg-danger-light hover-text-dark mt-2"
                                                         (click)="approve(recent.Id,'reject')">Reject</span>
                                                 </div>
                                             </ng-container>
 
-                                            <ng-container >
-                                                <div class="dropdown-menu dropdown-menu-right" *ngIf="!isAdmin && recent.IsPublished==0">
+                                            <ng-container>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    *ngIf="!isAdmin && recent.IsPublished==0">
                                                     <span class="dropdown-item cursor-pointer"
                                                         (click)="editFiles(recent?.MemUniqueId)"
                                                         data-sidebar-target="#view-file">{{isEditLoader ? "Loading..." :
