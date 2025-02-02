@@ -56,10 +56,9 @@ export class ServicesidebarService {
   }
   
   public showMother(data: string): void {
-
-    
     this.show = data;
   }
+  
   public toggleCheck(data:any): void {
     this.check = data;
   }

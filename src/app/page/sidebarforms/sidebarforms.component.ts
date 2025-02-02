@@ -290,11 +290,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           memFold: this.handleModals?.editMemo?.MemFoldId,
           
         };
-        console.log(memo);
         this.isLoading = true;
         this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
           (response) => {
-            console.log(response);
             this.isLoading = false;
             this.memoForm.reset();
             Toastify({
@@ -322,7 +320,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         this.isLoadingApprove = true;
         this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModals?.editMemo?.Id, 'publish' : 'pending' }).subscribe((response) => {
         this.isLoadingApprove = false;
-        console.log(response);
         Toastify({
           text: 'Memo submitted successfully',
           duration: 3000,
@@ -349,7 +346,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         this.isLoading = true;
         this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
           (response: any) => {
-            // console.log(response);
             this.isLoading = false;
             this.memId = response.id;
             this.handleModals.setMemId(response.id);
@@ -361,10 +357,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
               backgroundColor: '#0000FF',
             }).showToast();
             this.fileService.triggerFileRefresh();
+            // this.handleModals.showMother("undefined");
             this.memoForm.reset();
           },
           (error) => {
-            console.error('Error saving draft:', error);
             this.isLoading = false;
             Toastify({
               text: `${error.error.message || 'An error occurred'}`,

@@ -54,6 +54,7 @@ export class DashboardComponent implements OnInit {
     this.fileService.refreshFile$.subscribe(shouldRefresh => {
       if (shouldRefresh) {
         this.fetchRecentFiles();
+        this.fetchChartData();
       }
     });
    
@@ -92,12 +93,13 @@ export class DashboardComponent implements OnInit {
         backgroundColor: "red",
       }).showToast();
     })
-    // Graph
+  };
+
+  fetchChartData() {
     this.httpRequest?.makeGetRequest("/dashboard/month_on_month_graph?year=2025").subscribe((response: any) => {
       this.barChartData = response.data.map((item: any) => ({name: item.month, value: item.count}))
       this.isLoading = false;
     }, (error: any) => {
-      // console.log('Error fetching data', error);
       this.isLoading = false;
     })
   };
@@ -144,22 +146,6 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  // format=(dateT:any)=> {
-  //   const date= (new Date(dateT))
-  //   const year = date.getFullYear();
-  //   const month = String(date.getMonth() + 1).padStart(2, '0'); 
-  //   const day = String(date.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  //  }
-   
-  //  formatTime(dateT: any): string {
-  //    const date = new Date(dateT);
-  //    const hours = String(date.getHours()).padStart(2, '0');
-  //    const minutes = String(date.getMinutes()).padStart(2, '0');
-  //    const seconds = String(date.getSeconds()).padStart(2, '0');
-  //    return `${hours}:${minutes}:${seconds}`;
-  //  }
-   
    approve(memId: any,status:any){
     this.handleModal.showMother("otp");
     this.handleModal.setPublishMemId({memId,status})
