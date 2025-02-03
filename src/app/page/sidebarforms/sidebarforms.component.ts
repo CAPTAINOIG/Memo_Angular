@@ -36,6 +36,8 @@ import { CreateqrcodeComponent } from '../../createqrcode/createqrcode.component
   styleUrls: ['./sidebarforms.component.css']
 })
 export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
+  isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
+  
   @ViewChild('fileInput') fileInput!: ElementRef;
   step: any;
   memoForm: FormGroup;
