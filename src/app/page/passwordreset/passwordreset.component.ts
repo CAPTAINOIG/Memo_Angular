@@ -54,7 +54,7 @@ if (this.resetPassword.valid) {
     });
 
    
-    this.http.patch('https://blockchain.creditclan.com/memo/auth/reset_password', {password:data.password}, {headers}).subscribe(
+    this.http.patch('https://lendnode.creditclan.com/memo/api/auth/reset_password', {password:data.password}, {headers}).subscribe(
       (response) => {
         console.log(response);
         this.isLoading = false;
@@ -65,7 +65,7 @@ if (this.resetPassword.valid) {
           position: 'right',
           duration: 3000,
         }).showToast();
-        this.router.navigate(['/portal/dashboard']);
+        this.router.navigate(['/login']);
       },
       (error) => {
         console.error(error);

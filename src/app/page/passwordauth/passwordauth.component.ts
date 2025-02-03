@@ -50,9 +50,8 @@ export class PasswordauthComponent {
       'Content-Type': 'application/json',
       "ngrok-skip-browser-warning": '69420',
     });
-    this.http.post('https://blockchain.creditclan.com/memo/auth/verify_two_fact_auth', otpData, { headers })
+    this.http.post('https://lendnode.creditclan.com/memo/api/auth/verify_two_fact_auth', otpData, { headers })
       .subscribe((response: any) => {
-        console.log(response);
           this.isLoading = false;
           Toastify({
             text: 'OTP verified successfully!',
@@ -61,7 +60,7 @@ export class PasswordauthComponent {
             position: 'right',
             duration: 3000,
           }).showToast();
-          this.router.navigate(['/resetpassword']); 
+          this.router.navigate(['/resetPassword']); 
         },
         (error) => {
           this.isLoading = false;
