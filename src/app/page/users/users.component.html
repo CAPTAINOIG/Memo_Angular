@@ -89,7 +89,7 @@
                         <td>
                           <a href="mailto:{{user?.email}}">{{user?.email}}</a>
                         </td>
-                        <td>{{user?.UserRole?.RoleName}}</td>
+                        <td>{{user?.['UserRole.RoleName']}}</td>
                         <td>
                           <span [class]="!user.is_locked_out?'badge bg-success-bright text-success':'bg-danger-bright text-danger badge'">{{user.is_locked_out?"Block":"Active"}}</span>
                         </td>

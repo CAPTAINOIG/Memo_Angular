@@ -121,11 +121,10 @@ createUser() {
 
 authentication(user:string){
   this.httpRequest.makePostRequest('/users_management/create_authenticator_secret', {identity:user}).subscribe((response)=>{
-    console.log(response)
     this.handleModal.showMother("authentication")
     this.authData.setAuthData(response)
   }, (error)=>{
-    console.log(error);
+    // console.log(error);
   })
 
 }
