@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: 'app-passwordauth',
-    imports: [CommonModule, ReactiveFormsModule, RouterLink],
+    imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './passwordauth.component.html',
     styleUrls: ['./passwordauth.component.css']
 })

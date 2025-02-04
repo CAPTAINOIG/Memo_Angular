@@ -15,9 +15,10 @@ import { QuestionComponent } from "../question/question.component";
 
 @Component({
     selector: 'app-folder',
-    imports: [NavbarComponent, NavigatingComponent, LandingpageusersComponent, AddressblockchainComponent, CompetitorComponent, PlatformComponent, TokenComponent, BonusComponent, TeamComponent, DistributionComponent, FooterComponent, PartnerComponent, QuestionComponent],
+    imports: [NavbarComponent, NavigatingComponent, LandingpageusersComponent, AddressblockchainComponent],
     templateUrl: './folder.component.html',
-    styleUrl: './folder.component.css'
+    styleUrl: './folder.component.css',
+    standalone: true,
 })
 export class FolderComponent {
 

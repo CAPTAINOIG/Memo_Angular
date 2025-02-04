@@ -8,7 +8,7 @@ import Toastify from 'toastify-js';
 
 @Component({
     selector: 'app-twofactorauth',
-    imports: [CommonModule, ReactiveFormsModule, RouterLink],
+    imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './twofactorauth.component.html',
     styleUrls: ['./twofactorauth.component.css']
 })
