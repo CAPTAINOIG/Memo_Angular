@@ -1,4 +1,4 @@
-<div >
+<div>
   <!-- <div *ngIf="handleModals.handleValue" class="sidebar-group-forms d-print-none"  > -->
   <div *ngIf="handleModals.show == 'new_user'" class="sidebar-group-forms d-print-none">
     <div class="sidebar primary-sidebar show" id="storage">
@@ -155,8 +155,12 @@
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Memo</label>
                 <div class="NgxEditor__Wrapper" style="height: 450px; max-height: 500px; overflow-y: auto;">
-                  <ngx-editor-menu [editor]="editor" > </ngx-editor-menu>
-                  <ngx-editor [editor]="editor" formControlName="memo" [placeholder]="'Type here...'" ></ngx-editor>
+                  <quill-editor [modules]="quillModules" formControlName="memo" [placeholder]="'Write Something Here'"
+                     style="height: 400px;" theme="snow">
+                  </quill-editor>
+
+                  <!-- <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                  <ngx-editor [editor]="editor" formControlName="memo" [placeholder]="'Type here...'"></ngx-editor> -->
                 </div>
               </div>
               <div class="form-group form-check">
@@ -167,21 +171,31 @@
               <div>
 
                 <div class="form-buttons mb-4">
-                    <button type="submit" name="action" value="save" class="btn btn-primary" [disabled]="isLoading">
-                      <ng-container *ngIf="isLoading; else buttonText">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                      </ng-container>
-                      <ng-template #buttonText>
-                        {{ handleModals.show === "edit_files" ? "Save Edit": "Save Draft" }}
-                      </ng-template>
-                    </button>
+                  <button type="submit" name="action" value="save" class="btn btn-primary" [disabled]="isLoading">
+                    <ng-container *ngIf="isLoading; else buttonText">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Loading...
+                    </ng-container>
+                    <ng-template #buttonText>
+                      {{ handleModals.show === "edit_files" ? "Save Edit": "Save Draft" }}
+                    </ng-template>
+                  </button>
 
-                    <button type="submit" name="action" value="approve"  class="btn btn-primary"
-                      [disabled]="isLoading">
-                      {{ isLoadingApprove ? "Loading..." : "Submit for approval" }}
-                    </button>
+                  <!-- <quill-editor [modules]="quillModules" formControlName="editorContent"></quill-editor>
+
+                  <p>Rich Text Editor with Advanced Features</p> -->
+
+                  <!-- <quill-editor [modules]="quillModules" formControlName="editorContent" style="height: 400px;"
+                    theme="snow">
+                  </quill-editor> -->
+
+
+                  <button type="submit" name="action" value="approve" class="btn btn-primary" [disabled]="isLoading">
+                    {{ isLoadingApprove ? "Loading..." : "Submit for approval" }}
+                  </button>
                 </div>
+
+
               </div>
             </form>
           </div>
@@ -584,13 +598,14 @@
                   <option value="restricted">Restricted</option>
                 </select>
               </div>
-          
+
               <div *ngIf="createMemoForm.controls['access'].value == 'public'" style="margin: 16px 0px">
-                <button type="submit" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
+                <button type="submit"
+                  class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
                   {{ isLoading ? "Loading....." : "Save" }}
                 </button>
               </div>
-          
+
               <div *ngIf="createMemoForm.controls['access'].value == 'restricted'" style="margin: 16px 0px">
                 <div class="form-group">
                   <label for="accessType">Select Type</label>
@@ -600,51 +615,57 @@
                     <option value="group">Group</option>
                   </select>
                 </div>
-          
+
                 <div *ngIf="createMemoForm.controls['accessType'].value == 'individual'">
                   <button (click)="selectFile()" class="btn btn-lg btn-block btn-outline-primary">
                     <i class="fa fa-cloud-upload mr-3"></i> Upload Allowed Users
                   </button>
-                  <input type="file" id="input-file" name="input-file" #fileInput (change)="handleChangeEvent($event)" hidden />
-          
+                  <input type="file" id="input-file" name="input-file" #fileInput (change)="handleChangeEvent($event)"
+                    hidden />
+
                   <div class="card border-0" style="margin: 16px 0px">
                     <div class="form-group">
                       <label for="users_name">Name</label>
-                      <input type="text" formControlName="name" class="form-control" id="users_name" placeholder="Enter name" />
+                      <input type="text" formControlName="name" class="form-control" id="users_name"
+                        placeholder="Enter name" />
                     </div>
                     <div *ngIf="createMemoForm.get('name')?.touched && createMemoForm.get('name')?.invalid">
                       <small class="text-danger">Key name is required.</small>
                     </div>
-          
+
                     <div class="form-group">
                       <label for="users_email">Email</label>
-                      <input type="email" formControlName="email" class="form-control" id="users_email" placeholder="Enter email" />
+                      <input type="email" formControlName="email" class="form-control" id="users_email"
+                        placeholder="Enter email" />
                     </div>
                     <div *ngIf="createMemoForm.get('email')?.touched && createMemoForm.get('email')?.invalid">
                       <small class="text-danger">Email is required.</small>
                     </div>
-          
+
                     <div class="form-group">
                       <label for="phone">Phone</label>
-                      <input type="text" formControlName="phone" class="form-control" id="users_phone" placeholder="Enter phone number" />
+                      <input type="text" formControlName="phone" class="form-control" id="users_phone"
+                        placeholder="Enter phone number" />
                     </div>
                     <div *ngIf="createMemoForm.get('phone')?.touched && createMemoForm.get('phone')?.invalid">
                       <small class="text-danger">Phone number is required.</small>
                     </div>
                   </div>
                 </div>
-          
+
                 <div *ngIf="createMemoForm.controls['accessType'].value == 'group'">
                   <div class="form-group">
                     <label for="group_email">Group Email</label>
-                    <input type="email" formControlName="groupEmail" class="form-control" id="group_email" placeholder="Enter group email" />
+                    <input type="email" formControlName="groupEmail" class="form-control" id="group_email"
+                      placeholder="Enter group email" />
                   </div>
                   <div *ngIf="createMemoForm.get('groupEmail')?.touched && createMemoForm.get('groupEmail')?.invalid">
                     <small class="text-danger">Group email is required.</small>
                   </div>
                 </div>
-          
-                <button type="submit" (click)="createMemo()" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
+
+                <button type="submit" (click)="createMemo()"
+                  class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 my-3">
                   {{ isLoading ? "Loading....." : "Save" }}
                 </button>
               </div>

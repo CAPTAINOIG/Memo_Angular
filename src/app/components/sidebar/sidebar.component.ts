@@ -7,6 +7,7 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
     selector: 'app-sidebar',
     imports: [CommonModule],
     templateUrl: './sidebar.component.html',
+    standalone: true,
     styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {

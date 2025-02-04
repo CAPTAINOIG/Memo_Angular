@@ -1,6 +1,17 @@
+
 .form-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
   }
-  
+
+.ql-toolbar.ql-snow {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-height: 200px;
+}

@@ -15,7 +15,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     selector: 'app-dashboard',
     imports: [CommonModule, NavigationComponent, SidebarComponent, RouterLink, NgxChartsModule],
     templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css']
+    styleUrls: ['./dashboard.component.css'],
+    standalone: true
 })
 export class DashboardComponent implements OnInit {
   isSuperAdmin: boolean = false;

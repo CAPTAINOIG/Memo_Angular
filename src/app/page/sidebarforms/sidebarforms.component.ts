@@ -6,6 +6,8 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { NewuserComponent } from '../newuser/newuser.component';
 import Toastify from 'toastify-js';
+import 'quill-better-table/dist/quill-better-table.css';
+
 
 import { UserdetailComponent } from '../../userdetail/userdetail.component';
 import { AuthenticationComponent } from "../authentication/authentication.component";
@@ -14,6 +16,14 @@ import { EsignatureComponent } from '../esignature/esignature.component';
 import { OtpconfirmationComponent } from '../otpconfirmation/otpconfirmation.component';
 import { CreatefolderComponent } from '../createfolder/createfolder.component';
 import { CreateqrcodeComponent } from '../../createqrcode/createqrcode.component';
+import { QuillModule } from 'ngx-quill';
+import Quill from 'quill';
+import QuillBetterTable from 'quill-better-table';
+
+
+Quill.register({
+  'modules/better-table': QuillBetterTable
+}, true);
 
 @Component({
     selector: 'app-sidebarforms',
@@ -29,10 +39,12 @@ import { CreateqrcodeComponent } from '../../createqrcode/createqrcode.component
         // EditmemoComponent,
         OtpconfirmationComponent,
         CreatefolderComponent,
-        CreateqrcodeComponent
+        CreateqrcodeComponent,
+        QuillModule,
     ],
     templateUrl: './sidebarforms.component.html',
-    styleUrls: ['./sidebarforms.component.css']
+    styleUrls: ['./sidebarforms.component.css'],
+    standalone: true,
 })
 export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
@@ -87,12 +99,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     private fileService: ServicesidebarService,
   ) {
     this.memoForm = new FormGroup({
-      title: new FormControl('',
-        Validators.required),
-      memo: new FormControl('',
-        Validators.required),
-        memFoldId: new FormControl('',
-        Validators.required),
+      title: new FormControl('', Validators.required),
+      memo: new FormControl('', Validators.required),
+      memFoldId: new FormControl('', Validators.required),
       include_signature: new FormControl(false),
       security_type: new FormControl(''),
       secureByEmailOtp: new FormControl(false),
@@ -135,6 +144,45 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.handleModals.setCreateMemoTabs(data)
   }
 
+  quillModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],          
+      ['blockquote', 'code-block'],                       
+      [{ 'header': 1 }, { 'header': 2 }],                 
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],      
+      [{ 'script': 'sub' }, { 'script': 'super' }],       
+      [{ 'indent': '-1' }, { 'indent': '+1' }],          
+      [{ 'direction': 'rtl' }],                          
+      [{ 'size': ['small', false, 'large', 'huge'] }],    
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],          
+      [{ 'color': [] }, { 'background': [] }],            
+      [{ 'font': [] }],                                  
+      [{ 'align': [] }],                                 
+      ['link', 'image', 'video'],                         
+      ['clean'],                                          
+      // ['table']                                           
+    ],
+    clipboard: {
+      matchVisual: false,
+    },
+    'better-table': {
+      operationMenu: {
+        items: {
+          unmergeCells: {
+            text: 'Unmerge Cells'
+          }
+        }
+      }
+    }
+  };
+
+  
+  // onContentChanged(event: any) {
+  //   this.memoForm.get('memo')?.setValue(event.html);
+  // }
+  
+  
+  
   ngOnInit(): void {
     this.editor = new Editor();
     this.fetchFolders();
@@ -281,9 +329,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       MemUniqueId: this.memId,
       include_signature: !!this.memoForm.value.include_signature,
       memFold: Number(this.memoForm.value.memFoldId),
-      // memFold: Number(this.memFoldId),
       isPublished: event.submitter.value==='save' ? 0 : 1
     }
+    console.log(memoData)
 
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);
@@ -749,6 +797,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   chooseFile() {
     this.fileInput.nativeElement.click();
   }
+
   fileChangeEvent(event: any): void {
     const uploadLogo = new FormData();
     const image = event.target.files[0];
@@ -768,7 +817,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     else {
       console.warn('No file selected.');
     }
-  }
+  };
 
   changeSecurityType(): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
@@ -822,6 +871,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       console.warn('No file selected.');
     }
   }
+
 
 }
 
