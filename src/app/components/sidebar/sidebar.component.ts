@@ -4,11 +4,10 @@ import { CommonModule } from '@angular/common';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+    selector: 'app-sidebar',
+    imports: [CommonModule],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
   folder: any = [];

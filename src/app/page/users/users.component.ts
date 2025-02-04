@@ -14,11 +14,10 @@ import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
-  selector: 'app-users',
-  standalone: true,
-  imports: [CommonModule, NavigationComponent, HeaderComponent, SidebarComponent, RouterLink, FormsModule, NewuserComponent],
-  templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+    selector: 'app-users',
+    imports: [CommonModule, NavigationComponent, HeaderComponent, SidebarComponent, FormsModule],
+    templateUrl: './users.component.html',
+    styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit {
   // private folderSubject = new BehaviorSubject<any[]>([]);

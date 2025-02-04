@@ -4,11 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-security-check',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
-  templateUrl: './security-check.component.html',
-  styleUrl: './security-check.component.css'
+    selector: 'app-security-check',
+    imports: [FormsModule, ReactiveFormsModule, CommonModule],
+    templateUrl: './security-check.component.html',
+    styleUrl: './security-check.component.css'
 })
 export class SecurityCheckComponent implements OnInit {
   isLoading = true;

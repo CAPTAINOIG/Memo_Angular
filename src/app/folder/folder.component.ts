@@ -14,11 +14,10 @@ import { PartnerComponent } from "../partner/partner.component";
 import { QuestionComponent } from "../question/question.component";
 
 @Component({
-  selector: 'app-folder',
-  standalone: true,
-  imports: [NavbarComponent, NavigatingComponent, LandingpageusersComponent, AddressblockchainComponent, CompetitorComponent, PlatformComponent, TokenComponent, BonusComponent, TeamComponent, DistributionComponent, FooterComponent, PartnerComponent, QuestionComponent],
-  templateUrl: './folder.component.html',
-  styleUrl: './folder.component.css'
+    selector: 'app-folder',
+    imports: [NavbarComponent, NavigatingComponent, LandingpageusersComponent, AddressblockchainComponent, CompetitorComponent, PlatformComponent, TokenComponent, BonusComponent, TeamComponent, DistributionComponent, FooterComponent, PartnerComponent, QuestionComponent],
+    templateUrl: './folder.component.html',
+    styleUrl: './folder.component.css'
 })
 export class FolderComponent {
 

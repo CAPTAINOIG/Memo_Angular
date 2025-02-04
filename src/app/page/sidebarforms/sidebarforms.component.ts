@@ -16,24 +16,23 @@ import { CreatefolderComponent } from '../createfolder/createfolder.component';
 import { CreateqrcodeComponent } from '../../createqrcode/createqrcode.component';
 
 @Component({
-  selector: 'app-sidebarforms',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgxEditorModule,
-    NewuserComponent,
-    UserdetailComponent,
-    AuthenticationComponent,
-    EsignatureComponent,
-    // EditmemoComponent,
-    OtpconfirmationComponent,
-    CreatefolderComponent,
-    CreateqrcodeComponent
-  ],
-  templateUrl: './sidebarforms.component.html',
-  styleUrls: ['./sidebarforms.component.css']
+    selector: 'app-sidebarforms',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgxEditorModule,
+        NewuserComponent,
+        UserdetailComponent,
+        AuthenticationComponent,
+        EsignatureComponent,
+        // EditmemoComponent,
+        OtpconfirmationComponent,
+        CreatefolderComponent,
+        CreateqrcodeComponent
+    ],
+    templateUrl: './sidebarforms.component.html',
+    styleUrls: ['./sidebarforms.component.css']
 })
 export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')

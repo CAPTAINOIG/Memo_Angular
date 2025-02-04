@@ -8,11 +8,10 @@ import { CommonModule } from '@angular/common';
 import Toastify from 'toastify-js';
 
 @Component({
-  selector: 'app-forgotpassword',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './forgotpassword.component.html',
-  styleUrl: './forgotpassword.component.css'
+    selector: 'app-forgotpassword',
+    imports: [CommonModule, ReactiveFormsModule],
+    templateUrl: './forgotpassword.component.html',
+    styleUrl: './forgotpassword.component.css'
 })
 export class ForgotpasswordComponent {
   forgotPasswordForm: FormGroup;

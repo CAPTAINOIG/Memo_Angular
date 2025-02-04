@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { ServicesidebarService } from '../service/servicesidebar.service';
 
 @Component({
-  selector: 'app-userdetail',
-  standalone: true,
-  imports: [],
-  templateUrl: './userdetail.component.html',
-  styleUrl: './userdetail.component.css'
+    selector: 'app-userdetail',
+    imports: [],
+    templateUrl: './userdetail.component.html',
+    styleUrl: './userdetail.component.css'
 })
 export class UserdetailComponent {
   userData: any

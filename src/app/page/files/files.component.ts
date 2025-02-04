@@ -9,11 +9,10 @@ import Toastify from 'toastify-js';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-files',
-  standalone: true,
-  imports: [NavigationComponent, SidebarComponent, ReactiveFormsModule, FormsModule, CommonModule],
-  templateUrl: './files.component.html',
-  styleUrl: './files.component.css'
+    selector: 'app-files',
+    imports: [NavigationComponent, SidebarComponent, ReactiveFormsModule, FormsModule, CommonModule],
+    templateUrl: './files.component.html',
+    styleUrl: './files.component.css'
 })
 export class FilesComponent {
 private folderSubject = new BehaviorSubject<any[]>([]);

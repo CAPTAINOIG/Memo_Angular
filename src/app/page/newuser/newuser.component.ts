@@ -9,11 +9,10 @@ import { CommonModule } from '@angular/common';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({
-  selector: 'app-newuser',
-  standalone: true,
-  imports: [ CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './newuser.component.html',
-  styleUrls: ['./newuser.component.css']
+    selector: 'app-newuser',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    templateUrl: './newuser.component.html',
+    styleUrls: ['./newuser.component.css']
 })
 export class NewuserComponent {
   createUserForm: FormGroup;

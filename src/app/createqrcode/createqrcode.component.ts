@@ -6,11 +6,10 @@ import { CommonModule } from '@angular/common';
 import { ServicesidebarService } from '../service/servicesidebar.service';
 
 @Component({
-  selector: 'app-createqrcode',
-  standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
-  templateUrl: './createqrcode.component.html',
-  styleUrl: './createqrcode.component.css'
+    selector: 'app-createqrcode',
+    imports: [FormsModule, CommonModule, ReactiveFormsModule],
+    templateUrl: './createqrcode.component.html',
+    styleUrl: './createqrcode.component.css'
 })
 export class CreateqrcodeComponent implements OnInit, OnDestroy {
 

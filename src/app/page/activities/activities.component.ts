@@ -7,11 +7,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-activities',
-  standalone: true,
-  imports: [NavigationComponent, SidebarComponent, CommonModule, ReactiveFormsModule ],
-  templateUrl: './activities.component.html',
-  styleUrl: './activities.component.css'
+    selector: 'app-activities',
+    imports: [NavigationComponent, SidebarComponent, CommonModule, ReactiveFormsModule],
+    templateUrl: './activities.component.html',
+    styleUrl: './activities.component.css'
 })
 export class ActivitiesComponent {
 activities: any;

@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-navigating',
-  standalone: true,
-  imports: [],
-  templateUrl: './navigating.component.html',
-  styleUrl: './navigating.component.css'
+    selector: 'app-navigating',
+    imports: [],
+    templateUrl: './navigating.component.html',
+    styleUrl: './navigating.component.css'
 })
 export class NavigatingComponent {
 

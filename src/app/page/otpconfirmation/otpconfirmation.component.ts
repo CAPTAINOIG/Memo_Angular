@@ -6,11 +6,10 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 import Toastify from 'toastify-js';
 
 @Component({
-  selector: 'app-otpconfirmation',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
-  templateUrl: './otpconfirmation.component.html',
-  styleUrls: ['./otpconfirmation.component.css']
+    selector: 'app-otpconfirmation',
+    imports: [ReactiveFormsModule, CommonModule, FormsModule],
+    templateUrl: './otpconfirmation.component.html',
+    styleUrls: ['./otpconfirmation.component.css']
 })
 export class OtpconfirmationComponent {
   otp: string = '';

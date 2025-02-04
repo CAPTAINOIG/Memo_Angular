@@ -7,11 +7,10 @@ import Toastify from 'toastify-js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
-  selector: 'app-passwordauth',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './passwordauth.component.html',
-  styleUrls: ['./passwordauth.component.css']
+    selector: 'app-passwordauth',
+    imports: [CommonModule, ReactiveFormsModule, RouterLink],
+    templateUrl: './passwordauth.component.html',
+    styleUrls: ['./passwordauth.component.css']
 })
 export class PasswordauthComponent {
   authForm:FormGroup

@@ -6,11 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Toastify from 'toastify-js';
 
 @Component({
-  selector: 'app-external-viewer',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './external-viewer.component.html',
-  styleUrls: ['./external-viewer.component.css']
+    selector: 'app-external-viewer',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    templateUrl: './external-viewer.component.html',
+    styleUrls: ['./external-viewer.component.css']
 })
 export class ExternalViewerComponent implements OnInit {
   itemId: string | null = null;

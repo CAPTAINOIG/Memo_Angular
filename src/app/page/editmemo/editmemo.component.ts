@@ -8,11 +8,10 @@ import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 
 @Component({
-  selector: 'app-editmemo',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxEditorModule],
-  templateUrl: './editmemo.component.html',
-  styleUrls: ['./editmemo.component.css']
+    selector: 'app-editmemo',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxEditorModule],
+    templateUrl: './editmemo.component.html',
+    styleUrls: ['./editmemo.component.css']
 })
 export class EditmemoComponent implements OnInit, OnDestroy {
 

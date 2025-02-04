@@ -9,11 +9,10 @@ import { tick } from '@angular/core/testing';
 import Toastify from 'toastify-js';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [NavigationComponent, SidebarComponent, FormsModule, CommonModule],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.css'
+    selector: 'app-settings',
+    imports: [NavigationComponent, SidebarComponent, FormsModule, CommonModule],
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.css'
 })
 export class SettingsComponent {
   imageSrc: string = '../../assets/media/image/user/women_avatar1.jpg';

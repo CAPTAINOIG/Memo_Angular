@@ -5,11 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 
 @Component({
-  selector: 'app-esignature',
-  standalone: true,
-  imports: [CommonModule,ReactiveFormsModule, FormsModule],
-  templateUrl: './esignature.component.html',
-  styleUrl: './esignature.component.css'
+    selector: 'app-esignature',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    templateUrl: './esignature.component.html',
+    styleUrl: './esignature.component.css'
 })
 
 export class EsignatureComponent implements OnInit {

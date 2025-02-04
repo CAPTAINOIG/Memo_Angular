@@ -7,11 +7,10 @@ import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css"; 
 
 @Component({
-  selector: 'app-authentication',
-  standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
-  templateUrl: './authentication.component.html',
-  styleUrl: './authentication.component.css'
+    selector: 'app-authentication',
+    imports: [FormsModule, CommonModule, ReactiveFormsModule],
+    templateUrl: './authentication.component.html',
+    styleUrl: './authentication.component.css'
 })
 export class AuthenticationComponent {
 isLoading = false;

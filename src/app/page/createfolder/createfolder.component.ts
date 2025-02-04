@@ -7,11 +7,10 @@ import "toastify-js/src/toastify.css";
 import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({
-  selector: 'app-createfolder',
-  standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
-  templateUrl: './createfolder.component.html',
-  styleUrl: './createfolder.component.css'
+    selector: 'app-createfolder',
+    imports: [FormsModule, CommonModule, ReactiveFormsModule],
+    templateUrl: './createfolder.component.html',
+    styleUrl: './createfolder.component.css'
 })
 export class CreatefolderComponent {
   isLoading = false;

@@ -7,11 +7,10 @@ import { Router, RouterLink } from '@angular/router';
 import Toastify from 'toastify-js'; 
 
 @Component({
-  selector: 'app-twofactorauth',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './twofactorauth.component.html',
-  styleUrls: ['./twofactorauth.component.css']
+    selector: 'app-twofactorauth',
+    imports: [CommonModule, ReactiveFormsModule, RouterLink],
+    templateUrl: './twofactorauth.component.html',
+    styleUrls: ['./twofactorauth.component.css']
 })
 export class TwofactorauthComponent {
   authForm:FormGroup

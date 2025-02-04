@@ -5,10 +5,9 @@ import { SidebarformsComponent } from '../../page/sidebarforms/sidebarforms.comp
 
   @Component({
     selector: 'app-dashboard',
-    standalone: true,
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
-    imports: [RouterModule,HeaderComponent,SidebarformsComponent],
+    imports: [RouterModule, HeaderComponent, SidebarformsComponent]
 })
 export class DashboardComponent {
   prop:boolean=false;

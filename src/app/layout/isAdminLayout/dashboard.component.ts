@@ -3,10 +3,9 @@ import { RouterModule } from '@angular/router';
 
   @Component({
     selector: 'app-dashboard',
-    standalone: true,
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
-    imports: [RouterModule],
+    imports: [RouterModule]
 })
 export class AdminLayoutComponent {
 
