@@ -104,10 +104,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       ip_address: new FormControl(''),
       create_as_template: new FormControl(false),
       access: new FormControl(''),
+      accessType: new FormControl(''),
       public: new FormControl(''),
       name: new FormControl(''),
       email: new FormControl(''),
       phone: new FormControl(''),
+      groupEmail: new FormControl(''),
       metaData: new FormControl(''),
       key: new FormControl(''),
       value: new FormControl(''),
@@ -121,10 +123,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
     this.createMemoForm = this.fb.group({
       access: new FormControl(''),
+      accessType: new FormControl(''),
       public: new FormControl(''),
       name: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
+      groupEmail: new FormControl('', Validators.required),
     });
   }
 
@@ -162,9 +166,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         ip_address: '',
         create_as_template: false,
         access: '',
+        accessType: '',
         name: '',
         email: '',
         phone: '',
+        groupEmail : '',
         key: '',
         value: '',
         public: '',
@@ -476,6 +482,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     };
 
     this.isLoading = true;
+
     const memoData = {
       access: this.createMemoForm.get('access')?.value,
       memId: this.memId,
@@ -483,10 +490,14 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         {
           phone: this.createMemoForm.get('phone')?.value,
           email: this.createMemoForm.get('email')?.value,
+          group: this.createMemoForm.get('groupEmail')?.value,
         },
       ],
       // name: this.createMemoForm.get('name')?.value,
     };
+    
+    console.log(memoData)
+
     this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
       (response) => {
         console.log(response);
@@ -512,6 +523,88 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }
     );
   }
+  // TO BE USED LATER
+  // createMemo() {
+  //   this.isLoading = false;
+  //   if (!this.memId) {
+  //     Toastify({
+  //       text: "please create a memo",
+  //       duration: 3000,
+  //       gravity: "top",
+  //       position: "right",
+  //       backgroundColor: "#FF0000",
+  //     }).showToast();
+  //     return;
+  //   }
+  
+  //   if (!this.createMemoForm.valid) {
+  //     Toastify({
+  //       text: "Form is not valid",
+  //       duration: 3000,
+  //       gravity: "top",
+  //       position: "right",
+  //       backgroundColor: "#FF0000",
+  //     }).showToast();
+  //     this.isLoading = false;
+  //     return;
+  //   }
+  
+  //   const access = this.createMemoForm.get('access')?.value;
+  //   const accessType = this.createMemoForm.get('accessType')?.value;
+  
+  //   let memoData: any = {
+  //     access: access,
+  //     memId: this.memId,
+  //     users: []
+  //   };
+  
+  //   if (access === 'public') {
+  //     // No additional data required
+  //   }
+  
+  //   // Restricted Access
+  //   if (access === 'restricted') {
+  //     if (accessType === 'individual') {
+  //       memoData.users.push({
+  //         name: this.createMemoForm.get('name')?.value,
+  //         email: this.createMemoForm.get('email')?.value,
+  //         phone: this.createMemoForm.get('phone')?.value
+  //       });
+  //     } 
+  //     else if (accessType === 'group') {
+  //       memoData.users.push({
+  //         groupEmail: this.createMemoForm.get('groupEmail')?.value
+  //       });
+  //     }
+  //   }
+  
+  //   console.log(memoData);
+  //   this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       this.isLoading = false;
+  //       Toastify({
+  //         text: 'Success',
+  //         duration: 3000,
+  //         gravity: "top",
+  //         position: "right",
+  //         backgroundColor: "#0000FF",
+  //       }).showToast();
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       this.isLoading = false;
+  //       Toastify({
+  //         text: 'Error saving memo',
+  //         duration: 3000,
+  //         gravity: "top",
+  //         position: "right",
+  //         backgroundColor: "#FF0000",
+  //       }).showToast();
+  //     }
+  //   );
+  // }
+  
 
 
 

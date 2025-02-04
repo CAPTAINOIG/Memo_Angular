@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ServicesidebarService {
   show: any = "undefined";
   check="nothing";
-  status = ['Save Draft','Pending', 'Approved', 'Rejected']
+  status = ['Draft','Pending', 'Approved', 'Rejected']
   public userData: any;
   public authData: any;
   public UserDetail: any;
@@ -48,6 +48,20 @@ export class ServicesidebarService {
 
   triggerSuspendUserRefresh(){
     this.suspendUserSubject.next(true);
+  }
+
+  private otpConfirmationSubject = new BehaviorSubject<boolean>(true);
+  otpConfirmation$ = this.otpConfirmationSubject.asObservable();
+
+  triggerOtpConfirmationRefresh(){
+    this.otpConfirmationSubject.next(true);
+  }
+
+  private qrCodeSubject = new BehaviorSubject<boolean>(true);
+  refreshQrCode$ = this.qrCodeSubject.asObservable();
+
+  triggerQrCodeRefresh(){
+    this.qrCodeSubject.next(true);
   }
   
   // we brought the data here because we want it to be cleared after every secs so we brought it to service
@@ -98,7 +112,11 @@ export class ServicesidebarService {
     return this.UserDetail
   }
 
-  setPublishMemId=(data:any)=>this.publishMemId=data
+  setPublishMemId(data:any) {
+    this.publishMemId=data
+    console.log(this.publishMemId)
+  }
+
   setEditMemo(data:any){
     this.editMemo = data
   }

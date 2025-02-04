@@ -108,7 +108,6 @@ export class DashboardComponent implements OnInit {
     this.isLoading = true;
     this.httpRequest?.makeGetRequest("/dashboard/files/recent").subscribe((response: any) => {
       this.recentFiles = response.data
-      // console.log(this.recentFiles);
       this.isLoading = false;
     }, (error: any) => {
       // console.log(error);
@@ -120,13 +119,19 @@ export class DashboardComponent implements OnInit {
     this.handleModal.showMother("create_memo")
     this.handleModal.toggleCheck('hello')
   }
+
+  qrCode(memId: any) {
+    this.handleModal.setPublishMemId({memId})
+    this.handleModal.showMother("qrcode");
+  };
   
   viewFiles(recent: any){
     this.httpRequest?.makeGetRequest('/memo/single?id='+recent.MemUniqueId).subscribe((response)=>{
       this.handleModal.showMother("forms")
       this.userData.setUserData(response.data)
     })
-  }
+  };
+  
   editFiles(file: any) {
     this.isEditLoader = true;
     this.httpRequest?.makeGetRequest("/memo/single?id="+file).subscribe((response: any) => {
@@ -144,7 +149,7 @@ export class DashboardComponent implements OnInit {
         backgroundColor: "red",
       }).showToast();
     })
-  }
+  };
 
    approve(memId: any,status:any){
     this.handleModal.showMother("otp");

@@ -78,12 +78,6 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let user of makeFilter()">
-                        <!-- <td>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-{{user?.id}}">
-                            <label class="custom-control-label" for="user-{{user?.id}}"></label>
-                          </div>
-                        </td> -->
                         <td>
                           <a href="#">
                             <figure class="avatar avatar-sm mr-2">
@@ -95,11 +89,6 @@
                         <td>
                           <a href="mailto:{{user?.email}}">{{user?.email}}</a>
                         </td>
-                        <!-- <td>
-                          <div class="progress" style="height: 5px">
-                            <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </td> -->
                         <td>{{user?.UserRole?.RoleName}}</td>
                         <td>
                           <span [class]="!user.is_locked_out?'badge bg-success-bright text-success':'bg-danger-bright text-danger badge'">{{user.is_locked_out?"Block":"Active"}}</span>

@@ -165,14 +165,14 @@
                                         </span>
                                     </td>
                                     <td class="text-primary cursor-pointer">
-                                        <button *ngIf="item.MemFullLink" title="Copy to clipboard"
+                                        <button *ngIf="item?.MemFullLink" title="Copy to clipboard"
                                             (click)="copyToClipboard(item.MemFullLink)" class="btn btn-icon">
                                             <i class="ti-clipboard"></i>
                                         </button>
                                     </td>
                                     <td>
-                                        <img src="{{item.MemQuickResponse}}" alt="QR Code"
-                                            style="width: 60px; height: 60px; object-fit: contain;">
+                                        <img src="{{item?.MemQuickResponse}}" alt=""
+                                            style="width: 60px; height: 60px;">
                                     </td>
                                     <td class="text-right">
                                         <div class="dropdown"
@@ -182,13 +182,14 @@
                                             </a>
                                             <!-- Admin Actions -->
                                             <ng-container *ngIf="isAdmin">
-                                                <div class="dropdown-menu dropdown-menu-right">
+                                                <div class="dropdown-menu dropdown-menu-right">  
+                                                    <span class="dropdown-item cursor-pointer bg-primary hover-bg-success-light hover-text-dark" (click)="qrCode(item?.MemUniqueId)">Attach Qr Code</span>
                                                     <span
-                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark"
-                                                        (click)="approve(item.Id, 'approve')">Approve</span>
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
+                                                        (click)="approve(item?.Id, 'approve')">Approve</span>
                                                     <span
                                                         class="dropdown-item cursor-pointer bg-danger hover-bg-danger-light hover-text-dark mt-2"
-                                                        (click)="approve(item.Id, 'reject')">Reject</span>
+                                                        (click)="approve(item?.Id, 'reject')">Reject</span>
                                                 </div>
                                             </ng-container>
 

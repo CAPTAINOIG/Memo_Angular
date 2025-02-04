@@ -20,7 +20,7 @@
                             [legend]="true" [showYAxisLabel]="true" yAxisLabel="Memo Created Count">
                         </ngx-charts-bar-vertical>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mt-5">
                         <div class="card">
                             <div class="card-body text-center">
                                 <div class="row mb-4">
@@ -29,8 +29,6 @@
                                     </div>
                                 </div>
                                 <h4 class="my-3">Create Memo</h4>
-                                <p class="text-muted">Create memo to grow their business and serve their customers
-                                    better. Use this tool to generate reports.</p>
                                 <button class="btn btn-outline-primary btn-lg2" (click)="openModal()">Create
                                     Memo</button>
                             </div>
@@ -137,19 +135,19 @@
                                     <td>
                                         <span class="badge badge-pill {{statusClasses[recent?.IsPublished]}}">
                                             {{status[recent?.IsPublished]??'Pending'}}
-
                                         </span>
                                     </td>
 
-                                    <td class="text-right">
+                                    <td class="">
                                         <div class="dropdown" *ngIf="recent?.IsPublished==0 || recent?.IsPublished==1">
                                             <a href="#" class="btn btn-floating" data-toggle="dropdown">
                                                 <i class="ti-more-alt"></i>
                                             </a>
                                             <ng-container *ngIf="isAdmin">
                                                 <div class="dropdown-menu dropdown-menu-right">
+                                                    <span class="dropdown-item cursor-pointer bg-primary hover-text-dark" (click)="qrCode(recent?.MemUniqueId)">Attach Qr Code</span>
                                                     <span
-                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark"
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
                                                         (click)="approve(recent.Id,'approve')">Approve</span>
                                                     <span
                                                         class="dropdown-item cursor-pointer bg-danger  hover-bg-danger-light hover-text-dark mt-2"

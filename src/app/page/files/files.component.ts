@@ -36,7 +36,7 @@ allFolder$ = this.folderSubject.asObservable();
   isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
 
 
-  constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService, private folderService: ServicesidebarService, private fileService: ServicesidebarService) { }
+  constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService, private folderService: ServicesidebarService, private fileService: ServicesidebarService, private qrCodeService: ServicesidebarService) { }
 
   ngOnInit(): void {
     this.status = this.handleModal.status
@@ -48,6 +48,12 @@ allFolder$ = this.folderSubject.asObservable();
     });
 
     this.fileService.refreshFile$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.loadFiles();
+      }
+    });
+
+    this.qrCodeService.refreshQrCode$.subscribe(shouldRefresh => {
       if (shouldRefresh) {
         this.loadFiles();
       }
@@ -104,9 +110,9 @@ allFolder$ = this.folderSubject.asObservable();
     this.page += 1
     this.httpRequest.makeGetRequest(`/dashboard/files/all?page=${this.page}&foldId=${this.foldId}`).subscribe((response) => {
       this.allFile = response.data;
+      console.log(this.allFile)
       this.isLoadingNext = false;
     }, (error) => {
-      console.log(error);
       this.isLoadingNext = false;
     })
   }
@@ -115,7 +121,6 @@ allFolder$ = this.folderSubject.asObservable();
     this.isEditLoader = true;
     this.httpRequest?.makeGetRequest("/memo/single?id=" + file).subscribe((response: any) => {
       this.handleModal.setEditMemo(response.data)
-      // console.log(response.data)
       this.handleModal.showMother("edit_files");
       this.isEditLoader = false;
     }, (error: any) => {
@@ -146,11 +151,12 @@ allFolder$ = this.folderSubject.asObservable();
     this.handleModal.setPublishMemId({memId, status})
   }
   
-
-  // filteredFiles() {
-  //   return this.allFile.filter(item =>item?.IsPublished && item?.IsPublished.toLowerCase().includes(this.searchTerm.toLowerCase()));
-  // }
-
+  qrCode(memId: any) {
+    console.log(memId)
+    this.handleModal.setPublishMemId({memId})
+    this.handleModal.showMother("qrcode");
+  }
+  
     setFilterStatus(status: string): void {
     this.filterStatus = status;
   }
@@ -163,18 +169,9 @@ allFolder$ = this.folderSubject.asObservable();
     });
   }
 
-  // format = (dateT: any) => {
-  //   const date = (new Date(dateT))
-  //   const year = date.getFullYear();
-  //   const month = String(date.getMonth() + 1).padStart(2, '0'); 
-  //   const day = String(date.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  // }
-
   createFolders() {
     this.handleModal.showMother("create_folder")
   }
-
 
 
   copyToClipboard(text: string): void {

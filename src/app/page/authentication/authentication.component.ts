@@ -34,7 +34,6 @@ authData: any;
     if(this.createAuthForm.valid){
       const auth = this.createAuthForm.value
       this.httpRequest.makePostRequest('/users_management/verify_auth', auth).subscribe((response)=>{
-        console.log(response);
         this.isLoading = false
         Toastify({
           text: "successful!",

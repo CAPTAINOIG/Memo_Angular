@@ -49,7 +49,7 @@ this.userServive.refreshUser$.subscribe(shouldRefresh => {
 
 this.suspendUnsuspendUser.suspendUser$.subscribe(shouldRefresh => {
   if(shouldRefresh){
-    this.selectedValue();
+    this.fetchUsers();
   }
 });
 // FETCH USER ROLES
@@ -72,7 +72,6 @@ this.httpRequest?.makeGetRequest("/users_management/user_roles/all").subscribe((
 
 };
 
-
 fetchUsers(){
   this.httpRequest?.makeGetRequest("/users_management/users/all").subscribe((response:any)=>{
     this.users=response.data
@@ -80,7 +79,7 @@ fetchUsers(){
   },(error:any) => {
     this.isLoading = false;
 })
-}
+};
 
 makeFilter=()=>{
     if(!isNaN(this.selectedValue)){
@@ -122,6 +121,7 @@ createUser() {
 
 authentication(user:string){
   this.httpRequest.makePostRequest('/users_management/create_authenticator_secret', {identity:user}).subscribe((response)=>{
+    console.log(response)
     this.handleModal.showMother("authentication")
     this.authData.setAuthData(response)
   }, (error)=>{

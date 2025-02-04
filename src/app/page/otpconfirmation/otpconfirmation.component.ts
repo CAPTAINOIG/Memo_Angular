@@ -16,7 +16,7 @@ export class OtpconfirmationComponent {
   otp: string = '';
   isLoading = false;
 
-  constructor(private httpRequest: HttpRequestService, public handleModal: ServicesidebarService) { }
+  constructor(private httpRequest: HttpRequestService, public handleModal: ServicesidebarService, private otpconfirmationService: ServicesidebarService) { }
 
   onSubmit() {
     if(!this.otp){
@@ -30,9 +30,9 @@ export class OtpconfirmationComponent {
       return;
     }
     this.isLoading = true;
-    console.log(this.otp)
     this.httpRequest.makePostRequest('/auth/validate_two_fact_auth', { otp: this.otp }).subscribe(
       (response) => {
+        this.otpconfirmationService.triggerOtpConfirmationRefresh();
         if(response.status){
           this.publishAndUnpublish()
         }else{
@@ -61,9 +61,7 @@ export class OtpconfirmationComponent {
       this.handleModal.showMother("undefined")
       
     }, (error) => {
-      console.log(error);
       this.isLoading = false
-
     })
 
   }

@@ -22,7 +22,7 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private httpRequest: HttpRequestService, public handleModals: ServicesidebarService) {
+  constructor(private httpRequest: HttpRequestService, public handleModals: ServicesidebarService, private qrCodeService: ServicesidebarService) {
       this.form = new FormGroup({
         qrcode: new FormControl(''),
       });
@@ -39,6 +39,7 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     // this.fetchQrCode()
+    const memId = this.handleModals.publishMemId
   }
 
   // fetchQrCode() {
@@ -97,10 +98,11 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
   }
 
   createQrCode() {
-    const memId = this.handleModals.show !== 'edit_files' ? this.handleModals.memId : this.handleModals?.editMemo?.MemUniqueId;
+    // const memId = this.handleModals.show !== 'edit_files' ? this.handleModals.memId : this.handleModals?.editMemo?.MemUniqueId;
+    const memId = this.handleModals.publishMemId.memId
     if (!memId) {
       Toastify({
-        text: "please create a memo",
+        text: "memId is required",
         duration: 3000,
         gravity: "top",
         position: "right",
@@ -115,8 +117,6 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
       memqrcodeId: this.handleModals.qrCodeData.MemUniqueId
     })
     this.httpRequest.makePatchRequest('/memo/update_memo_memuniqueid', updateMemoMemUniqueId).subscribe((response) => {
-      console.log(response);
-      this.handleModals.qrCodeData = undefined;
       Toastify({
         text: "success",
         duration: 3000,
@@ -125,6 +125,9 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
         backgroundColor: "blue",
       }).showToast();
       this.isLoading = false;
+      this.qrCodeService.triggerQrCodeRefresh();
+      this.handleModals.qrCodeData = undefined;
+      this.handleModals.showMother("undefined")
     }, (error) => {
       this.isLoading = false;
       Toastify({
