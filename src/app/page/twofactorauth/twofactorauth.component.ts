@@ -5,10 +5,12 @@ import { LocalstorageService } from '../../service/LocalstorageService/localstor
 import { HttpRequestService } from '../../service/HttpRequest/http-request.service';
 import { Router, RouterLink } from '@angular/router';
 import Toastify from 'toastify-js'; 
+import { ServicesidebarService } from '../../service/servicesidebar.service';
 
 @Component({
     selector: 'app-twofactorauth',
     imports: [CommonModule, ReactiveFormsModule],
+    standalone: true,
     templateUrl: './twofactorauth.component.html',
     styleUrls: ['./twofactorauth.component.css']
 })
@@ -22,7 +24,8 @@ export class TwofactorauthComponent {
     private fb: FormBuilder,
     private router: Router,
     private local:LocalstorageService,
-   private httpRequest:HttpRequestService
+   private httpRequest:HttpRequestService,
+   public handleModal: ServicesidebarService,
   ) {
     this.authForm = this.fb.group({
       otp: ['', Validators.required],

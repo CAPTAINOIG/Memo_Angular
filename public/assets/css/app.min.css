@@ -7626,7 +7626,7 @@ div.form-membership:before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 98, 255, 0.8);
+  /* background: rgba(0, 98, 255, 0.8); */
 }
 div.form-membership1:before {
   content: "";

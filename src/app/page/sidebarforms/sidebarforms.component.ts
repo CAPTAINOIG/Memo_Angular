@@ -28,20 +28,20 @@ Quill.register({
 @Component({
     selector: 'app-sidebarforms',
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        NgxEditorModule,
-        NewuserComponent,
-        UserdetailComponent,
-        AuthenticationComponent,
-        EsignatureComponent,
-        // EditmemoComponent,
-        OtpconfirmationComponent,
-        CreatefolderComponent,
-        CreateqrcodeComponent,
-        QuillModule,
-    ],
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgxEditorModule,
+    NewuserComponent,
+    UserdetailComponent,
+    AuthenticationComponent,
+    EsignatureComponent,
+    // EditmemoComponent,
+    OtpconfirmationComponent,
+    CreatefolderComponent,
+    CreateqrcodeComponent,
+    QuillModule,
+],
     templateUrl: './sidebarforms.component.html',
     styleUrls: ['./sidebarforms.component.css'],
     standalone: true,
@@ -99,10 +99,13 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     private fileService: ServicesidebarService,
   ) {
     this.memoForm = new FormGroup({
+      memoType: new FormControl(),
+      memoCode: new FormControl(''),
       title: new FormControl('', Validators.required),
       memo: new FormControl('', Validators.required),
       memFoldId: new FormControl('', Validators.required),
       include_signature: new FormControl(false),
+      staff: new FormControl(''),
       security_type: new FormControl(''),
       secureByEmailOtp: new FormControl(false),
       secureBySmsOtp: new FormControl(false),
@@ -175,18 +178,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }
     }
   };
-
-  
-  // onContentChanged(event: any) {
-  //   this.memoForm.get('memo')?.setValue(event.html);
-  // }
-  
-  
   
   ngOnInit(): void {
     this.editor = new Editor();
     this.fetchFolders();
     this.getIp();
+    this.generateMemoCode();
 
     this.folderService.refreshFolder$.subscribe(shouldRefresh => {
       if (shouldRefresh) {
@@ -199,6 +196,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
       const check = this.handleModals.show == "edit_files"
       this.memoForm.setValue({
+        memoType: check ? this.handleModals?.editMemo?.MemTitle : '',
+        memoCode: check ? this.handleModals?.editMemo?.MemCode : '',
         title: check ? this.handleModals?.editMemo?.MemTitle : '',
         memo: check ? this.handleModals?.editMemo?.MemContents : '',
         memFoldId: check ? this.handleModals?.editMemo?.MemFoldId : '',
@@ -246,8 +245,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   ngOnDestroy(): void {
     this.editor.destroy();
   }
-
-
 
   fetchAreaDetails() {
     this.areaName = this.memoForm.get('areaName')?.value;
@@ -310,6 +307,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.memoForm.reset()
   }
 
+  generateMemoCode() {
+    const randomId = 'CCA/' + Math.floor(1000000000 + Math.random() * 9000000000);
+    this.memoForm.patchValue({ memoCode: randomId });
+  }
+
   draftMemo(event: any): void {
     if (!this.memoForm.valid) {
       Toastify({
@@ -329,13 +331,15 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       MemUniqueId: this.memId,
       include_signature: !!this.memoForm.value.include_signature,
       memFold: Number(this.memoForm.value.memFoldId),
-      isPublished: event.submitter.value==='save' ? 0 : 1
+      isPublished: event.submitter.value==='save' ? 0 : 1,
+      memoType: this.memoForm.value.memoType,
+      staff: this.memoForm.value.staff,
+      memoCode: this.memoForm.value.memoCode
     }
-    console.log(memoData)
 
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);
-    }
+    };
   
     if (this.handleModals.show === 'edit_files' && event.submitter.value ==='save') {
         const memo = {
@@ -395,9 +399,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           backgroundColor: '#FF0000',
         }).showToast();
       })
-      }    
+      }
       else if(this.handleModals.show === 'create_memo' ) {
-        // console.log(memoData);
         this.isLoading = true;
         this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
           (response: any) => {
@@ -426,9 +429,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
             }).showToast();
           }
         );
-      }
-
-  }
+      };
+  };
 
 
   addIP(ip_address: string) {
@@ -461,7 +463,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }).showToast();
     }
     this.memoForm.get('ip_address')?.reset();
-  }
+  };
 
   onsubmit() {
     this.isLoading = false;
@@ -499,10 +501,77 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         backgroundColor: "#FF0000",
       }).showToast();
     })
-  }
+  };
 
   onCheckboxChange(event: any) {
-  }
+  };
+
+  // createMemo() {
+  //   this.isLoading = false;
+  //   if (!this.memId) {
+  //     Toastify({
+  //       text: "please create a memo",
+  //       duration: 3000,
+  //       gravity: "top",
+  //       position: "right",
+  //       backgroundColor: "#FF0000",
+  //     }).showToast();
+  //     return;
+  //   }
+
+  //   if (!this.createMemoForm.valid) {
+  //     Toastify({
+  //       text: "Form is not valid valid",
+  //       duration: 3000,
+  //       gravity: "top",
+  //       position: "right",
+  //       backgroundColor: "#FF0000",
+  //     }).showToast();
+  //     return;
+  //   };
+
+  //   this.isLoading = true;
+
+  //   const memoData = {
+  //     access: this.createMemoForm.get('access')?.value,
+  //     memId: this.memId,
+  //     users: [
+  //       {
+  //         phone: this.createMemoForm.get('phone')?.value,
+  //         email: this.createMemoForm.get('email')?.value,
+  //         group: this.createMemoForm.get('groupEmail')?.value,
+  //       },
+  //     ],
+  //     // name: this.createMemoForm.get('name')?.value,
+  //   };
+    
+  //   console.log(memoData)
+
+  //   this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       this.isLoading = false;
+  //       Toastify({
+  //         text: 'success',
+  //         duration: 3000,
+  //         gravity: "top",
+  //         position: "right",
+  //         backgroundColor: "#0000FF",
+  //       }).showToast();
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       this.isLoading = false;
+  //       Toastify({
+  //         text: 'Error saving memo',
+  //         duration: 3000,
+  //         gravity: "top",
+  //         position: "right",
+  //         backgroundColor: "#FF0000",
+  //       }).showToast();
+  //     }
+  //   );
+  // };
 
   createMemo() {
     this.isLoading = false;
@@ -516,41 +585,55 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }).showToast();
       return;
     }
-
+  
     if (!this.createMemoForm.valid) {
       Toastify({
-        text: "Form is not valid valid",
+        text: "Form is not valid",
         duration: 3000,
         gravity: "top",
         position: "right",
         backgroundColor: "#FF0000",
       }).showToast();
+      this.isLoading = false;
       return;
-    };
-
-    this.isLoading = true;
-
-    const memoData = {
-      access: this.createMemoForm.get('access')?.value,
+    }
+  
+    const access = this.createMemoForm.get('access')?.value;
+    const accessType = this.createMemoForm.get('accessType')?.value;
+  
+    let memoData: any = {
+      access: access,
       memId: this.memId,
-      users: [
-        {
-          phone: this.createMemoForm.get('phone')?.value,
-          email: this.createMemoForm.get('email')?.value,
-          group: this.createMemoForm.get('groupEmail')?.value,
-        },
-      ],
-      // name: this.createMemoForm.get('name')?.value,
+      users: []
     };
-    
-    console.log(memoData)
-
+  
+    if (access === 'public') {
+      // No additional data required
+    }
+  
+    // Restricted Access
+    if (access === 'restricted') {
+      if (accessType === 'individual') {
+        memoData.users.push({
+          name: this.createMemoForm.get('name')?.value,
+          email: this.createMemoForm.get('email')?.value,
+          phone: this.createMemoForm.get('phone')?.value
+        });
+      } 
+      else if (accessType === 'group') {
+        memoData.users.push({
+          groupEmail: this.createMemoForm.get('groupEmail')?.value
+        });
+      }
+    }
+  
+    console.log(memoData);
     this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
       (response) => {
         console.log(response);
         this.isLoading = false;
         Toastify({
-          text: 'success',
+          text: 'Success',
           duration: 3000,
           gravity: "top",
           position: "right",
@@ -570,91 +653,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }
     );
   }
-  // TO BE USED LATER
-  // createMemo() {
-  //   this.isLoading = false;
-  //   if (!this.memId) {
-  //     Toastify({
-  //       text: "please create a memo",
-  //       duration: 3000,
-  //       gravity: "top",
-  //       position: "right",
-  //       backgroundColor: "#FF0000",
-  //     }).showToast();
-  //     return;
-  //   }
   
-  //   if (!this.createMemoForm.valid) {
-  //     Toastify({
-  //       text: "Form is not valid",
-  //       duration: 3000,
-  //       gravity: "top",
-  //       position: "right",
-  //       backgroundColor: "#FF0000",
-  //     }).showToast();
-  //     this.isLoading = false;
-  //     return;
-  //   }
-  
-  //   const access = this.createMemoForm.get('access')?.value;
-  //   const accessType = this.createMemoForm.get('accessType')?.value;
-  
-  //   let memoData: any = {
-  //     access: access,
-  //     memId: this.memId,
-  //     users: []
-  //   };
-  
-  //   if (access === 'public') {
-  //     // No additional data required
-  //   }
-  
-  //   // Restricted Access
-  //   if (access === 'restricted') {
-  //     if (accessType === 'individual') {
-  //       memoData.users.push({
-  //         name: this.createMemoForm.get('name')?.value,
-  //         email: this.createMemoForm.get('email')?.value,
-  //         phone: this.createMemoForm.get('phone')?.value
-  //       });
-  //     } 
-  //     else if (accessType === 'group') {
-  //       memoData.users.push({
-  //         groupEmail: this.createMemoForm.get('groupEmail')?.value
-  //       });
-  //     }
-  //   }
-  
-  //   console.log(memoData);
-  //   this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.isLoading = false;
-  //       Toastify({
-  //         text: 'Success',
-  //         duration: 3000,
-  //         gravity: "top",
-  //         position: "right",
-  //         backgroundColor: "#0000FF",
-  //       }).showToast();
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //       this.isLoading = false;
-  //       Toastify({
-  //         text: 'Error saving memo',
-  //         duration: 3000,
-  //         gravity: "top",
-  //         position: "right",
-  //         backgroundColor: "#FF0000",
-  //       }).showToast();
-  //     }
-  //   );
-  // }
-  
-
-
-
   draftMetaData() {
     if (!this.memId) {
       Toastify({
@@ -714,7 +713,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           backgroundColor: "#FF0000",
         }).showToast();
       })
-  }
+  };
 
   fetchMetaData(): void {
     const url = `/memo/metadata/?memId=${encodeURIComponent(this.memId)}`;
@@ -734,7 +733,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         }).showToast();
       }
     );
-  }
+  };
 
   deleteMetaData(key: number) {
     // console.log(key);
@@ -769,7 +768,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         }).showToast();
       }
     );
-  }
+  };
 
 
   getMemoAttachments() {
@@ -779,7 +778,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       console.log(error);
 
     })
-  }
+  };
 
   deleteAttachment(id: number) {
     if (confirm('Are you sure you want to delete this attachment?')) {
@@ -793,10 +792,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         }
       );
     }
-  }
+  };
+
   chooseFile() {
     this.fileInput.nativeElement.click();
-  }
+  };
 
   fileChangeEvent(event: any): void {
     const uploadLogo = new FormData();
@@ -824,14 +824,13 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     if (selectedValue === 'template') {
       this.saveTemplate();
     }
-  }
+  };
 
   saveTemplate() {
     this.httpRequest.makeGetRequest('/memo/mem_secure_rule/all').subscribe((response) => {
-      console.log(response.data);
       this.template = response.data
     })
-  }
+  };
 
   fetchFolders(): void {
     this.httpRequest.makeGetRequest('/dashboard/folder/all').subscribe(
@@ -846,11 +845,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         // console.error('Error fetching folders:', error);
       }
     );
-  }
+  };
 
   selectFile() {
     this.fileInput.nativeElement.click();
-  }
+  };
+
   handleChangeEvent(event: any): void {
     const uploadLogo = new FormData();
     const image = event.target.files[0];
@@ -870,8 +870,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     else {
       console.warn('No file selected.');
     }
-  }
-
-
+  };
 }
 

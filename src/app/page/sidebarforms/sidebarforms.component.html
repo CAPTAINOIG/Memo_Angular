@@ -84,18 +84,6 @@
     </div>
   </div>
 
-  <!-- <div *ngIf="handleModals.show == 'edit_files'" class="sidebar-group-forms d-print-none">
-    <div class="sidebar primary-sidebar show" id="storage">
-      <div class="sidebar-header">
-        <h4>Edit Memo</h4>
-        <a href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
-          <i class="ti-angle-right"></i>
-        </a>
-      </div>
-      <app-editmemo></app-editmemo>
-    </div>
-  </div> -->
-
   <div *ngIf="['edit_files', 'create_memo'].includes(this.handleModals.show)" class="sidebar-group-forms d-print-none">
     <div class="sidebar primary-sidebar show" id="storage">
       <div class="sidebar-header">
@@ -137,6 +125,33 @@
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <form [formGroup]="memoForm" (ngSubmit)="draftMemo($event)">
               <div class="form-group">
+                <label for="memoType">Memo Type</label>
+                <div class="form-group">
+                  <select name="memoType" formControlName="memoType" id="memoType" class="form-control"
+                    class="form-control" id="exampleFormControlSelect1">
+                    <option value="external">External</option>
+                    <option value="internal">Internal</option>
+                  </select>
+                </div>
+                <div *ngIf="memoForm.controls['memoType'].value == 'external'">
+                 
+                </div>
+                <div *ngIf="memoForm.controls['memoType'].value == 'internal'">
+                  <div class="card border-0" style="margin: 16px 0px">
+                    <div class="form-group">
+                      <label for="users_name">Staff</label>
+                      <input type="text" formControlName="staff" class="form-control" id="staff"
+                        placeholder="Enter name" />
+                    </div>
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Memo Code</label>
+                <input type="text" formControlName="memoCode" class="form-control" id="memoCode" name="memoCode"
+                   placeholder="" />
+              </div>
+              <div class="form-group">
                 <label for="exampleInputEmail1">Title</label>
                 <input type="text" formControlName="title" class="form-control" id="title" name="title"
                   aria-describedby="emailHelp" placeholder="" />
@@ -154,7 +169,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Memo</label>
-                <div class="NgxEditor__Wrapper" style="height: 450px; max-height: 500px; overflow-y: auto;">
+                <div id="scroll-container" class="NgxEditor__Wrapper" style="height: 450px; max-height: 500px; overflow-y: auto;">
                   <quill-editor [modules]="quillModules" formControlName="memo" [placeholder]="'Write Something Here'"
                      style="height: 400px;" theme="snow">
                   </quill-editor>
@@ -180,15 +195,6 @@
                       {{ handleModals.show === "edit_files" ? "Save Edit": "Save Draft" }}
                     </ng-template>
                   </button>
-
-                  <!-- <quill-editor [modules]="quillModules" formControlName="editorContent"></quill-editor>
-
-                  <p>Rich Text Editor with Advanced Features</p> -->
-
-                  <!-- <quill-editor [modules]="quillModules" formControlName="editorContent" style="height: 400px;"
-                    theme="snow">
-                  </quill-editor> -->
-
 
                   <button type="submit" name="action" value="approve" class="btn btn-primary" [disabled]="isLoading">
                     {{ isLoadingApprove ? "Loading..." : "Submit for approval" }}

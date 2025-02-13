@@ -1,35 +1,30 @@
-<div class="form-membership" style="background: url(../../assets/media/image/pexels-pixabay-164425.jpg)">
-    <div class="form-wrapper animate__animated animate__fadeIn">
+<div class="form-membership" style="background-attachment: fixed !important;
+    background-size: cover !important;background: url(../../assets/media/image/woman-hold-laptop-with-virtual-global-with-cyber-security-login-user-identification-informati.jpg);">
+    <div class="form-wrapper animate_animated animate_fadeIn">
 
         <!-- logo -->
         <div id="logo">
-            <img src="../../assets/media/image/logo-dark.png" alt="image">
+            <img src="../../assets/media/image/logo.png" alt="image">
         </div>
-        <!-- ./ logo -->
-
         <h5>Two Factor Authentication</h5>
 
-        <!-- form -->
         <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <input 
-                    type="otp" 
-                    class="form-control" 
-                    formControlName="otp" 
-                    placeholder="number" 
-                    [ngClass]="{'is-invalid': authForm.get('otp').invalid && authForm.get('otp').touched}" 
-                    required>
+                <input type="otp" class="form-control" formControlName="otp" placeholder="number"
+                    [ngClass]="{'is-invalid': authForm.get('otp').invalid && authForm.get('otp').touched}" required>
                 <div *ngIf="authForm.get('otp').invalid && authForm.get('otp').touched" class="invalid-feedback">
                     <small *ngIf="authForm.get('otp').errors.required">OTP is required.</small>
                     <small *ngIf="authForm.get('otp').errors.minlength">OTP must be at least 6 characters long.</small>
                 </div>
             </div>
-            <button type="submit" [disabled]="isLoading" class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700">
+
+            <button type="submit" [disabled]="isLoading"
+                class="btn btn-primary btn-block w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 mt-2">
                 {{ isLoading ? 'Submitting...' : 'Submit' }}
-              </button>
+            </button>
+
             <hr>
         </form>
-        <!-- ./ form -->
 
     </div>
 </div>
