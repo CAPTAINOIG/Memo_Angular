@@ -4,6 +4,7 @@ import { ServicesidebarService } from '../service/servicesidebar.service';
 @Component({
     selector: 'app-userdetail',
     imports: [],
+    standalone: true,
     templateUrl: './userdetail.component.html',
     styleUrl: './userdetail.component.css'
 })

@@ -671,8 +671,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
     const values = this.form.value;
     this.metaDataArray.push(values);
-    console.log('Form submitted:', values);
-    // this.form.reset();
     const meta = {
       memId: this.memId,
       "data": {
@@ -730,8 +728,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   };
 
   deleteMetaData(key: number) {
-    console.log(this.memId);
-    console.log(key);
+    // console.log(this.memId);
+    // console.log(key);
 
     const url = `/memo/metadata/?memId=${encodeURIComponent(this.memId)}&key=${encodeURIComponent(key)}`;
 

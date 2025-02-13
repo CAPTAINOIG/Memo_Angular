@@ -1,16 +1,27 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
-  constructor (private router: Router) {}
+export class NavbarComponent implements OnInit {
+   macAddress = 'XX:XX:XX:XX:XX:XX'; 
+  constructor (private router: Router,  private route: ActivatedRoute) {}
+  ngOnInit(): void {
+      this.route.queryParams.subscribe(params => {
+        const mac_address = params['mac'];
+        // console.log(this.macAddress)
+        if (mac_address) {
+          this.macAddress = mac_address;
+         
+        }
+      });
+    }
 
   navigateToLogin() {
-    const macAddress = 'XX:XX:XX:XX:XX:XX'; 
-    this.router.navigate(['/login'], { queryParams: { mac: macAddress } });
+   
+    this.router.navigate(['/login'], { queryParams: { mac: this.macAddress } });
   };
 }

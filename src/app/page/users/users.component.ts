@@ -16,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
     selector: 'app-users',
     imports: [CommonModule, NavigationComponent, HeaderComponent, SidebarComponent, FormsModule],
+    standalone: true,
     templateUrl: './users.component.html',
     styleUrl: './users.component.css'
 })
