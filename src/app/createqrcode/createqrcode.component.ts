@@ -8,6 +8,7 @@ import { ServicesidebarService } from '../service/servicesidebar.service';
 @Component({
     selector: 'app-createqrcode',
     imports: [FormsModule, CommonModule, ReactiveFormsModule],
+    standalone: true,
     templateUrl: './createqrcode.component.html',
     styleUrl: './createqrcode.component.css'
 })
@@ -41,20 +42,6 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
     const memId = this.handleModals.publishMemId
   }
 
-  // fetchQrCode() {
-  //   if (this.handleModals.createMemoTab && ['edit_files', 'create_memo'].includes(this.handleModals.show)) {
-  //     this.httpRequest.makeGetRequest('/memo/get_by_memuniqueid_that_is_not_used').subscribe((response) => {
-  //       if (response.data) {
-  //         console.log(response.data);
-  //         this.handleModals.setQrCodeData(response.data)
-  //       }
-  //     }, (error) => {
-  //       console.log(error);
-  //     })
-
-  //   }
-  // }
-  
   handleQrCodeLink() {
     const qrCodeValue = this.form.controls['qrcode'].value;
     if (!qrCodeValue) {

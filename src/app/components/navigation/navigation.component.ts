@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 @Component({
     selector: 'app-navigation',
     imports: [RouterLink, CommonModule, RouterLink],
+    standalone: true,
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.css']
 })

@@ -7,7 +7,8 @@ import { SidebarformsComponent } from '../../page/sidebarforms/sidebarforms.comp
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
-    imports: [RouterModule, HeaderComponent, SidebarformsComponent]
+    imports: [RouterModule, HeaderComponent, SidebarformsComponent],
+    standalone: true
 })
 export class DashboardComponent {
   prop:boolean=false;

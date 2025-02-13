@@ -8,6 +8,7 @@ import Toastify from 'toastify-js';
 @Component({
     selector: 'app-external-viewer',
     imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    standalone: true,
     templateUrl: './external-viewer.component.html',
     styleUrls: ['./external-viewer.component.css']
 })

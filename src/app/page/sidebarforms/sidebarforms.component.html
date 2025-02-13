@@ -291,10 +291,10 @@
                 </thead>
                 <tbody class="">
                   <tr *ngFor="let data of metaDataResult; let i = index">
-                    <td>{{ data.key }}</td>
-                    <td>{{ data.value }}</td>
+                    <td>{{ data?.key }}</td>
+                    <td>{{ data?.value }}</td>
                     <td class="text-center">
-                      <button (click)="deleteMetaData(i)" class="btn btn-link">
+                      <button (click)="deleteMetaData(data?.value)" class="btn btn-link">
                         <i class="fas fa-trash-alt text-danger">delete</i>
                       </button>
                     </td>

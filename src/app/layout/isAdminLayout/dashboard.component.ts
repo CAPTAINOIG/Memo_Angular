@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
-    imports: [RouterModule]
+    imports: [RouterModule],
+    standalone:true
 })
 export class AdminLayoutComponent {
 

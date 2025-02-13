@@ -26,8 +26,8 @@ Quill.register({
 }, true);
 
 @Component({
-    selector: 'app-sidebarforms',
-    imports: [
+  selector: 'app-sidebarforms',
+  imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
@@ -41,14 +41,14 @@ Quill.register({
     CreatefolderComponent,
     CreateqrcodeComponent,
     QuillModule,
-],
-    templateUrl: './sidebarforms.component.html',
-    styleUrls: ['./sidebarforms.component.css'],
-    standalone: true,
+  ],
+  templateUrl: './sidebarforms.component.html',
+  styleUrls: ['./sidebarforms.component.css'],
+  standalone: true,
 })
 export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
-  isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
-  
+  isAdmin = JSON.parse(localStorage.getItem('isAdmin') ?? 'false')
+
   @ViewChild('fileInput') fileInput!: ElementRef;
   step: any;
   memoForm: FormGroup;
@@ -149,20 +149,20 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
   quillModules = {
     toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],          
-      ['blockquote', 'code-block'],                       
-      [{ 'header': 1 }, { 'header': 2 }],                 
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],      
-      [{ 'script': 'sub' }, { 'script': 'super' }],       
-      [{ 'indent': '-1' }, { 'indent': '+1' }],          
-      [{ 'direction': 'rtl' }],                          
-      [{ 'size': ['small', false, 'large', 'huge'] }],    
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],          
-      [{ 'color': [] }, { 'background': [] }],            
-      [{ 'font': [] }],                                  
-      [{ 'align': [] }],                                 
-      ['link', 'image', 'video'],                         
-      ['clean'],                                          
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'header': 1 }, { 'header': 2 }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+      ['link', 'image', 'video'],
+      ['clean'],
       // ['table']                                           
     ],
     clipboard: {
@@ -178,7 +178,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }
     }
   };
-  
+
   ngOnInit(): void {
     this.editor = new Editor();
     this.fetchFolders();
@@ -191,7 +191,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }
     });
   };
-  
+
   ngDoCheck(): void {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
       const check = this.handleModals.show == "edit_files"
@@ -216,7 +216,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         name: '',
         email: '',
         phone: '',
-        groupEmail : '',
+        groupEmail: '',
         key: '',
         value: '',
         public: '',
@@ -323,7 +323,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }).showToast();
       return;
     }
-    
+
     const memoData = {
       title: this.memoForm.value.title,
       // MemTitle: this.memoForm.value.title,
@@ -331,7 +331,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       MemUniqueId: this.memId,
       include_signature: !!this.memoForm.value.include_signature,
       memFold: Number(this.memoForm.value.memFoldId),
-      isPublished: event.submitter.value==='save' ? 0 : 1,
+      isPublished: event.submitter.value === 'save' ? 0 : 1,
       memoType: this.memoForm.value.memoType,
       staff: this.memoForm.value.staff,
       memoCode: this.memoForm.value.memoCode
@@ -340,44 +340,44 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     if (memoData.memo && memoData.memo.type === 'doc') {
       memoData.memo = this.extractPlainText(memoData.memo);
     };
-  
-    if (this.handleModals.show === 'edit_files' && event.submitter.value ==='save') {
-        const memo = {
-          title: this.memoForm.value.title || this.handleModals?.editMemo?.MemTitle,
-          memo: this.memoForm.value.memo,
-          memId: this.handleModals?.editMemo?.MemUniqueId,
-          memFold: this.handleModals?.editMemo?.MemFoldId,
-          
-        };
-        this.isLoading = true;
-        this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
-          (response) => {
-            this.isLoading = false;
-            this.memoForm.reset();
-            Toastify({
-              text: 'Memo updated successfully',
-              duration: 3000,
-              gravity: 'top',
-              position: 'right',
-              backgroundColor: '#0000FF',
-            }).showToast();
-            this.fileService.triggerFileRefresh();
-          },
-          (error) => {
-            console.error('Error updating memo:', error);
-            this.isLoading = false;
-            Toastify({
-              text: `${error.error.message || 'An error occurred'}`,
-              duration: 3000,
-              gravity: 'top',
-              position: 'right',
-              backgroundColor: '#FF0000',
-            }).showToast();
-          }
-        );
-      }else if(this.handleModals.show === 'edit_files' && event.submitter.value==='approve') {
-        this.isLoadingApprove = true;
-        this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModals?.editMemo?.Id, 'publish' : 'pending' }).subscribe((response) => {
+
+    if (this.handleModals.show === 'edit_files' && event.submitter.value === 'save') {
+      const memo = {
+        title: this.memoForm.value.title || this.handleModals?.editMemo?.MemTitle,
+        memo: this.memoForm.value.memo,
+        memId: this.handleModals?.editMemo?.MemUniqueId,
+        memFold: this.handleModals?.editMemo?.MemFoldId,
+
+      };
+      this.isLoading = true;
+      this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
+        (response) => {
+          this.isLoading = false;
+          this.memoForm.reset();
+          Toastify({
+            text: 'Memo updated successfully',
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: '#0000FF',
+          }).showToast();
+          this.fileService.triggerFileRefresh();
+        },
+        (error) => {
+          console.error('Error updating memo:', error);
+          this.isLoading = false;
+          Toastify({
+            text: `${error.error.message || 'An error occurred'}`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: '#FF0000',
+          }).showToast();
+        }
+      );
+    } else if (this.handleModals.show === 'edit_files' && event.submitter.value === 'approve') {
+      this.isLoadingApprove = true;
+      this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModals?.editMemo?.Id, 'publish': 'pending' }).subscribe((response) => {
         this.isLoadingApprove = false;
         Toastify({
           text: 'Memo submitted successfully',
@@ -399,37 +399,37 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           backgroundColor: '#FF0000',
         }).showToast();
       })
-      }
-      else if(this.handleModals.show === 'create_memo' ) {
-        this.isLoading = true;
-        this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
-          (response: any) => {
-            this.isLoading = false;
-            this.memId = response.id;
-            this.handleModals.setMemId(response.id);
-            Toastify({
-              text: 'Memo created successfully',
-              duration: 3000,
-              gravity: 'top',
-              position: 'right',
-              backgroundColor: '#0000FF',
-            }).showToast();
-            this.fileService.triggerFileRefresh();
-            // this.handleModals.showMother("undefined");
-            this.memoForm.reset();
-          },
-          (error) => {
-            this.isLoading = false;
-            Toastify({
-              text: `${error.error.message || 'An error occurred'}`,
-              duration: 3000,
-              gravity: 'top',
-              position: 'right',
-              backgroundColor: '#FF0000',
-            }).showToast();
-          }
-        );
-      };
+    }
+    else if (this.handleModals.show === 'create_memo') {
+      this.isLoading = true;
+      this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
+        (response: any) => {
+          this.isLoading = false;
+          this.memId = response.id;
+          this.handleModals.setMemId(response.id);
+          Toastify({
+            text: 'Memo created successfully',
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: '#0000FF',
+          }).showToast();
+          this.fileService.triggerFileRefresh();
+          // this.handleModals.showMother("undefined");
+          this.memoForm.reset();
+        },
+        (error) => {
+          this.isLoading = false;
+          Toastify({
+            text: `${error.error.message || 'An error occurred'}`,
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: '#FF0000',
+          }).showToast();
+        }
+      );
+    };
   };
 
 
@@ -479,9 +479,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
     this.isLoading = true;
     const formValues = { ...this.memoForm.value, data: this.test, ipData: this.allowed_ips, geolocationData: Object.values(this.locationDetails), memId: this.memId, new: this.area_location, metaData: this.metaDataArray };
-    console.log(formValues);
     this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response) => {
-      console.log(response);
       this.isLoading = false;
       Toastify({
         text: 'success',
@@ -491,7 +489,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         backgroundColor: "#0000FF",
       }).showToast();
     }, (error) => {
-      console.log(error.error.message);
       this.isLoading = false;
       Toastify({
         text: 'something went wrong',
@@ -544,7 +541,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   //     ],
   //     // name: this.createMemoForm.get('name')?.value,
   //   };
-    
+
   //   console.log(memoData)
 
   //   this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
@@ -585,7 +582,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }).showToast();
       return;
     }
-  
+
     if (!this.createMemoForm.valid) {
       Toastify({
         text: "Form is not valid",
@@ -597,20 +594,20 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.isLoading = false;
       return;
     }
-  
+
     const access = this.createMemoForm.get('access')?.value;
     const accessType = this.createMemoForm.get('accessType')?.value;
-  
+
     let memoData: any = {
       access: access,
       memId: this.memId,
       users: []
     };
-  
+
     if (access === 'public') {
       // No additional data required
     }
-  
+
     // Restricted Access
     if (access === 'restricted') {
       if (accessType === 'individual') {
@@ -619,18 +616,16 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           email: this.createMemoForm.get('email')?.value,
           phone: this.createMemoForm.get('phone')?.value
         });
-      } 
+      }
       else if (accessType === 'group') {
         memoData.users.push({
           groupEmail: this.createMemoForm.get('groupEmail')?.value
         });
       }
     }
-  
-    console.log(memoData);
+
     this.httpRequest.makePostRequest('/memo/access_type/create', memoData).subscribe(
       (response) => {
-        console.log(response);
         this.isLoading = false;
         Toastify({
           text: 'Success',
@@ -641,7 +636,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         }).showToast();
       },
       (error) => {
-        console.log(error);
         this.isLoading = false;
         Toastify({
           text: 'Error saving memo',
@@ -653,7 +647,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       }
     );
   }
-  
+
   draftMetaData() {
     if (!this.memId) {
       Toastify({
@@ -736,7 +730,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   };
 
   deleteMetaData(key: number) {
-    // console.log(key);
+    console.log(this.memId);
+    console.log(key);
+
     const url = `/memo/metadata/?memId=${encodeURIComponent(this.memId)}&key=${encodeURIComponent(key)}`;
 
     this.httpRequest.makeDeleteRequest(url).subscribe(
@@ -760,7 +756,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       },
       (error) => {
         Toastify({
-          text: 'Error fetching metadata',
+          text: 'Error Deleting metadata',
           duration: 3000,
           gravity: "top",
           position: "right",
