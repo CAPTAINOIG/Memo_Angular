@@ -11,6 +11,7 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 @Component({
     selector: 'app-login',
     imports: [CommonModule, ReactiveFormsModule, RouterLink],
+    standalone: true,
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })

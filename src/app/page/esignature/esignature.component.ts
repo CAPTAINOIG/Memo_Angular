@@ -7,6 +7,7 @@ import { HttpRequestService } from '../../service/HttpRequest/http-request.servi
 @Component({
     selector: 'app-esignature',
     imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    standalone: true,
     templateUrl: './esignature.component.html',
     styleUrl: './esignature.component.css'
 })

@@ -9,6 +9,7 @@ import "toastify-js/src/toastify.css";
 @Component({
     selector: 'app-authentication',
     imports: [FormsModule, CommonModule, ReactiveFormsModule],
+    standalone: true,
     templateUrl: './authentication.component.html',
     styleUrl: './authentication.component.css'
 })

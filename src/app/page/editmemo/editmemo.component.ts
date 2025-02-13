@@ -10,6 +10,7 @@ import "toastify-js/src/toastify.css";
 @Component({
     selector: 'app-editmemo',
     imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxEditorModule],
+    standalone: true,
     templateUrl: './editmemo.component.html',
     styleUrls: ['./editmemo.component.css']
 })

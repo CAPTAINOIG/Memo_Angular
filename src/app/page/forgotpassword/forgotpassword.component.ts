@@ -10,6 +10,7 @@ import Toastify from 'toastify-js';
 @Component({
     selector: 'app-forgotpassword',
     imports: [CommonModule, ReactiveFormsModule],
+    standalone: true,
     templateUrl: './forgotpassword.component.html',
     styleUrl: './forgotpassword.component.css'
 })

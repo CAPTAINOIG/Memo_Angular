@@ -9,6 +9,7 @@ import { ServicesidebarService } from '../../service/servicesidebar.service';
 @Component({
     selector: 'app-createfolder',
     imports: [FormsModule, CommonModule, ReactiveFormsModule],
+    standalone: true,
     templateUrl: './createfolder.component.html',
     styleUrl: './createfolder.component.css'
 })

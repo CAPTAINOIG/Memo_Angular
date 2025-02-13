@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @Component({
     selector: 'app-activities',
     imports: [NavigationComponent, SidebarComponent, CommonModule, ReactiveFormsModule],
+    standalone: true,
     templateUrl: './activities.component.html',
     styleUrl: './activities.component.css'
 })

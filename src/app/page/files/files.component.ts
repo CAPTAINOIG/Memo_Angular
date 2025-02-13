@@ -11,6 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
     selector: 'app-files',
     imports: [NavigationComponent, SidebarComponent, ReactiveFormsModule, FormsModule, CommonModule],
+    standalone: true,
     templateUrl: './files.component.html',
     styleUrl: './files.component.css'
 })
