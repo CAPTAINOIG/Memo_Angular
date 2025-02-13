@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
     }
 
   navigateToLogin() {
-   
     this.router.navigate(['/login'], { queryParams: { mac: this.macAddress } });
   };
 }

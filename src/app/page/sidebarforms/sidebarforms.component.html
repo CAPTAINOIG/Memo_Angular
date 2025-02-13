@@ -454,24 +454,24 @@
 
                     <!-- Step 3: Display the input field with the selected country and disable it -->
                     <!-- <div *ngIf="countrySelected"> -->
-                    <div>
+                    <div style="color: black; font-weight: 100;">
                       <input class="card form-control" type="text" [value]="selectedCountry"
                         formControlName="areaName" />
 
-                      <button class="btn btn-primary mb-2 my-3" type="button" (click)="getIp()">
+                      <!-- <button class="btn btn-primary mb-2 my-3" type="button" (click)="getIp()">
                         Get Location Details
-                      </button>
+                      </button> -->
                     </div>
 
                     <div *ngIf="!locationDetails && memoForm.get('areaName')?.value ">
                       No location found for this area.
                     </div>
 
-                    <ul class="list-inline">
+                    <!-- <ul class="list-inline">
                       <li class="list-inline-item" *ngFor="let ip of area_location">
                         <span class="badge border bg-success-bright text-success">{{ ip }}</span>
                       </li>
-                    </ul>
+                    </ul> -->
                   </ng-container>
                 </div>
 
