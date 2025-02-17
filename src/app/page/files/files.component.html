@@ -201,6 +201,9 @@
                                             <!-- Non-Admin Actions -->
                                             <ng-container *ngIf="!isAdmin && item.IsPublished === 0">
                                                 <div class="dropdown-menu dropdown-menu-right">
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-primary hover-bg-success-light hover-text-dark"
+                                                        (click)="qrCode(item?.MemUniqueId)">Attach Qr Code</span>
                                                     <span class="dropdown-item cursor-pointer"
                                                         (click)="editFiles(item?.MemUniqueId)"
                                                         data-sidebar-target="#view-file">

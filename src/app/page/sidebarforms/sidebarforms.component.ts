@@ -19,6 +19,7 @@ import { CreateqrcodeComponent } from '../../createqrcode/createqrcode.component
 import { QuillModule } from 'ngx-quill';
 import Quill from 'quill';
 import QuillBetterTable from 'quill-better-table';
+import { HttpClient } from '@angular/common/http';
 
 
 Quill.register({
@@ -81,6 +82,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   memFoldId: any;
   metaDataResult: any;
   isMetaLoader = false;
+  secureBySmsOtp = false;
+  otpSent = false;
+  otpForm: FormGroup;
+  submittedOtp = '';
+  isSmsLoading = false;
 
 
   memo_attachments = [
@@ -97,6 +103,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     private fb: FormBuilder,
     private folderService: ServicesidebarService,
     private fileService: ServicesidebarService,
+    private http: HttpClient,
   ) {
     this.memoForm = new FormGroup({
       memoType: new FormControl(),
@@ -131,6 +138,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       key: ['', Validators.required],
       value: ['', Validators.required],
     });
+
+    this.otpForm = this.fb.group({
+      phoneNumber: new FormControl('', Validators.required),
+      message: new FormControl('', Validators.required),
+    })
 
     this.createMemoForm = this.fb.group({
       access: new FormControl(''),
@@ -258,11 +270,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.httpRequest.makeGetRequest('/memo/memgeotemp').subscribe((response) => {
       const lat = response.data.lat;
       const lng = response.data.lng;
-      
+
       this.area_location = [{ lat: lat, lng: lng }];
 
       const location = `Lat: ${lat}, Lng: ${lng}`;
-      console.log(location);
 
       this.memoForm.controls['areaName'].setValue(location);
       // this.memoForm.reset();
@@ -468,6 +479,72 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.memoForm.get('ip_address')?.reset();
   };
 
+
+  sendOtp() {
+    if (!this.otpForm.valid) {
+      Toastify({
+        text: 'Please fill all the fields',
+        duration: 3000,
+        gravity: 'top',
+        position: 'right',
+        style: { background: '#FF0000' },
+      }).showToast();
+      return;
+    }
+    const payload = this.otpForm.value;
+    this.isSmsLoading = true;
+    this.http.post('https://lendnode.creditclan.com/gateway/send_external_sms', {phone: payload.phoneNumber, message: payload.message}).subscribe((response) => {
+          this.isSmsLoading = false;
+          Toastify({
+            text: 'OTP sent successfully',
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            style: { background: '#0000FF' },
+          }).showToast();
+          this.otpSent = true;
+        },
+        (error) => {
+          this.isSmsLoading = false;
+          Toastify({
+            text: 'Error sending OTP',
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            style: { background: '#FF0000' },
+          }).showToast();
+        }
+      );
+  }
+
+  verifyOtp() {
+    const payload = {
+      phoneNumber: this.otpForm.value.phoneNumber,
+      otp: this.submittedOtp,
+    };
+
+    this.http.post('/memo/otp/verify', payload).subscribe((response) => {
+        Toastify({
+          text: 'OTP verified successfully',
+          duration: 3000,
+          gravity: 'top',
+          position: 'right',
+          style: { background: '#0000FF' },
+        }).showToast();
+      },
+      (error) => {
+        Toastify({
+          text: 'Error verifying OTP',
+          duration: 3000,
+          gravity: 'top',
+          position: 'right',
+          style: { background: '#FF0000' },
+        }).showToast();
+      }
+    );
+  }
+
+
   onsubmit() {
     this.isLoading = false;
     if (!this.memId) {
@@ -482,7 +559,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     }
     this.isLoading = true;
     const formValues = { ...this.memoForm.value, data: this.test, ipData: this.allowed_ips, geolocationData: this.area_location, memId: this.memId, new: this.area_location, metaData: this.metaDataArray };
-    console.log(formValues);
     this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response) => {
       console.log(response);
       this.isLoading = false;
@@ -760,9 +836,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
   getMemoAttachments() {
     this.httpRequest.makeGetRequest(`/memo/memo_attachment?${this.memId}`).subscribe((response) => {
-      console.log(response);
     }, (error) => {
-      console.log(error);
 
     })
   };

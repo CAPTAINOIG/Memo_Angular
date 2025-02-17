@@ -56,7 +56,9 @@ export class ExternalViewerComponent implements OnInit {
               if (response.data) {
                 this.status = 'data';
                 this.data = response.data;
-                console.log(this.data);
+                if (this.data.MemMetadata) {
+                  this.data.MemMetadata = JSON.parse(this.data.MemMetadata);
+                }
               }
               else if (response.requireAccess) {
                 this.status = 'requireAccess';
@@ -76,7 +78,6 @@ export class ExternalViewerComponent implements OnInit {
       (error: any) => {
         this.status = 'error';
         this.message = "This page requires your location to fetch the data";
-        console.error('Error retrieving location:', error);
       },
       {
         enableHighAccuracy: true,
@@ -103,10 +104,7 @@ export class ExternalViewerComponent implements OnInit {
       identity: this.identity,
       memId: this.itemId
     }
-    console.log(verifyIdentity);
-
     this.http.makePostRequest('/memo/verify_viewer_identity/', verifyIdentity).subscribe((response) => {
-      console.log(response);
       this.status = "Next_token"
       Toastify({
         text: 'success',
