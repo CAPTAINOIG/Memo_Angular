@@ -480,69 +480,69 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   };
 
 
-  sendOtp() {
-    if (!this.otpForm.valid) {
-      Toastify({
-        text: 'Please fill all the fields',
-        duration: 3000,
-        gravity: 'top',
-        position: 'right',
-        style: { background: '#FF0000' },
-      }).showToast();
-      return;
-    }
-    const payload = this.otpForm.value;
-    this.isSmsLoading = true;
-    this.http.post('https://lendnode.creditclan.com/gateway/send_external_sms', {phone: payload.phoneNumber, message: payload.message}).subscribe((response) => {
-          this.isSmsLoading = false;
-          Toastify({
-            text: 'OTP sent successfully',
-            duration: 3000,
-            gravity: 'top',
-            position: 'right',
-            style: { background: '#0000FF' },
-          }).showToast();
-          this.otpSent = true;
-        },
-        (error) => {
-          this.isSmsLoading = false;
-          Toastify({
-            text: 'Error sending OTP',
-            duration: 3000,
-            gravity: 'top',
-            position: 'right',
-            style: { background: '#FF0000' },
-          }).showToast();
-        }
-      );
-  }
+  // sendOtp() {
+  //   if (!this.otpForm.valid) {
+  //     Toastify({
+  //       text: 'Please fill all the fields',
+  //       duration: 3000,
+  //       gravity: 'top',
+  //       position: 'right',
+  //       style: { background: '#FF0000' },
+  //     }).showToast();
+  //     return;
+  //   }
+  //   const payload = this.otpForm.value;
+  //   this.isSmsLoading = true;
+  //   this.http.post('https://lendnode.creditclan.com/gateway/send_external_sms', {phone: payload.phoneNumber, message: payload.message}).subscribe((response) => {
+  //         this.isSmsLoading = false;
+  //         Toastify({
+  //           text: 'OTP sent successfully',
+  //           duration: 3000,
+  //           gravity: 'top',
+  //           position: 'right',
+  //           style: { background: '#0000FF' },
+  //         }).showToast();
+  //         this.otpSent = true;
+  //       },
+  //       (error) => {
+  //         this.isSmsLoading = false;
+  //         Toastify({
+  //           text: 'Error sending OTP',
+  //           duration: 3000,
+  //           gravity: 'top',
+  //           position: 'right',
+  //           style: { background: '#FF0000' },
+  //         }).showToast();
+  //       }
+  //     );
+  // }
 
-  verifyOtp() {
-    const payload = {
-      phoneNumber: this.otpForm.value.phoneNumber,
-      otp: this.submittedOtp,
-    };
+  // verifyOtp() {
+  //   const payload = {
+  //     phoneNumber: this.otpForm.value.phoneNumber,
+  //     otp: this.submittedOtp,
+  //   };
 
-    this.http.post('/memo/otp/verify', payload).subscribe((response) => {
-        Toastify({
-          text: 'OTP verified successfully',
-          duration: 3000,
-          gravity: 'top',
-          position: 'right',
-          style: { background: '#0000FF' },
-        }).showToast();
-      },
-      (error) => {
-        Toastify({
-          text: 'Error verifying OTP',
-          duration: 3000,
-          gravity: 'top',
-          position: 'right',
-          style: { background: '#FF0000' },
-        }).showToast();
-      }
-    );
-  }
+  //   this.http.post('/memo/otp/verify', payload).subscribe((response) => {
+  //       Toastify({
+  //         text: 'OTP verified successfully',
+  //         duration: 3000,
+  //         gravity: 'top',
+  //         position: 'right',
+  //         style: { background: '#0000FF' },
+  //       }).showToast();
+  //     },
+  //     (error) => {
+  //       Toastify({
+  //         text: 'Error verifying OTP',
+  //         duration: 3000,
+  //         gravity: 'top',
+  //         position: 'right',
+  //         style: { background: '#FF0000' },
+  //       }).showToast();
+  //     }
+  //   );
+  // }
 
 
   onsubmit() {

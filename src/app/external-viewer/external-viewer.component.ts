@@ -71,7 +71,6 @@ export class ExternalViewerComponent implements OnInit {
             (error) => {
               this.status = 'error';
               this.message = error.error.message;
-              console.error(error);
             }
           );
       },
@@ -89,7 +88,6 @@ export class ExternalViewerComponent implements OnInit {
 
   sendIdentityOtp() {
     if (!this.identity) {
-      console.log('empty');
       Toastify({
         text: 'input cannot be empty',
         duration: 3000,
