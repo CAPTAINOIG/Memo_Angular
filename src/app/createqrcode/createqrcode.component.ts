@@ -58,6 +58,7 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
     this.httpRequest.makePatchRequest('/memo/update_memqrcode', {memQrcodeLink:qrCodeValue})
       .subscribe(
         (response) => {
+          console.log(response)
           this.isQrCodeLoader = false;
           this.handleModals.setQrCodeData(response.data)
           this.form.reset();
@@ -103,6 +104,7 @@ export class CreateqrcodeComponent implements OnInit, OnDestroy {
       memqrcodeId: this.handleModals.qrCodeData.MemUniqueId
     })
     this.httpRequest.makePatchRequest('/memo/update_memo_memuniqueid', updateMemoMemUniqueId).subscribe((response) => {
+      console.log(response)
       Toastify({
         text: "success",
         duration: 3000,

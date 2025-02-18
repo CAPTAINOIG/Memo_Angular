@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Toastify from 'toastify-js';
+import { ServicesidebarService } from '../service/servicesidebar.service';
 
 @Component({
     selector: 'app-external-viewer',
@@ -18,16 +19,18 @@ export class ExternalViewerComponent implements OnInit {
   message: string = "";
   data: any = undefined;
   isLoader = false;
-
+  qrcode: any;
   identity: string = '';
   identityOtp: string = '';
   identityOtpSent: boolean = false;
   isVerified: boolean = false;
 
 
-  constructor(private http: HttpRequestService, private route: ActivatedRoute) { }
+  constructor(private http: HttpRequestService, private route: ActivatedRoute, private handleModals: ServicesidebarService) { }
 
   ngOnInit(): void {
+    this.qrcode = this.handleModals.getCreateMemoTabs();
+    console.log(this.qrcode)
     this.route.paramMap.subscribe(params => {
       this.itemId = params.get('id');
       this.getData();
@@ -56,6 +59,7 @@ export class ExternalViewerComponent implements OnInit {
               if (response.data) {
                 this.status = 'data';
                 this.data = response.data;
+                console.log(this.data)
                 if (this.data.MemMetadata) {
                   this.data.MemMetadata = JSON.parse(this.data.MemMetadata);
                 }

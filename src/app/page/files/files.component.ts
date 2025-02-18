@@ -110,7 +110,6 @@ allFolder$ = this.folderSubject.asObservable();
     this.page += 1
     this.httpRequest.makeGetRequest(`/dashboard/files/all?page=${this.page}&foldId=${this.foldId}`).subscribe((response) => {
       this.allFile = response.data;
-      console.log(this.allFile)
       this.isLoadingNext = false;
     }, (error) => {
       this.isLoadingNext = false;
@@ -142,6 +141,7 @@ allFolder$ = this.folderSubject.asObservable();
     this.page = 1
     this.httpRequest.makeGetRequest('/dashboard/files/all?page=1&foldId=' + id).subscribe((response) => {
       this.allFile = response.data;
+      console.log(this.allFile)
       this.isLoading = false;
     })
   }

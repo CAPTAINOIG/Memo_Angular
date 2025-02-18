@@ -82,8 +82,12 @@ export class ServicesidebarService {
     if(!data){
       this.setQrCodeData(undefined)
     }
-
   }
+
+  getCreateMemoTabs(){
+    return this.createMemoTab
+  }
+
   setUserData(data: any) {
     this.userData = data;
   }

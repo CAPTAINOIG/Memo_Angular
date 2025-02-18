@@ -3,24 +3,17 @@
     <div class="card shadow-sm p-4 mb-5 bg-white rounded memo-content">
       <div class="card-body text-start">
         <div class="logo w-25 mx-auto">
-
-          <img src="../../assets/media/image/logo.png" alt="logo" style="
-            width: 100%;
-            margin: 16px 0px;" />
-
+          <img src="../../assets/media/image/logo.png" alt="logo" style=" width: 100%; margin: 16px 0px;" />
+          <img src="{{ data?.MemQuickResponse }}" alt="Image" class="img-fluid" style="width: 150px; margin-left: 185%; margin-top: -200%;" />
         </div>
+        <div> 
+        </div>
+
         <h1 class="card-title text-dark mb-3 text-center" style="font-size: 30px; font-weight: bold;">{{ data?.MemTitle}}</h1>
         <hr />
         <div class="card-text fs-6" [innerHTML]="data?.MemContents"></div>
-
         <div *ngIf="data.MemMetadata">
           <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Key</th>
-                <th>Value</th>
-              </tr>
-            </thead>
             <tbody *ngFor="let item of data.MemMetadata">
               <tr>
                 <td>{{ item?.key }}</td>
@@ -30,31 +23,6 @@
           </table>
 
         </div>
-
-        <!-- FOR USED LATER -->
-        <!-- <div *ngIf="data.MemMetadata && data.MemMetadata.length > 0">
-          <table class="table table-bordered mt-4">
-            <thead>
-              <tr class="flex justify-content-between">
-                <th class="text-center">Memo Title</th>
-                <th class="text-center">Value</th>
-                <th class="text-center">Delete</th>
-              </tr>
-            </thead>
-            <tbody class="">
-              <tr *ngFor="let data of data.MemMetadata; let i = index">
-                <td>{{ data.key }}</td>
-                <td>{{ data.value }}</td>
-                <td class="text-center">
-                  <button (click)="deleteMetaData(i)" class="btn btn-link">
-                    <i class="fas fa-trash-alt text-danger">delete</i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div> -->
-
 
         <div class="d-flex align-items-center justify-content-end mt-4">
           <div class="text-center" *ngIf="data?.IncludeSignature">

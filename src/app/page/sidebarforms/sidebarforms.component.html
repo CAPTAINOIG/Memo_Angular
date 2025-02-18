@@ -368,6 +368,11 @@
                         </div>
                       </div>
                       </div>
+
+                       <label for="phoneNumber" class="font-weight-bold">Phone Number:</label>
+        <input class="form-control" type="text" formControlName="phoneNumber" id="phoneNumber"
+          (blur)="onPhoneNumberEntered()" />
+      </div>
                       <div *ngIf="otpSent">
                         <div>
                           <label for="submittedOtp" class="font-weight-bold">Enter OTP:</label>

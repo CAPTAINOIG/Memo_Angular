@@ -141,7 +141,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
     this.otpForm = this.fb.group({
       phoneNumber: new FormControl('', Validators.required),
-      message: new FormControl('', Validators.required),
     })
 
     this.createMemoForm = this.fb.group({
@@ -493,7 +492,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   //   }
   //   const payload = this.otpForm.value;
   //   this.isSmsLoading = true;
-  //   this.http.post('https://lendnode.creditclan.com/gateway/send_external_sms', {phone: payload.phoneNumber, message: payload.message}).subscribe((response) => {
+  //   this.http.post('https://lendnode.creditclan.com/gateway/send_external_sms', {phone: payload.phoneNumber}).subscribe((response) => {
   //         this.isSmsLoading = false;
   //         Toastify({
   //           text: 'OTP sent successfully',
@@ -544,6 +543,25 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   //   );
   // }
 
+  // onPhoneNumberEntered() {
+  //   if (this.otpForm.get('phoneNumber')?.invalid) {
+  //     return;
+  //   }
+
+  //   this.phoneNumber = this.otpForm.get('phoneNumber')?.value;
+
+  //   this.http.post('https://your-backend-api.com/send-otp', { phoneNumber: this.phoneNumber })
+  //     .subscribe({
+  //       next: () => {
+  //         this.otpSent = true;
+  //         alert("OTP has been sent to your phone.");
+  //       },
+  //       error: (err) => {
+  //         console.error(err);
+  //         alert("Failed to send OTP. Please try again.");
+  //       }
+  //     });
+  // }
 
   onsubmit() {
     this.isLoading = false;
@@ -560,7 +578,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.isLoading = true;
     const formValues = { ...this.memoForm.value, data: this.test, ipData: this.allowed_ips, geolocationData: this.area_location, memId: this.memId, new: this.area_location, metaData: this.metaDataArray };
     this.httpRequest.makePostRequest('/memo/mem_secure_rule/create', formValues).subscribe((response) => {
-      console.log(response);
       this.isLoading = false;
       Toastify({
         text: 'success',
@@ -570,7 +587,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         backgroundColor: "#0000FF",
       }).showToast();
     }, (error) => {
-      console.log(error);
       this.isLoading = false;
       Toastify({
         text: 'something went wrong',
