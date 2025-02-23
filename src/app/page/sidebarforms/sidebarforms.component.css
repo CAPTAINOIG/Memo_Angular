@@ -15,3 +15,105 @@
   border-radius: 4px;
   min-height: 200px;
 }
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 100vh;  */
+  margin-top: 150px;
+  gap: 20px; 
+}
+
+.btn-generate {
+  padding: 20px 40px; 
+  font-size: 24px; 
+  border: none;
+  border-radius: 10px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+  width: 300px; 
+  text-align: center;
+}
+.btn-create {
+  padding: 20px 40px; 
+  font-size: 24px; 
+  border: none;
+  border-radius: 10px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+  width: 300px; 
+  text-align: center;
+}
+
+.btn-generate {
+  background-color: #007bff; 
+  color: white;
+}
+
+.btn-generate:hover {
+  background-color: #0056b3; 
+}
+
+.btn-create {
+  background-color: #28a745; 
+  color: white;
+}
+
+.btn-create:hover {
+  background-color: #218838; 
+}
+
+.or-text {
+  font-size: 20px;
+  color: #6c757d; 
+  margin: 0;
+}
+
+#folder {
+  max-height: 70vh;
+  overflow-y: auto; 
+}
+
+#folder::-webkit-scrollbar {
+  width: 2px; 
+}
+
+#folder::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+#folder::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.5);  
+  border-radius: 6px; 
+}
+
+#folder {
+  scrollbar-width: thin; 
+  scrollbar-color: rgba(136, 136, 136, 0.5) transparent; 
+}
+
+#scroll-container {
+  width: 100%; 
+  height: 10vh; 
+  overflow-y: scroll;
+}
+
+#scroll-container::-webkit-scrollbar {
+  width: 8px; 
+}
+
+#scroll-container::-webkit-scrollbar-track {
+  background: #e0e0e0; 
+  border-radius: 4px;
+}
+
+#scroll-container::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 4px; 
+}
+
+#scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

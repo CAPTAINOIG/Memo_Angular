@@ -8,24 +8,22 @@
   justify-content: space-between;
 }
 
-/* Custom Scrollbar for WebKit browsers */
 #folder::-webkit-scrollbar {
-  width: 2px; /* Further reduced width of the scrollbar */
+  width: 2px; 
 }
 
 #folder::-webkit-scrollbar-track {
-  background: transparent; /* Make the track background transparent */
+  background: transparent; 
 }
 
 #folder::-webkit-scrollbar-thumb {
-  background: rgba(136, 136, 136, 0.5);  /* Slightly transparent color for the thumb */
-  border-radius: 6px; /* Rounded corners */
+  background: rgba(136, 136, 136, 0.5);  
+  border-radius: 6px; 
 }
 
-/* Custom Scrollbar for Firefox */
 #folder {
-  scrollbar-width: thin; /* Thin scrollbar */
-  scrollbar-color: rgba(136, 136, 136, 0.5) transparent; /* Thumb color and track color */
+  scrollbar-width: thin; 
+  scrollbar-color: rgba(136, 136, 136, 0.5) transparent; 
 }
 
 

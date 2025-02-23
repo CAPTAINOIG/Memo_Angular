@@ -53,6 +53,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   @ViewChild('fileInput') fileInput!: ElementRef;
   step: any;
   memoForm: FormGroup;
+  fullMemo = false;
+  createMetaData = false;
   editor: Editor;
   allowed_ips: string[] = [];
   ip_address: string = '';
@@ -87,6 +89,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   otpForm: FormGroup;
   submittedOtp = '';
   isSmsLoading = false;
+  isMetaDeleteLoader = false;
 
 
   memo_attachments = [
@@ -107,6 +110,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   ) {
     this.memoForm = new FormGroup({
       memoType: new FormControl(),
+      memoDataType: new FormControl(),
+      // createMetaToggle: new FormControl(''),
       memoCode: new FormControl(''),
       title: new FormControl('', Validators.required),
       memo: new FormControl('', Validators.required),
@@ -129,8 +134,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       phone: new FormControl(''),
       groupEmail: new FormControl(''),
       metaData: new FormControl(''),
-      key: new FormControl(''),
-      value: new FormControl(''),
+      // key: new FormControl(''),
+      // value: new FormControl(''),
     });
 
     this.form = this.fb.group({
@@ -194,7 +199,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.editor = new Editor();
     this.fetchFolders();
     this.getIp();
-    this.generateMemoCode();
+    // this.generateMemoCode();
 
     this.folderService.refreshFolder$.subscribe(shouldRefresh => {
       if (shouldRefresh) {
@@ -203,11 +208,27 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     });
   };
 
+  GenerateFullMemo() {
+    this.fullMemo = true;
+    this.createMetaData = false; 
+  }
+  
+  CretaeMetaData() {
+    this.createMetaData = true;
+    this.fullMemo = false; 
+  }
+
+  reset() {
+    this.fullMemo = false;
+    this.createMetaData = false;
+  }
+
   ngDoCheck(): void {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
       const check = this.handleModals.show == "edit_files"
       this.memoForm.setValue({
         memoType: check ? this.handleModals?.editMemo?.MemTitle : '',
+        memoDataType: check ? this.handleModals?.editMemo?.MemTitle : '',
         memoCode: check ? this.handleModals?.editMemo?.MemCode : '',
         title: check ? this.handleModals?.editMemo?.MemTitle : '',
         memo: check ? this.handleModals?.editMemo?.MemContents : '',
@@ -320,23 +341,24 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.memoForm.reset()
   }
 
-  generateMemoCode() {
-    const randomId = 'CCA/' + Math.floor(1000000000 + Math.random() * 9000000000);
-    this.memoForm.patchValue({ memoCode: randomId });
-  }
+  // generateMemoCode() {
+  //   const randomId = 'CCA/' + Math.floor(1000000000 + Math.random() * 9000000000);
+  //   this.memoForm.patchValue({ memoCode: randomId });
+  // }
 
   draftMemo(event: any): void {
-    if (!this.memoForm.valid) {
-      Toastify({
-        text: 'Form is not valid',
-        duration: 3000,
-        gravity: 'top',
-        position: 'right',
-        backgroundColor: '#FF0000',
-      }).showToast();
-      return;
+    if(this.fullMemo){
+      if (!this.memoForm.valid) {
+        Toastify({
+          text: 'Form is not valid',
+          duration: 3000,
+          gravity: 'top',
+          position: 'right',
+          backgroundColor: '#FF0000',
+        }).showToast();
+        return;
+      }
     }
-
     const memoData = {
       title: this.memoForm.value.title,
       // MemTitle: this.memoForm.value.title,
@@ -375,9 +397,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
             backgroundColor: '#0000FF',
           }).showToast();
           this.fileService.triggerFileRefresh();
+          if (this.createMetaData) {
+            this.draftMetaData();
+          }
         },
         (error) => {
-          console.error('Error updating memo:', error);
           this.isLoading = false;
           Toastify({
             text: `${error.error.message || 'An error occurred'}`,
@@ -400,9 +424,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
           backgroundColor: '#0000FF',
         }).showToast();
         this.fileService.triggerFileRefresh();
+        if (this.createMetaData) {
+          this.draftMetaData();
+        }
         this.memoForm.reset();
       }, (error) => {
-        // console.log(error);
         this.isLoadingApprove = false;
         Toastify({
           text: `${error.error.message || 'An error occurred'}`,
@@ -428,6 +454,9 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
             backgroundColor: '#0000FF',
           }).showToast();
           this.fileService.triggerFileRefresh();
+          if (this.createMetaData) {
+            this.draftMetaData();
+          }
           // this.handleModals.showMother("undefined");
           this.memoForm.reset();
         },
@@ -445,6 +474,112 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     };
   };
 
+  
+  draftMetaData() {
+    if (!this.memId) {
+      Toastify({
+        text: "please create a memo",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#FF0000",
+      }).showToast();
+      return;
+    }
+    if (this.fullMemo && !this.form.valid) {
+      Toastify({
+        text: "Please fill all the fields",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#FF0000",
+      }).showToast();
+      return;
+    }
+    const values = this.form.value;
+    this.metaDataArray.push(values);
+    const meta = {
+      memId: this.memId,
+      "data": {
+        key: values.key,
+        value: values.value,
+      }
+    }
+    this.isMetaLoader = true;
+    this.httpRequest.makePostRequest('/memo/metadata', meta).subscribe(
+      (response) => {
+        Toastify({
+          text: "Meta Data added successfully",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#0000FF",
+        }).showToast();
+        // this.memoForm.reset()
+        this.form.controls['key'].reset();
+        this.form.controls['value'].reset();
+        this.isLoading = false;
+        this.fetchMetaData();
+        this.isMetaLoader = false;
+      },
+      (error) => {
+        this.isMetaLoader = false;
+        Toastify({
+          text: 'Error fetching metadata',
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#FF0000",
+        }).showToast();
+      })
+  };
+
+  fetchMetaData(): void {
+    const url = `/memo/metadata/?memId=${encodeURIComponent(this.memId)}`;
+    this.httpRequest.makeGetRequest(url).subscribe(
+      (response) => {
+        this.metaDataResult = response.data;
+        // console.log(this.metaDataResult);
+      },
+      (error) => {
+        Toastify({
+          text: 'Error fetching metadata',
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#FF0000",
+        }).showToast();
+      }
+    );
+  };
+
+  deleteMetaData(key: number) {
+    this.isMetaDeleteLoader = true;
+    const keyString = String(key); 
+    const url = `/memo/metadata/?memId=${encodeURIComponent(this.memId)}&key=${encodeURIComponent(keyString)}`;
+    this.httpRequest.makeDeleteRequest(url).subscribe(
+      (response) => {
+        this.isMetaDeleteLoader = false;
+        this.metaDataResult = response.data;
+        Toastify({
+          text: 'success',
+          duration: 3000,
+          position: 'top',
+          backgroundColor: "#0000FF",
+        }).showToast();
+      },
+      (error) => {
+        this.isMetaDeleteLoader = false;
+        Toastify({
+          text: 'Error Deleting metadata',
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#FF0000",
+        }).showToast();
+      }
+    );
+  };
 
   addIP(ip_address: string) {
     if (!ip_address || !this.isValidIP(ip_address)) {
@@ -746,109 +881,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     );
   }
 
-  draftMetaData() {
-    if (!this.memId) {
-      Toastify({
-        text: "please create a memo",
-        duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "#FF0000",
-      }).showToast();
-      return;
-    }
-    if (!this.form.valid) {
-      Toastify({
-        text: "Please fill all the fields",
-        duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "#FF0000",
-      }).showToast();
-      return;
-    }
-    const values = this.form.value;
-    this.metaDataArray.push(values);
-    const meta = {
-      memId: this.memId,
-      "data": {
-        key: values.key,
-        value: values.value,
-      }
-    }
-    this.isMetaLoader = true;
-    this.httpRequest.makePostRequest('/memo/metadata', meta).subscribe(
-      (response) => {
-        Toastify({
-          text: "Meta Data added successfully",
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "#0000FF",
-        }).showToast();
-        // this.memoForm.reset()
-        this.memoForm.controls['key'].reset();
-        this.memoForm.controls['value'].reset();
-        this.isLoading = false;
-        this.fetchMetaData();
-        this.isMetaLoader = false;
-      },
-      (error) => {
-        this.isMetaLoader = false;
-        Toastify({
-          text: 'Error fetching metadata',
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "#FF0000",
-        }).showToast();
-      })
-  };
-
-  fetchMetaData(): void {
-    const url = `/memo/metadata/?memId=${encodeURIComponent(this.memId)}`;
-
-    this.httpRequest.makeGetRequest(url).subscribe(
-      (response) => {
-        this.metaDataResult = response.data;
-        // console.log(this.metaDataResult);
-      },
-      (error) => {
-        Toastify({
-          text: 'Error fetching metadata',
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "#FF0000",
-        }).showToast();
-      }
-    );
-  };
-
-  deleteMetaData(key: number) {
-    const url = `/memo/metadata/?memId=${encodeURIComponent(this.memId)}&key=${encodeURIComponent(key)}`;
-    this.httpRequest.makeDeleteRequest(url).subscribe(
-      (response) => {
-        this.metaDataResult = response.data;
-        Toastify({
-          text: 'success',
-          duration: 3000,
-          position: 'top',
-          backgroundColor: "#0000FF",
-        }).showToast();
-      },
-      (error) => {
-        Toastify({
-          text: 'Error Deleting metadata',
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "#FF0000",
-        }).showToast();
-      }
-    );
-  };
-
 
   getMemoAttachments() {
     this.httpRequest.makeGetRequest(`/memo/memo_attachment?${this.memId}`).subscribe((response) => {
@@ -933,14 +965,11 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     const image = event.target.files[0];
 
     if (image) {
-      console.log(image);
       uploadLogo.append('image', image, image.name);
       this.httpRequest.makePostRequest('/memo/access_type/create', uploadLogo, true).subscribe(
         (response) => {
-          console.log(response);
         },
         (error) => {
-          console.log(error);
         }
       );
     }

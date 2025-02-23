@@ -26,11 +26,9 @@ export class ExternalViewerComponent implements OnInit {
   isVerified: boolean = false;
 
 
-  constructor(private http: HttpRequestService, private route: ActivatedRoute, private handleModals: ServicesidebarService) { }
+  constructor(private http: HttpRequestService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.qrcode = this.handleModals.getCreateMemoTabs();
-    console.log(this.qrcode)
     this.route.paramMap.subscribe(params => {
       this.itemId = params.get('id');
       this.getData();
@@ -59,7 +57,6 @@ export class ExternalViewerComponent implements OnInit {
               if (response.data) {
                 this.status = 'data';
                 this.data = response.data;
-                console.log(this.data)
                 if (this.data.MemMetadata) {
                   this.data.MemMetadata = JSON.parse(this.data.MemMetadata);
                 }
