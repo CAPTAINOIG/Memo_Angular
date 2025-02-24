@@ -17,6 +17,8 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "allowedCommonJsDependencies": [
+              "quill-delta",
+              "quill-better-table",
               "toastify-js"
             ],
             "polyfills": [

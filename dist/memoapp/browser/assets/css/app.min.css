@@ -84,7 +84,7 @@ Author URL: https://themeforest.net/user/laborasyon/portfolio
   right: -100%;
   top: 0;
   bottom: 0;
-  width: 700px;
+  width: 900px;
   display: flex;
   flex-direction: column;
   transition: right 0.2s;
@@ -7626,7 +7626,7 @@ div.form-membership:before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 98, 255, 0.8);
+  /* background: rgba(0, 98, 255, 0.8); */
 }
 div.form-membership1:before {
   content: "";
