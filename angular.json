@@ -26,10 +26,13 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+             {
+              "glob": "**/*",
+               "input": "public"
+             },
+              "src/favicon.ico",
+              "src/assets",
+              "src/web.config"
             ],
             "styles": [
            

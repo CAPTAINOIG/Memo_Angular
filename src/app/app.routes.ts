@@ -21,25 +21,27 @@ import { FolderComponent } from './folder/folder.component';
 
 
 export const routes: Routes = [
-    {'path': '', component: FolderComponent},
-    {'path':'login', component:LoginComponent},
-    {path: 'auth', component: TwofactorauthComponent},
-    {'path':'forgotpassword', component: ForgotpasswordComponent},
-    {path: 'passwordAuth', component: PasswordauthComponent},
-    {'path': 'resetPassword', component: PasswordresetComponent},
-    {'path':'portal', component:DashboardLayout, canActivate:[authGuard], children:[
-        {'path':'dashboard', component:DashboardComponent},
-        {'path':'files', component:FilesComponent},
-        {path:"",component:AdminLayoutComponent, canActivate:[isAdminGaurd], children:[
-            {'path':'activities', component:ActivitiesComponent},
-            {'path':'users', component:UsersComponent},
-            {'path':'settings', component:SettingsComponent},
-            {'path': 'newuser', component: NewuserComponent},
-        ]}
-    ]},
-    {'path': 'securitycheck', component: SecurityCheckComponent},
-    {'path': 'viewer/:id', component: ExternalViewerComponent},
-    { path: 'errorpage', component: PagenotfoundComponent },
-    { path: '**', redirectTo: '/errorpage' } 
+    { path: 'viewer/:id', component: ExternalViewerComponent },
+    { path: '**', redirectTo: 'viewer/b3ccc41a-8d1b-47b2-9383-423bb1027410' },
+    // {'path': '', component: FolderComponent},
+    // {'path':'login', component:LoginComponent},
+    // {path: 'auth', component: TwofactorauthComponent},
+    // {'path':'forgotpassword', component: ForgotpasswordComponent},
+    // {path: 'passwordAuth', component: PasswordauthComponent},
+    // {'path': 'resetPassword', component: PasswordresetComponent},
+    // {'path':'portal', component:DashboardLayout, canActivate:[authGuard], children:[
+    //     {'path':'dashboard', component:DashboardComponent},
+    //     {'path':'files', component:FilesComponent},
+    //     {path:"",component:AdminLayoutComponent, canActivate:[isAdminGaurd], children:[
+    //         {'path':'activities', component:ActivitiesComponent},
+    //         {'path':'users', component:UsersComponent},
+    //         {'path':'settings', component:SettingsComponent},
+    //         {'path': 'newuser', component: NewuserComponent},
+    //     ]}
+    // ]},
+    // {'path': 'securitycheck', component: SecurityCheckComponent},
+    // {'path': 'viewer/:id', component: ExternalViewerComponent},
+    // { path: 'errorpage', component: PagenotfoundComponent },
+    // { path: '**', redirectTo: '/errorpage' } 
 ];
 
