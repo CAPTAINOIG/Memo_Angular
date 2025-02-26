@@ -21,10 +21,32 @@ export class LoginComponent {
 
   mac_address: string | null = null;
 
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private local: LocalstorageService,
+    private HttpRequest: HttpRequestService,
+    private userDetail: ServicesidebarService,
+    private route: ActivatedRoute,
+  ) {
+    this.loginForm = this.fb.group({
+      identity: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.mac_address = params['mac'];
-      // console.log(this.macAddress)
+
+      if (this.mac_address) {
+        localStorage.setItem("mac_address", this.mac_address); 
+      } else {
+        this.mac_address = localStorage.getItem("mac_address"); 
+        console.log(this.mac_address)
+      }
+  
+      
       if (!this.mac_address) {
         Toastify({
           text: 'You are not allowed to view this page',
@@ -38,20 +60,6 @@ export class LoginComponent {
           this.router.navigate(['/errorpage']);
         }, 2000);
       }
-    });
-  }
-
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private local: LocalstorageService,
-    private HttpRequest: HttpRequestService,
-    private userDetail: ServicesidebarService,
-    private route: ActivatedRoute,
-  ) {
-    this.loginForm = this.fb.group({
-      identity: ['', Validators.required],
-      password: ['', Validators.required],
     });
   }
 
