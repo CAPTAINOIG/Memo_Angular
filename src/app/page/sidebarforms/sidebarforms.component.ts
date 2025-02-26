@@ -85,6 +85,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   metaDataResult: any;
   isMetaLoader = false;
   secureBySmsOtp = false;
+  metaData = true;
   otpSent = false;
   otpForm: FormGroup;
   submittedOtp = '';
@@ -133,13 +134,13 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       email: new FormControl(''),
       phone: new FormControl(''),
       groupEmail: new FormControl(''),
-      metaData: new FormControl(''),
+      metaData: new FormControl(true),
       // key: new FormControl(''),
       // value: new FormControl(''),
     });
 
     this.form = this.fb.group({
-      metaData: new FormControl(''),
+      metaData: new FormControl(true),
       key: ['', Validators.required],
       value: ['', Validators.required],
     });
@@ -221,6 +222,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   reset() {
     this.fullMemo = false;
     this.createMetaData = false;
+    this.metaDataResult = [];
   }
 
   ngDoCheck(): void {

@@ -130,7 +130,7 @@
             </li>
           </ul>
 
-        <div *ngIf="fullMemo ||createMetaData" class="tab-content">
+        <div *ngIf="fullMemo || createMetaData" class="tab-content">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <form [formGroup]="memoForm" (ngSubmit)="draftMemo($event)">
               <div class="form-group">
@@ -165,7 +165,7 @@
                 <input type="text" formControlName="title" class="form-control" id="title" name="title"
                   aria-describedby="emailHelp" placeholder="" />
               </div>
-              <div *ngIf="fullMemo" class="form-group">
+              <div class="form-group">
                 <label for="exampleFormControlSelect1">Folder</label>
                 <select formControlName="memFoldId" class="form-control" id="memFoldId">
                   <option value="">Select a folder</option>
@@ -258,7 +258,6 @@
                   </button>
                 </div>
 
-
               </div>
             </form>
           </div>
@@ -296,7 +295,7 @@
             </div>
           </div>
 
-          <div ngif="createMetaData" class="tab-pane fade" id="metadata" role="tabpanel" aria-labelledby="metadata-tab">
+          <div ngif="!createMetaData" class="tab-pane fade" id="metadata" role="tabpanel" aria-labelledby="metadata-tab">
             <div [formGroup]="form">
               <div class="card card-body mb-3 d-flex justify-content-between flex-row">
                 <div>
@@ -337,11 +336,11 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="metaDataResult && metaDataResult.length > 0">
+            <div *ngIf="!createMetaData && metaDataResult && metaDataResult.length > 0">
               <table class="table table-bordered mt-4">
                 <thead>
                   <tr class="flex justify-content-between">
-                    <th class="text-center">Memo Title</th>
+                    <th class="text-center">Memo Title hello world</th>
                     <th class="text-center">Value</th>
                     <th class="text-center">Delete</th>
                    
