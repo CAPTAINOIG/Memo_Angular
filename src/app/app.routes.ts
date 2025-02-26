@@ -22,7 +22,7 @@ import { FolderComponent } from './folder/folder.component';
 
 export const routes: Routes = [
     { path: 'viewer/:id', component: ExternalViewerComponent },
-    { path: '**', redirectTo: 'viewer/b3ccc41a-8d1b-47b2-9383-423bb1027410' },
+    { path: '**', redirectTo: 'viewer/3f92b8d4-6a5e-4c91-98df-1c0a2b6e9e45' },
     // {'path': '', component: FolderComponent},
     // {'path':'login', component:LoginComponent},
     // {path: 'auth', component: TwofactorauthComponent},
