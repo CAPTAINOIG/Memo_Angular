@@ -16,7 +16,7 @@ export class OtpconfirmationComponent {
   isLoading = false;
   adminStatus = false
 
-  constructor(private httpRequest: HttpRequestService, public handleModal: ServicesidebarService, private otpconfirmationService: ServicesidebarService, private sidebarService: ServicesidebarService) { }
+  constructor(private httpRequest: HttpRequestService, public handleModal: ServicesidebarService, private otpconfirmationService: ServicesidebarService) { }
 
   onSubmit() {
     if(!this.otp){
@@ -35,7 +35,6 @@ export class OtpconfirmationComponent {
         this.otpconfirmationService.triggerOtpConfirmationRefresh();
         if(response.status){
           this.publishAndUnpublish()
-          this.sidebarService.updateApprovalStatus(this.handleModal.publishMemId.memId, true); 
         }else{
           this.isLoading = false;
         }
@@ -54,6 +53,7 @@ export class OtpconfirmationComponent {
       }
     );
   }
+
 
   publishAndUnpublish() {
     this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModal.publishMemId.memId,'publish': this.handleModal.publishMemId.status }).subscribe((response) => {

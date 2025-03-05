@@ -37,7 +37,7 @@ allFolder$ = this.folderSubject.asObservable();
   isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
 
 
-  constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService, private folderService: ServicesidebarService, private fileService: ServicesidebarService, private qrCodeService: ServicesidebarService, public sidebarService: ServicesidebarService, public statusService: ServicesidebarService) { }
+  constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService, private folderService: ServicesidebarService, private fileService: ServicesidebarService, private qrCodeService: ServicesidebarService, public sidebarService: ServicesidebarService) { }
 
   ngOnInit(): void {
     this.status = this.handleModal.status

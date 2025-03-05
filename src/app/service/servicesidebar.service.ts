@@ -16,8 +16,6 @@ export class ServicesidebarService {
   public memId: any
   createMemoTab = undefined
   qrCodeData = undefined;
-  public approvalStatus: { [key: number]: boolean } = {}; 
-
   private componentStates: { [key: string]: boolean } = {};
 
   constructor() { }
@@ -93,10 +91,6 @@ export class ServicesidebarService {
   }
   getUserData() {
     return this.userData
-  }
-
-  updateApprovalStatus(id: number, status: boolean) {
-    this.approvalStatus[id] = status;
   }
 
   setMemId(data: any) {
