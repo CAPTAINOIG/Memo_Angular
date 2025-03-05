@@ -84,7 +84,7 @@
                                 <input type="text" class="form-control" [(ngModel)]="searchTerm"
                                     placeholder="Enter title to search">
                             </div>
-
+                          
                             <li class="list-inline-item">
                                 <button class="btn btn-secondary" (click)="setFilterStatus('')">All Memo</button>
                             </li>
@@ -179,7 +179,7 @@
 
                                     <td class="text-right">
                                         <div class="dropdown"
-                                            *ngIf="item?.IsPublished === 0 || item?.IsPublished === 1">
+                                           >
                                             <a href="#" class="btn btn-floating" data-toggle="dropdown">
                                                 <i class="ti-more-alt"></i>
                                             </a>
@@ -198,17 +198,44 @@
                                                 </div>
                                             </ng-container>
 
-                                            <!-- Non-Admin Actions -->
-                                            <ng-container *ngIf="!isAdmin && item.IsPublished === 0">
+                                            <ng-container *ngIf="sidebarService.userData.role_id === 1">
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <span
                                                         class="dropdown-item cursor-pointer bg-primary hover-bg-success-light hover-text-dark"
-                                                        (click)="qrCode(item?.MemUniqueId)">Attach Qr Code</span>
-                                                    <span class="dropdown-item cursor-pointer"
+                                                        (click)="qrCode(item?.MemUniqueId)">Attach QR Code</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
+                                                        (click)="approve(item?.Id, 'approve')">Approve</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-danger hover-bg-danger-light hover-text-dark mt-2"
+                                                        (click)="approve(item?.Id, 'reject')">Reject</span>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container
+                                                *ngIf="sidebarService.userData.role_id === 4 || sidebarService.userData.role_id === 5">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span
+                                                       *ngIf="item.IsPublished === 1"
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
+                                                        (click)="approve(item?.Id, 'finalApproval')">Submit for final approver</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-danger hover-bg-danger-light hover-text-dark mt-2"
+                                                        (click)="approve(item?.Id, 'reject')">Reject</span>
+                                                </div>
+                                            </ng-container>
+
+                                            <!-- INITIATOR -->
+                                            <ng-container
+                                                *ngIf="sidebarService.userData.role_id === 2 && item?.IsPublished === 0">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span class="dropdown-item cursor-pointer bg-primary"
                                                         (click)="editFiles(item?.MemUniqueId)"
-                                                        data-sidebar-target="#view-file">
-                                                        {{isEditLoader ? "Loading..." : "Edit"}}
-                                                    </span>
+                                                        data-sidebar-target="#view-file">{{isEditLoader ? "Loading..." :
+                                                        "Edit"}}</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
+                                                        (click)="approve(item?.Id, 'pending')">Submit for approver</span>
                                                 </div>
                                             </ng-container>
                                         </div>

@@ -6,14 +6,11 @@ import { LocalstorageService } from '../LocalstorageService/localstorage.service
   providedIn: 'root'
 })
 export class HttpRequestService {
-  // private baseUrl = 'https://c83f-2a09-bac5-4dd0-1c82-00-2d7-76.ngrok-free.app/api';
-  private baseUrl = 'https://lendnode.creditclan.com/memo/api';
+  private baseUrl = 'https://f433-2a09-bac1-5420-18-00-ae-11.ngrok-free.app/api';
+  // private baseUrl = 'https://lendnode.creditclan.com/memo/api';
   private geoApiKey = '39f835849b07490f9ada6d2e31447933';
   
-  constructor(
-    private http: HttpClient,
-    private localstorage: LocalstorageService,
-  ) { }
+  constructor(private http: HttpClient, private localstorage: LocalstorageService) { }
 
   public makeGetRequest(url: string, body: any = {}) {
     return this.http.get<any>(`${this.baseUrl}${url}`, { headers: this.returnHeader() });

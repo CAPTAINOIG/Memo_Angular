@@ -38,15 +38,11 @@ export class LoginComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.mac_address = params['mac'];
-
       if (this.mac_address) {
         localStorage.setItem("mac_address", this.mac_address); 
       } else {
         this.mac_address = localStorage.getItem("mac_address"); 
-        console.log(this.mac_address)
       }
-  
-      
       if (!this.mac_address) {
         Toastify({
           text: 'You are not allowed to view this page',
@@ -55,7 +51,6 @@ export class LoginComponent {
           position: "right",
           backgroundColor: "red",
         }).showToast();
-        // this.router.navigate(['/errorpage']);
         setTimeout(() => {
           this.router.navigate(['/errorpage']);
         }, 2000);
@@ -75,8 +70,6 @@ export class LoginComponent {
       // console.log(json)
       this.HttpRequest.makePostRequest(`/auth/login`, json).subscribe({
         next: (data: any) => {
-          // console.log(data)
-          this.userDetail.setUserDetail(data)
           this.isLoading = false;
           if (data.status) {
             Toastify({

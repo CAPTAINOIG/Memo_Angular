@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit {
     private userData: ServicesidebarService,
     private router: Router,
     private fileService: ServicesidebarService,
+    public sidebarService: ServicesidebarService,
   ) {
 
   }

@@ -19,6 +19,7 @@ export class HeaderComponent {
   ngOnInit(): void{ 
      this.httpRequet.makeGetRequest('/auth/user').subscribe((response)=>{
       this.user = response.data;
+      this.sidebarService.setUserData(response.data)
     }, (error)=>{
     })
 }

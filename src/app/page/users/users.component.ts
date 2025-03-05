@@ -21,9 +21,6 @@ import { BehaviorSubject } from 'rxjs';
     styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit {
-  // private folderSubject = new BehaviorSubject<any[]>([]);
-  // allFolder$ = this.folderSubject.asObservable();
-  
   suspendUser: boolean; 
   user: any []= []
   users: any = [];

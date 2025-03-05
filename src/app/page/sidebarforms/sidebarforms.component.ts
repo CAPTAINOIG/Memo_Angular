@@ -112,8 +112,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.memoForm = new FormGroup({
       memoType: new FormControl(),
       memoDataType: new FormControl(),
-      // createMetaToggle: new FormControl(''),
-      memoCode: new FormControl(''),
+      memoCode: new FormControl(),
       title: new FormControl('', Validators.required),
       memo: new FormControl('', Validators.required),
       memFoldId: new FormControl('', Validators.required),
@@ -135,8 +134,6 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       phone: new FormControl(''),
       groupEmail: new FormControl(''),
       metaData: new FormControl(true),
-      // key: new FormControl(''),
-      // value: new FormControl(''),
     });
 
     this.form = this.fb.group({
@@ -211,12 +208,12 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
   GenerateFullMemo() {
     this.fullMemo = true;
-    this.createMetaData = false; 
+    this.createMetaData = false;
   }
-  
+
   CretaeMetaData() {
     this.createMetaData = true;
-    this.fullMemo = false; 
+    this.fullMemo = false;
   }
 
   reset() {
@@ -228,13 +225,14 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   ngDoCheck(): void {
     if (this.handleModals.show == "edit_files" && this.handleModals.check == "nothing") {
       const check = this.handleModals.show == "edit_files"
-      this.memoForm.setValue({
+      this.memoForm.patchValue({
         memoType: check ? this.handleModals?.editMemo?.MemTitle : '',
         memoDataType: check ? this.handleModals?.editMemo?.MemTitle : '',
         memoCode: check ? this.handleModals?.editMemo?.MemCode : '',
         title: check ? this.handleModals?.editMemo?.MemTitle : '',
         memo: check ? this.handleModals?.editMemo?.MemContents : '',
         memFoldId: check ? this.handleModals?.editMemo?.MemFoldId : '',
+        staff: check ? this.handleModals?.editMemo?.Staff : '',
         metaData: '',
         include_signature: false,
         security_type: false,
@@ -349,7 +347,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   // }
 
   draftMemo(event: any): void {
-    if(this.fullMemo){
+    if (this.fullMemo) {
       if (!this.memoForm.valid) {
         Toastify({
           text: 'Form is not valid',
@@ -384,7 +382,10 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
         memo: this.memoForm.value.memo,
         memId: this.handleModals?.editMemo?.MemUniqueId,
         memFold: this.handleModals?.editMemo?.MemFoldId,
-
+        isPublished: event.submitter.value === 'save' ? 0 : 1,
+        memoType: this.memoForm.value.memoType,
+        staff: this.memoForm.value.staff,
+        memoCode: this.memoForm.value.memoCode
       };
       this.isLoading = true;
       this.httpRequest.makePatchRequest('/memo/update', memo).subscribe(
@@ -445,6 +446,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.isLoading = true;
       this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
         (response: any) => {
+          console.log(response)
           this.isLoading = false;
           this.memId = response.id;
           this.handleModals.setMemId(response.id);
@@ -476,7 +478,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     };
   };
 
-  
+
   draftMetaData() {
     if (!this.memId) {
       Toastify({
@@ -557,7 +559,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
 
   deleteMetaData(key: number) {
     this.isMetaDeleteLoader = true;
-    const keyString = String(key); 
+    const keyString = String(key);
     const url = `/memo/metadata/?memId=${encodeURIComponent(this.memId)}&key=${encodeURIComponent(keyString)}`;
     this.httpRequest.makeDeleteRequest(url).subscribe(
       (response) => {

@@ -138,33 +138,67 @@
                                         </span>
                                     </td>
 
-                                    <td class="">
-                                        <div class="dropdown" *ngIf="recent?.IsPublished==0 || recent?.IsPublished==1">
+                                    <td class="text-right">
+                                        <div class="dropdown"
+                                           >
                                             <a href="#" class="btn btn-floating" data-toggle="dropdown">
                                                 <i class="ti-more-alt"></i>
                                             </a>
+                                            <!-- Admin Actions -->
                                             <ng-container *ngIf="isAdmin">
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <span class="dropdown-item cursor-pointer bg-primary hover-text-dark" (click)="qrCode(recent?.MemUniqueId)">Attach Qr Code</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-primary hover-bg-success-light hover-text-dark"
+                                                        (click)="qrCode(recent?.MemUniqueId)">Attach Qr Code</span>
                                                     <span
                                                         class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
-                                                        (click)="approve(recent.Id,'approve')">Approve</span>
+                                                        (click)="approve(recent?.Id, 'approve')">Approve</span>
                                                     <span
-                                                        class="dropdown-item cursor-pointer bg-danger  hover-bg-danger-light hover-text-dark mt-2"
-                                                        (click)="approve(recent.Id,'reject')">Reject</span>
+                                                        class="dropdown-item cursor-pointer bg-danger hover-bg-danger-light hover-text-dark mt-2"
+                                                        (click)="approve(recent?.Id, 'reject')">Reject</span>
                                                 </div>
                                             </ng-container>
 
-                                            <ng-container>
-                                                <div class="dropdown-menu dropdown-menu-right"
-                                                    *ngIf="!isAdmin && recent.IsPublished==0">
-                                                    <span class="dropdown-item cursor-pointer"
+                                            <ng-container *ngIf="sidebarService.userData.role_id === 1">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-primary hover-bg-success-light hover-text-dark"
+                                                        (click)="qrCode(recent?.MemUniqueId)">Attach QR Code</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
+                                                        (click)="approve(recent?.Id, 'approve')">Approve</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-danger hover-bg-danger-light hover-text-dark mt-2"
+                                                        (click)="approve(recent?.Id, 'reject')">Reject</span>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container
+                                                *ngIf="sidebarService.userData.role_id === 4 || sidebarService.userData.role_id === 5">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span
+                                                       *ngIf="recent.IsPublished === 1"
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
+                                                        (click)="approve(recent?.Id, 'finalApproval')">Submit for final approver</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-danger hover-bg-danger-light hover-text-dark mt-2"
+                                                        (click)="approve(recent?.Id, 'reject')">Reject</span>
+                                                </div>
+                                            </ng-container>
+
+                                            <!-- INITIATOR -->
+                                            <ng-container
+                                                *ngIf="sidebarService.userData.role_id === 2 && recent?.IsPublished === 0">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <span class="dropdown-item cursor-pointer bg-primary"
                                                         (click)="editFiles(recent?.MemUniqueId)"
                                                         data-sidebar-target="#view-file">{{isEditLoader ? "Loading..." :
                                                         "Edit"}}</span>
+                                                    <span
+                                                        class="dropdown-item cursor-pointer bg-success hover-bg-success-light hover-text-dark mt-2"
+                                                        (click)="approve(recent?.Id, 'pending')">Submit for approver</span>
                                                 </div>
                                             </ng-container>
-
                                         </div>
                                     </td>
                                 </tr>

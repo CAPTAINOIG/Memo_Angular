@@ -57,6 +57,7 @@ export class ExternalViewerComponent implements OnInit {
               if (response.data) {
                 this.status = 'data';
                 this.data = response.data;
+                console.log(this.data);
                 if (this.data.MemMetadata) {
                   this.data.MemMetadata = JSON.parse(this.data.MemMetadata);
                 }

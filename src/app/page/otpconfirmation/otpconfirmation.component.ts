@@ -14,8 +14,9 @@ import Toastify from 'toastify-js';
 export class OtpconfirmationComponent {
   otp: string = '';
   isLoading = false;
+  adminStatus = false
 
-  constructor(private httpRequest: HttpRequestService, public handleModal: ServicesidebarService, private otpconfirmationService: ServicesidebarService) { }
+  constructor(private httpRequest: HttpRequestService, public handleModal: ServicesidebarService, private otpconfirmationService: ServicesidebarService, private sidebarService: ServicesidebarService) { }
 
   onSubmit() {
     if(!this.otp){
@@ -34,6 +35,7 @@ export class OtpconfirmationComponent {
         this.otpconfirmationService.triggerOtpConfirmationRefresh();
         if(response.status){
           this.publishAndUnpublish()
+          this.sidebarService.updateApprovalStatus(this.handleModal.publishMemId.memId, true); 
         }else{
           this.isLoading = false;
         }
@@ -53,12 +55,10 @@ export class OtpconfirmationComponent {
     );
   }
 
-
   publishAndUnpublish() {
     this.httpRequest.makePatchRequest('/memo/publsh_memo', { "memId": this.handleModal.publishMemId.memId,'publish': this.handleModal.publishMemId.status }).subscribe((response) => {
       this.isLoading = false;
       this.handleModal.showMother("undefined")
-      
     }, (error) => {
       this.isLoading = false
     })

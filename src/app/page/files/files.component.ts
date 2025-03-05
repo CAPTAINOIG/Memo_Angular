@@ -31,12 +31,13 @@ allFolder$ = this.folderSubject.asObservable();
   searchTerm: string = '';
   filterStatus: string = '';
   status =[]
-  statusClasses = ['bg-secondary', 'bg-warning text-dark', 'bg-success', 'bg-danger'];
+  statusClasses = ['bg-secondary', 'bg-warning text-dark','bg-primary text-dark', 'bg-success', 'bg-danger'];
+  // userData: any;
   
   isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
 
 
-  constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService, private folderService: ServicesidebarService, private fileService: ServicesidebarService, private qrCodeService: ServicesidebarService) { }
+  constructor(private httpRequest: HttpRequestService, private handleModal: ServicesidebarService, private editMemo: ServicesidebarService, private folderService: ServicesidebarService, private fileService: ServicesidebarService, private qrCodeService: ServicesidebarService, public sidebarService: ServicesidebarService, public statusService: ServicesidebarService) { }
 
   ngOnInit(): void {
     this.status = this.handleModal.status
@@ -60,9 +61,12 @@ allFolder$ = this.folderSubject.asObservable();
     });
   };
 
+
+
   loadFiles(){
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response) => {
       this.allFile = response.data;
+      console.log(this.allFile)
       this.isLoading = false
     }, (error) => {
       Toastify({
@@ -119,11 +123,24 @@ allFolder$ = this.folderSubject.asObservable();
   editFiles(file: any) {
     this.isEditLoader = true;
     this.httpRequest?.makeGetRequest("/memo/single?id=" + file).subscribe((response: any) => {
+      if (!response.data) {
+        this.isEditLoader = false;
+        return;
+      }
+      this.isEditLoader = false;
+      const editMemo = {
+        MemTitle: response.data.MemTitle ?? '',
+        MemCode: response.data.MemCode ?? '',
+        MemContents: response.data.MemContents ?? '',
+        MemFoldId: response.data.MemFoldId ?? '',
+        memoCode: response.data.memoCode ?? '',
+        memoType: response.data.memoType ?? '',
+        include_signature: response.data.include_signature ?? '',
+        Staff: response.data.Staff ?? '',
+      };
       this.handleModal.setEditMemo(response.data)
       this.handleModal.showMother("edit_files");
-      this.isEditLoader = false;
     }, (error: any) => {
-      // console.log('Error fetching data', error);
       this.isLoading = false;
       Toastify({
         text: "Error fetching data",
@@ -141,7 +158,6 @@ allFolder$ = this.folderSubject.asObservable();
     this.page = 1
     this.httpRequest.makeGetRequest('/dashboard/files/all?page=1&foldId=' + id).subscribe((response) => {
       this.allFile = response.data;
-      console.log(this.allFile)
       this.isLoading = false;
     })
   }
@@ -161,7 +177,7 @@ allFolder$ = this.folderSubject.asObservable();
   }
 
   filteredFiles() {
-    return this.allFile.filter(item => {
+    return this.allFile.filter((item : any) => {
       const matchesSearch = item?.MemTitle?.toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchesStatus = this.filterStatus === '' || (this.filterStatus === 'approved' && item.IsPublished === 2) || (this.filterStatus === 'pending' && item.IsPublished === 1);
       return matchesSearch && matchesStatus;

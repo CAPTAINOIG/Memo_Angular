@@ -46,7 +46,7 @@ authData: any;
       }, (error)=>{
         this.isLoading = false
         Toastify({
-          text: "Error",
+          text: "invalid otp",
           duration: 3000,
           gravity: "top", 
           position: "right", 
