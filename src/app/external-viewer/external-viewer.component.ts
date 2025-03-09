@@ -53,7 +53,6 @@ export class ExternalViewerComponent implements OnInit {
         this.http.makeGetRequest(`/memo/get_mem_by_memuniqueid/?id=${this.itemId}&lat=${latitude}&long=${longitude}`)
           .subscribe(
             (response) => {
-
               if (response.data) {
                 this.status = 'data';
                 this.data = response.data;
@@ -68,15 +67,18 @@ export class ExternalViewerComponent implements OnInit {
               else {
                 this.status = 'message';
                 this.message = response.message
+                console.log(response);
               }
             },
             (error) => {
+              console.log(error);
               this.status = 'error';
               this.message = error.error.message;
             }
           );
       },
       (error: any) => {
+        console.log(error);
         this.status = 'error';
         this.message = "This page requires your location to fetch the data";
       },

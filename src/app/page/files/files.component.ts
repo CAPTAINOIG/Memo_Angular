@@ -61,8 +61,6 @@ allFolder$ = this.folderSubject.asObservable();
     });
   };
 
-
-
   loadFiles(){
     this.httpRequest.makeGetRequest('/dashboard/files/all').subscribe((response) => {
       this.allFile = response.data;
@@ -179,7 +177,7 @@ allFolder$ = this.folderSubject.asObservable();
   filteredFiles() {
     return this.allFile.filter((item : any) => {
       const matchesSearch = item?.MemTitle?.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesStatus = this.filterStatus === '' || (this.filterStatus === 'approved' && item.IsPublished === 2) || (this.filterStatus === 'pending' && item.IsPublished === 1);
+      const matchesStatus = this.filterStatus === '' || (this.filterStatus === 'approved' && item.IsPublished === 3) || (this.filterStatus === 'submit for approval' && item.IsPublished === 2) || (this.filterStatus === 'pending' && item.IsPublished === 1);
       return matchesSearch && matchesStatus;
     });
   }
