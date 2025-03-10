@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ServicesidebarService {
   show: any = "undefined";
   check = "nothing";
-  status = ['Draft', 'Pending','submit for approver', 'Approved', 'Rejected']
+  status = ['Draft', 'Pending','submit for approval', 'Approved', 'Rejected']
   public userData: any;
   public authData: any;
   public UserDetail: any;

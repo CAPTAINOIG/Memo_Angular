@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
   activities: any;
   isAdmin=JSON.parse(localStorage.getItem('isAdmin')??'false')
   status = []
-  statusClasses = ['bg-secondary', 'bg-warning text-dark', 'bg-success', 'bg-danger'];
+  statusClasses = ['bg-secondary', 'bg-warning text-dark','bg-primary text-dark', 'bg-success', 'bg-danger'];
   barChartData=[
   ]
 
