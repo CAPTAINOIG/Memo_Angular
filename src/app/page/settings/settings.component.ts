@@ -30,12 +30,9 @@ export class SettingsComponent {
 
   ngOnInit(): void {
     this.checkForExistingRecord();
-
     const userName = this.http.makeGetRequest('/auth/user').subscribe((response)=>{
       this.user = response.data;
-      
     }, (error)=>{
-      console.log(error);
     })
   }
 
@@ -95,7 +92,6 @@ export class SettingsComponent {
   checkForExistingRecord() {
     this.isLoading = true
     this.http.makeGetRequest('/memo/mem_e_signature/all').subscribe((response: any) => {
-      console.log(response)
       this.isLoading = false
       this.data = Array.isArray(response.data) ? response.data : [];
       if (this.data.length > 0) {
@@ -104,7 +100,6 @@ export class SettingsComponent {
       }
       this.isLoading = false
     }, (error) => {
-      console.log(error); 
       this.isLoading = false
     });
 
@@ -177,8 +172,6 @@ export class SettingsComponent {
 
 
   addESignature() {
-    console.log(this.esignature)
-    console.log(this.data[0].Id)
     if (!this.esignature.title || !this.esignature.image || !this.data[0].Id) {
       Toastify({
         text: "Please fill in all required fields!",

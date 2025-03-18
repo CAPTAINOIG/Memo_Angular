@@ -87,51 +87,108 @@
   <div *ngIf="['edit_files', 'create_memo'].includes(this.handleModals.show)" class="sidebar-group-forms d-print-none">
     <div class="sidebar primary-sidebar show" id="storage">
       <div class="sidebar-header">
+
         <ng-container *ngIf="handleModals.show === 'edit_files'; else newMemo">
           <h4>Edit Memo</h4>
         </ng-container>
         <ng-template #newMemo>
           <h4>New Memo</h4>
         </ng-template>
-        <a *ngIf="!fullMemo && !createMetaData" href="javascript:;" (click)="close()" class="btn btn-light btn-floating sidebar-close-btn">
+        
+        <a *ngIf="!fullMemo && !createMetaData" href="javascript:;" (click)="close()"
+          class="btn btn-light btn-floating sidebar-close-btn">
           <i class="ti-angle-right"></i>
         </a>
-        <div *ngIf="fullMemo || createMetaData">
-          <button  class="btn btn-light btn-floating sidebar-close-btn" (click)="reset()"> <i class="ti-angle-right"></i></button>
+        <div style="display: flex; gap: 16px;" *ngIf="fullMemo || createMetaData">
+          <div>  
+            <button class="memo-upload-button" (click)="openModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Upload Memo
+          </button>
+        </div>
+          <button class="btn btn-light btn-floating sidebar-close-btn" (click)="reset()"> <i
+              class="ti-angle-right"></i></button>
         </div>
       </div>
+      
+      
+      <div *ngIf="handleModals.show === 'edit_files' && !editUserMemo" class="button-container">
+        <button class="btn btn-edit" (click)="EditFullMemo()">Edit Memo</button>
+      </div>
+
       <div class="sidebar-content">
-        <div *ngIf="!fullMemo && !createMetaData" class="button-container">
+        <div *ngIf="!fullMemo && !createMetaData && handleModals.show !== 'edit_files'" class="button-container">
           <button class="btn btn-generate" (click)="GenerateFullMemo()">Create Full Memo</button>
           <p class="or-text">or</p>
           <button class="btn btn-create" (click)="CretaeMetaData()">Create Meta Data</button>
         </div>
 
-          <ul *ngIf="fullMemo ||createMetaData" class="nav nav-tabs mb-3" role="tablist">
-            <li  class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" (click)="handle('hello')" role="tab"
-                aria-controls="home" aria-selected="true">{{fullMemo ? "Content" : "Meta Data Table"}}</a>
-            </li>
-            <li *ngIf="fullMemo" class="nav-item active">
-              <a class="nav-link" id="metadata-tab" data-toggle="tab" href="#metadata" (click)="handle('hello')"
-                role="tab" aria-controls="metadata" aria-selected="false">Meta Data</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" (click)="handle('hello')" role="tab"
-                aria-controls="profile" aria-selected="false">Attachments</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" (click)="handle('hello')" role="tab"
-                aria-controls="contact" aria-selected="false">Security</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="sharing-tab" data-toggle="tab" href="#sharing" (click)="handle('hello')" role="tab"
-                aria-controls="sharing" aria-selected="false">Sharing</a>
-            </li>
-          </ul>
+        <ul *ngIf="fullMemo ||createMetaData" class="nav nav-tabs mb-3" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" (click)="handle('hello')" role="tab"
+              aria-controls="home" aria-selected="true">{{fullMemo ? "Content" : "Meta Data Table"}}</a>
+          </li>
+          <li *ngIf="fullMemo" class="nav-item active">
+            <a class="nav-link" id="metadata-tab" data-toggle="tab" href="#metadata" (click)="handle('hello')"
+              role="tab" aria-controls="metadata" aria-selected="false">Meta Data</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" (click)="handle('hello')" role="tab"
+              aria-controls="profile" aria-selected="false">Attachments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" (click)="handle('hello')" role="tab"
+              aria-controls="contact" aria-selected="false">Security</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sharing-tab" data-toggle="tab" href="#sharing" (click)="handle('hello')" role="tab"
+              aria-controls="sharing" aria-selected="false">Sharing</a>
+          </li>
+        </ul>
 
         <div *ngIf="fullMemo || createMetaData" class="tab-content">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <ng-container>
+              <div *ngIf="showModal" class="modal-overlay">
+                <div class="modal-container">
+                  <h2 class="modal-title">Upload Memo Document</h2>
+
+                  <div class="upload-area" [class.active]="isDragging" (dragover)="onDragOver($event)"
+                    (dragleave)="onDragLeave()" (drop)="onDrop($event)">
+                    <div class="upload-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                      </svg>
+                    </div>
+
+                    <div class="upload-text">
+                      <p>Drag and drop memo files here</p>
+                      <p>OR</p>
+                      <input type="file" #fileInput style="display: none" accept=".doc,.docx,.pdf,.txt"
+                        (change)="onFileSelected($event)" />
+                      <button class="browse-btn" (click)="fileInput.click()">Browse Files</button>
+                      <p class="file-info" *ngIf="selectedFile">Selected: {{ selectedFile.name }}</p>
+                    </div>
+                  </div>
+
+                  <div class="action-buttons">
+                    <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+                    <button class="upload-btn" [disabled]="!selectedFile || uploading" (click)="uploadFile()">
+                      <ng-container *ngIf="!uploading">Upload</ng-container>
+                      <ng-container *ngIf="uploading">Uploading...</ng-container>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
             <form [formGroup]="memoForm" (ngSubmit)="draftMemo($event)">
               <div class="form-group">
                 <label for="memoType">{{fullMemo ? "Memo Type" : "Type"}}</label>
@@ -201,12 +258,13 @@
                         id="exampleCheck1" />
                     </div>
                   </div>
-    
+
                   <div class="mt-3" *ngIf="form.controls['metaData'].value">
                     <div>
                       <div class="form-group mb-3">
                         <label for="key">Key</label>
-                        <input type="text" formControlName="key" class="form-control" id="key" placeholder="Enter key" />
+                        <input type="text" formControlName="key" class="form-control" id="key"
+                          placeholder="Enter key" />
                       </div>
                       <div class="form-group mb-3">
                         <label for="value">Value</label>
@@ -235,7 +293,8 @@
                         <td>{{ data?.value }}</td>
                         <td class="text-center">
                           <button (click)="deleteMetaData(data?.value)" class="btn btn-link">
-                            <i class="fas fa-trash-alt text-danger">{{ isMetaDeleteLoader ? "Loading..." : "delete" }}</i>
+                            <i class="fas fa-trash-alt text-danger">{{ isMetaDeleteLoader ? "Loading..." : "delete"
+                              }}</i>
                           </button>
                         </td>
                       </tr>
@@ -295,7 +354,8 @@
             </div>
           </div>
 
-          <div ngif="!createMetaData" class="tab-pane fade" id="metadata" role="tabpanel" aria-labelledby="metadata-tab">
+          <div ngif="!createMetaData" class="tab-pane fade" id="metadata" role="tabpanel"
+            aria-labelledby="metadata-tab">
             <div [formGroup]="form">
               <div class="card card-body mb-3 d-flex justify-content-between flex-row">
                 <div>
@@ -343,7 +403,7 @@
                     <th class="text-center">Memo Title hello world</th>
                     <th class="text-center">Value</th>
                     <th class="text-center">Delete</th>
-                   
+
                   </tr>
                 </thead>
                 <tbody class="">

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, OnChanges, SimpleChanges, DoCheck, EventEmitter, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder, Form } from '@angular/forms';
 import { NgxEditorModule, Editor } from 'ngx-editor';
 import { ServicesidebarService } from '../../service/servicesidebar.service';
@@ -49,12 +49,19 @@ Quill.register({
 })
 export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   isAdmin = JSON.parse(localStorage.getItem('isAdmin') ?? 'false')
+  @Output() closeModa = new EventEmitter<void>();
+  @Output() uploadComplete = new EventEmitter<File>();
+
 
   @ViewChild('fileInput') fileInput!: ElementRef;
+  selectedFile: File | null = null;
+  isDragging = false;
+  uploading = false;
   step: any;
   memoForm: FormGroup;
   fullMemo = false;
   createMetaData = false;
+  editUserMemo = false
   editor: Editor;
   allowed_ips: string[] = [];
   ip_address: string = '';
@@ -91,7 +98,8 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   submittedOtp = '';
   isSmsLoading = false;
   isMetaDeleteLoader = false;
-
+  showModal = false;
+  base64Image: string | null = null;
 
   memo_attachments = [
     {
@@ -216,9 +224,16 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
     this.fullMemo = false;
   }
 
+  EditFullMemo() {
+    this.fullMemo = true;
+    this.createMetaData = false;
+    this.editUserMemo = true;
+  }
+
   reset() {
     this.fullMemo = false;
     this.createMetaData = false;
+    this.editUserMemo = false;
     this.metaDataResult = [];
   }
 
@@ -346,6 +361,59 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
   //   this.memoForm.patchValue({ memoCode: randomId });
   // }
 
+  openModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.closeModa.emit();
+    this.showModal = false;
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(): void {
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      this.selectedFile = files[0];
+    }
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.base64Image = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+      this.selectedFile = file;
+    }
+  }
+
+  uploadFile(): void {
+    if (this.selectedFile) {
+      console.log(this.selectedFile);
+      this.uploading = true;
+      setTimeout(() => {
+        this.uploading = false;
+        this.uploadComplete.emit(this.selectedFile as File);
+      }, 1500);
+    }
+  }
+
   draftMemo(event: any): void {
     if (this.fullMemo) {
       if (!this.memoForm.valid) {
@@ -446,7 +514,7 @@ export class SidebarformsComponent implements OnInit, OnDestroy, DoCheck {
       this.isLoading = true;
       this.httpRequest.makePostRequest('/memo/create', memoData).subscribe(
         (response: any) => {
-          console.log(response)
+          // console.log(response)
           this.isLoading = false;
           this.memId = response.id;
           this.handleModals.setMemId(response.id);
